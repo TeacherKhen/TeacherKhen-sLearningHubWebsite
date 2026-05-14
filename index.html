@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Khen's Learning Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Chalkboard+SE&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue: #29abe2;
+            --pink: #f06eaa;
+            --green: #009245;
+            --orange: #fbb03b;
+            --purple: #b481f1;
+            --dark-blue: #1a1a4b;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Chalkboard SE', 'Arial', sans-serif;
+            overflow-x: hidden;
+            background-attachment: fixed;
+        }
+
+        .bg-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('background homepage.avif');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+
+        /* --- WELCOME SCREEN --- */
+        #welcome-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(8px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+            text-align: center;
+        }
+
+        .welcome-card {
+            padding: 40px;
+            border-radius: 40px;
+            background: white;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            border: 8px solid var(--orange);
+            max-width: 80%;
+        }
+
+        .welcome-msg {
+            font-family: 'Luckiest Guy', cursive;
+            font-size: 50px;
+            color: var(--blue);
+            margin-bottom: 10px;
+        }
+
+        .enter-btn {
+            background: var(--green);
+            color: white;
+            border: none;
+            padding: 20px 60px;
+            font-family: 'Luckiest Guy', cursive;
+            font-size: 28px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 0px #005e2c;
+            transition: all 0.2s;
+        }
+
+        /* --- HEADER & SEARCH --- */
+        .header-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px 60px;
+            border-radius: 35px;
+            border: 5px solid var(--blue);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 45px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .website-name {
+            font-family: 'Luckiest Guy', cursive;
+            font-size: clamp(30px, 6vw, 70px);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin: 0;
+        }
+
+        .letter {
+            position: relative;
+            text-shadow: 2px 2px 0px var(--dark-blue), 4px 4px 0px var(--dark-blue), 6px 6px 0px var(--dark-blue);
+            display: inline-block;
+            transform: rotate(-2deg);
+        }
+
+        #gameSearch {
+            width: 100%;
+            max-width: 500px;
+            padding: 15px 25px;
+            border-radius: 30px;
+            border: 3px solid var(--pink);
+            font-family: 'Chalkboard SE', sans-serif;
+            font-size: 1.2rem;
+            outline: none;
+            box-shadow: 0 4px 0px var(--dark-blue);
+        }
+
+        /* --- GAME GRID --- */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px 20px;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 1300px;
+            padding: 20px;
+        }
+
+        .game-card {
+            background: white;
+            border: 6px solid var(--blue);
+            border-radius: 25px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 0px var(--dark-blue);
+            text-decoration: none;
+            aspect-ratio: 1/1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-card.hidden { display: none; }
+        .game-card:hover { transform: translateY(-10px); border-color: var(--pink); }
+
+        .game-img-container {
+            flex-grow: 1;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f9f9f9;
+        }
+        
+        .game-img-container img { width: 100%; height: 100%; object-fit: cover; }
+
+        .game-title {
+            background: var(--dark-blue);
+            color: white;
+            padding: 15px 10px;
+            text-align: center;
+            font-family: 'Luckiest Guy', cursive;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            line-height: 1.3;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-container"></div>
+
+    <div id="welcome-overlay">
+        <div class="welcome-card">
+            <div class="welcome-msg">Welcome to my website!</div>
+            <p style="font-weight: bold; color: var(--pink);">Enjoy FREE learning materials for your classroom!</p>
+            <button class="enter-btn" onclick="enterSite()">START LEARNING ➔</button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header-container">
+            <div class="website-name" id="main-title"></div>
+            <input type="text" id="gameSearch" placeholder="🔍 Search for a game..." onkeyup="filterGames()">
+        </div>
+
+        <div class="game-grid" id="gameGrid">
+            <a href="https://teacherkhen.github.io/fishing/" class="game-card" data-name="fishing game catch it">
+                <div class="game-img-container"><img src="catch it.gif" alt="Fishing"></div> 
+                <div class="game-title">The Great Fishing Challenge</div>
+            </a>
+            
+            <a href="https://teacherkhen.github.io/spelling/" class="game-card" data-name="spelling warriors">
+                <div class="game-img-container"><img src="spelling.gif" alt="Spelling"></div> 
+                <div class="game-title">Spelling Warriors</div>
+            </a>
+
+            <a href="https://teacherkhen.github.io/pacman/" class="game-card" data-name="pacman challenge">
+                <div class="game-img-container"><img src="pacman.gif" alt="Pacman"></div> 
+                <div class="game-title">Pacman Vocabulary Quest</div>
+            </a>
+
+            <a href="https://teacherkhen.github.io/whiteboard/" class="game-card" data-name="whiteboard single double mode">
+                <div class="game-img-container"><img src="whiteboard.jpg" alt="Whiteboard"></div> 
+                <div class="game-title">Interactive Whiteboard [S & D]</div>
+            </a>
+
+            <a href="https://teacherkhen.github.io/whiteboard-quiz/" class="game-card" data-name="whiteboard quiz">
+                <div class="game-img-container"><img src="whiteboard+quiz.jpg" alt="Whiteboard Quiz"></div> 
+                <div class="game-title">Whiteboard & Quiz Master</div>
+            </a>
+
+            <a href="https://teacherkhen.github.io/phonics-reading-board/" class="game-card" data-name="phonics reading">
+                <div class="game-img-container"><img src="phonics reading.jpg" alt="Phonics"></div> 
+                <div class="game-title">Phonics Reading Lab</div>
+            </a>
+
+            <a href="https://teacherkhen.github.io/clothinglesson/" class="game-card" data-name="clothing shopping mall ww6">
+                <div class="game-img-container"><img src="clothing.png" alt="Clothing"></div> 
+                <div class="game-title">Fashion Mall: Clothing Lesson</div>
+            </a>
+
+            <a href="https://teacherkhen.github.io/past-time/" class="game-card" data-name="past time expressions ww8 calendar">
+                <div class="game-img-container"><img src="calendar.gif" alt="Past Time"></div> 
+                <div class="game-title">Time Traveler: Past Expressions</div>
+            </a>
+
+            <a href="https://teacherkhen.github.io/monster-card-flip-game/" class="game-card" data-name="monster card flip stationery flip game">
+                <div class="game-img-container"><img src="monster flip game.png" alt="Monster Flip"></div> 
+                <div class="game-title">Monster Card Flip Game</div>
+            </a>
+        </div>
+    </div>
+
+    <audio id="welcome-sound" src="winner sound effect.mp3"></audio> 
+    
+    <script>
+        const colors = ['#29abe2', '#f06eaa', '#009245', '#fbb03b', '#b481f1'];
+        const titleText = "Teacher Khen's Learning Hub";
+        
+        function generateTitle() {
+            const titleContainer = document.getElementById('main-title');
+            let colorIndex = 0;
+            titleText.split(' ').forEach((word, wIdx) => {
+                const wordSpan = document.createElement('span');
+                wordSpan.style.whiteSpace = "nowrap";
+                [...word].forEach(char => {
+                    const span = document.createElement('span');
+                    span.className = 'letter';
+                    span.textContent = char;
+                    span.style.color = colors[colorIndex % colors.length];
+                    wordSpan.appendChild(span);
+                    colorIndex++;
+                });
+                titleContainer.appendChild(wordSpan);
+                if (wIdx < titleText.split(' ').length - 1) {
+                    const space = document.createElement('span');
+                    space.innerHTML = "&nbsp;";
+                    titleContainer.appendChild(space);
+                }
+            });
+        }
+
+        function enterSite() {
+            document.getElementById('welcome-sound').play().catch(() => {});
+            document.getElementById('welcome-overlay').style.transform = "translateY(-100%)";
+        }
+
+        function filterGames() {
+            const input = document.getElementById('gameSearch').value.toLowerCase();
+            const cards = document.getElementsByClassName('game-card');
+            for (let i = 0; i < cards.length; i++) {
+                const name = cards[i].getAttribute('data-name');
+                cards[i].classList.toggle('hidden', !name.includes(input));
+            }
+        }
+
+        window.onload = generateTitle;
+    </script>
+</body>
+</html>
