@@ -80,7 +80,7 @@
         /* --- HEADER & SEARCH --- */
         .header-container {
             background: rgba(255, 255, 255, 0.95);
-            padding: 25px 60px;
+            padding: 20px 40px;
             border-radius: 35px;
             border: 5px solid var(--blue);
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
@@ -88,41 +88,41 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
         }
 
         .website-name {
             font-family: 'Luckiest Guy', cursive;
-            font-size: clamp(30px, 6vw, 70px);
+            font-size: clamp(25px, 5vw, 60px);
             letter-spacing: 3px;
             text-transform: uppercase;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             margin: 0;
         }
 
         .letter {
             position: relative;
-            text-shadow: 2px 2px 0px var(--dark-blue), 4px 4px 0px var(--dark-blue), 6px 6px 0px var(--dark-blue);
+            text-shadow: 2px 2px 0px var(--dark-blue);
             display: inline-block;
             transform: rotate(-2deg);
         }
 
         #gameSearch {
             width: 100%;
-            max-width: 500px;
-            padding: 15px 25px;
-            border-radius: 30px;
+            max-width: 350px; 
+            padding: 12px 20px;
+            border-radius: 25px;
             border: 3px solid var(--pink);
             font-family: 'Chalkboard SE', sans-serif;
-            font-size: 1.2rem;
+            font-size: 1rem;
             outline: none;
             box-shadow: 0 4px 0px var(--dark-blue);
         }
 
-        /* --- GAME GRID --- */
+        /* --- GAME GRID (Fixed for Search Results) --- */
         .main-content {
             display: flex;
             flex-direction: column;
@@ -132,7 +132,9 @@
 
         .game-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            /* FIXED: Using a specific size range so cards don't expand to fill space */
+            grid-template-columns: repeat(auto-fill, minmax(280px, 320px));
+            justify-content: center; /* Centers the grid itself */
             gap: 30px;
             width: 100%;
             max-width: 1300px;
@@ -150,9 +152,10 @@
             aspect-ratio: 1/1;
             display: flex;
             flex-direction: column;
+            width: 100%; /* Respects the grid column size */
         }
 
-        .game-card.hidden { display: none; }
+        .game-card.hidden { display: none !important; }
         .game-card:hover { transform: translateY(-10px); border-color: var(--pink); }
 
         .game-img-container {
@@ -197,11 +200,11 @@
     <div class="main-content">
         <div class="header-container">
             <div class="website-name" id="main-title"></div>
-            <input type="text" id="gameSearch" placeholder="🔍 Search for a game..." onkeyup="filterGames()">
+            <input type="text" id="gameSearch" placeholder="🔍 Type game name here..." onkeyup="filterGames()">
         </div>
 
         <div class="game-grid" id="gameGrid">
-            <a href="https://teacherkhen.github.io/fishing/" class="game-card" data-name="fishing game catch it">
+            <a href="https://teacherkhen.github.io/fishing/" class="game-card" data-name="fishing catch it">
                 <div class="game-img-container"><img src="catch it.gif" alt="Fishing"></div> 
                 <div class="game-title">The Great Fishing Challenge</div>
             </a>
@@ -211,37 +214,37 @@
                 <div class="game-title">Spelling Warriors</div>
             </a>
 
-            <a href="https://teacherkhen.github.io/pacman/" class="game-card" data-name="pacman challenge">
+            <a href="https://teacherkhen.github.io/pacman/" class="game-card" data-name="pacman vocabulary quest">
                 <div class="game-img-container"><img src="pacman.gif" alt="Pacman"></div> 
                 <div class="game-title">Pacman Vocabulary Quest</div>
             </a>
 
-            <a href="https://teacherkhen.github.io/whiteboard/" class="game-card" data-name="whiteboard single double mode">
+            <a href="https://teacherkhen.github.io/whiteboard/" class="game-card" data-name="whiteboard single double draw">
                 <div class="game-img-container"><img src="whiteboard.jpg" alt="Whiteboard"></div> 
                 <div class="game-title">Interactive Whiteboard [S & D]</div>
             </a>
 
-            <a href="https://teacherkhen.github.io/whiteboard-quiz/" class="game-card" data-name="whiteboard quiz">
+            <a href="https://teacherkhen.github.io/whiteboard-quiz/" class="game-card" data-name="whiteboard quiz master">
                 <div class="game-img-container"><img src="whiteboard+quiz.jpg" alt="Whiteboard Quiz"></div> 
                 <div class="game-title">Whiteboard & Quiz Master</div>
             </a>
 
-            <a href="https://teacherkhen.github.io/phonics-reading-board/" class="game-card" data-name="phonics reading">
+            <a href="https://teacherkhen.github.io/phonics-reading-board/" class="game-card" data-name="phonics reading sounds">
                 <div class="game-img-container"><img src="phonics reading.jpg" alt="Phonics"></div> 
                 <div class="game-title">Phonics Reading Lab</div>
             </a>
 
-            <a href="https://teacherkhen.github.io/clothinglesson/" class="game-card" data-name="clothing shopping mall ww6">
+            <a href="https://teacherkhen.github.io/clothinglesson/" class="game-card" data-name="fashion mall clothing shopping">
                 <div class="game-img-container"><img src="clothing.png" alt="Clothing"></div> 
                 <div class="game-title">Fashion Mall: Clothing Lesson</div>
             </a>
 
-            <a href="https://teacherkhen.github.io/past-time/" class="game-card" data-name="past time expressions ww8 calendar">
+            <a href="https://teacherkhen.github.io/past-time/" class="game-card" data-name="time traveler past expressions calendar">
                 <div class="game-img-container"><img src="calendar.gif" alt="Past Time"></div> 
                 <div class="game-title">Time Traveler: Past Expressions</div>
             </a>
 
-            <a href="https://teacherkhen.github.io/monster-card-flip-game/" class="game-card" data-name="monster card flip stationery flip game">
+            <a href="https://teacherkhen.github.io/monster-card-flip-game/" class="game-card" data-name="monster flip card game match">
                 <div class="game-img-container"><img src="monster flip game.png" alt="Monster Flip"></div> 
                 <div class="game-title">Monster Card Flip Game</div>
             </a>
@@ -283,11 +286,18 @@
         }
 
         function filterGames() {
-            const input = document.getElementById('gameSearch').value.toLowerCase();
+            const input = document.getElementById('gameSearch').value.toLowerCase().trim();
             const cards = document.getElementsByClassName('game-card');
+            
             for (let i = 0; i < cards.length; i++) {
-                const name = cards[i].getAttribute('data-name');
-                cards[i].classList.toggle('hidden', !name.includes(input));
+                const keywords = cards[i].getAttribute('data-name').toLowerCase();
+                const actualTitle = cards[i].querySelector('.game-title').innerText.toLowerCase();
+                
+                if (keywords.includes(input) || actualTitle.includes(input)) {
+                    cards[i].classList.remove('hidden');
+                } else {
+                    cards[i].classList.add('hidden');
+                }
             }
         }
 
