@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teacher Khen's Learning Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Chalkboard+SE&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --blue: #29abe2;
@@ -110,8 +111,47 @@
             transform: rotate(-2deg);
         }
 
-        #gameSearch {
+        /* --- SEARCH AND CONTACT BAR DESIGN --- */
+        .search-contact-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
             width: 100%;
+            max-width: 650px;
+        }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 0px var(--dark-blue);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 0px var(--dark-blue);
+        }
+
+        .contact-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0px var(--dark-blue);
+        }
+
+        .contact-btn.fb { background: #1877f2; }
+        .contact-btn.ig { background: #e1306c; }
+        .contact-btn.yt { background: #ff0000; }
+        .contact-btn.blogger { background: #f57d00; }
+
+        #gameSearch {
+            flex-grow: 1;
             max-width: 350px; 
             padding: 12px 20px;
             border-radius: 25px;
@@ -120,6 +160,17 @@
             font-size: 1rem;
             outline: none;
             box-shadow: 0 4px 0px var(--dark-blue);
+        }
+
+        @media (max-width: 580px) {
+            .search-contact-wrapper {
+                flex-wrap: wrap;
+            }
+            #gameSearch {
+                order: -1;
+                width: 100%;
+                max-width: 100%;
+            }
         }
 
         /* --- GAME GRID (Fixed for Search Results) --- */
@@ -200,7 +251,16 @@
     <div class="main-content">
         <div class="header-container">
             <div class="website-name" id="main-title"></div>
-            <input type="text" id="gameSearch" placeholder="🔍 Type game name here..." onkeyup="filterGames()">
+            
+            <div class="search-contact-wrapper">
+                <a href="https://www.facebook.com/khenethsherwin.avila.9" target="_blank" class="contact-btn fb" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/kheneth_02/" target="_blank" class="contact-btn ig" title="Instagram"><i class="fab fa-instagram"></i></a>
+                
+                <input type="text" id="gameSearch" placeholder="🔍 Type game name here..." onkeyup="filterGames()">
+                
+                <a href="https://www.youtube.com/@khenethavila" target="_blank" class="contact-btn yt" title="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="https://teacherkhenlearninghub.blogspot.com/" target="_blank" class="contact-btn blogger" title="Blogger"><i class="fab fa-blogger-b"></i></a>
+            </div>
         </div>
 
         <div class="game-grid" id="gameGrid">
@@ -250,7 +310,7 @@
             </a>
 
             <a href="https://teacherkhen.github.io/phonicsreading/" class="game-card" data-name="reading roll quest phonics game book children">
-                <div class="game-img-container"><img src="reading.png" alt="Reading Roll Quest"></div> 
+                <div class="game-img-container"><img src="reading.gif" alt="Reading Roll Quest"></div> 
                 <div class="game-title">Reading Roll Quest [Phonics Game]</div>
             </a>
         </div>
