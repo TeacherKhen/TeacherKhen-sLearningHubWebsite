@@ -1,742 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Teacher Khen's Learning Hub</title>
 
     <!-- Google AdSense -->
     <script async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1688473629636200"
         crossorigin="anonymous"></script>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Chalkboard+SE&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --blue: #29abe2;
-            --pink: #f06eaa;
-            --green: #009245;
-            --orange: #fbb03b;
-            --purple: #b481f1;
-            --dark-blue: #1a1a4b;
-        }
 
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: 'Chalkboard SE', 'Arial', sans-serif;
-            overflow-x: hidden;
-            background-attachment: fixed;
-        }
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Chalkboard+SE&display=swap"
+          rel="stylesheet">
 
-        .bg-container {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('background homepage.avif');
-            background-size: cover;
-            background-position: center;
-            z-index: -1;
-        }
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-        /* --- WELCOME SCREEN --- */
-        #welcome-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(8px);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
-            text-align: center;
-        }
-
-        .welcome-card {
-            padding: 40px;
-            border-radius: 40px;
-            background: white;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-            border: 8px solid var(--orange);
-            max-width: 80%;
-        }
-
-        .welcome-msg {
-            font-family: 'Luckiest Guy', cursive;
-            font-size: 50px;
-            color: var(--blue);
-            margin-bottom: 10px;
-        }
-
-        .enter-btn {
-            background: var(--green);
-            color: white;
-            border: none;
-            padding: 20px 60px;
-            font-family: 'Luckiest Guy', cursive;
-            font-size: 28px;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 6px 0px #005e2c;
-            transition: all 0.2s;
-        }
-
-        /* --- REMINDER MODAL SCREEN --- */
-        #reminder-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(26, 26, 75, 0.85);
-            backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 3000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        #reminder-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .reminder-card {
-            background: white;
-            border: 8px solid var(--purple);
-            border-radius: 35px;
-            padding: 40px;
-            max-width: 600px;
-            width: 100%;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            position: relative;
-            text-align: left;
-            animation: popUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-sizing: border-box;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        @keyframes popUp {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .close-x {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            font-size: 2rem;
-            color: var(--pink);
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .close-x:hover {
-            transform: scale(1.2);
-        }
-
-        .reminder-card h2 {
-            font-family: 'Luckiest Guy', cursive;
-            color: var(--blue);
-            font-size: 2.2rem;
-            margin-top: 0;
-            margin-bottom: 20px;
-            text-align: center;
-            letter-spacing: 1px;
-        }
-
-        .reminder-section {
-            margin-bottom: 25px;
-        }
-
-        .reminder-section h3 {
-            font-family: 'Luckiest Guy', cursive;
-            color: var(--orange);
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
-        }
-
-        .reminder-card ol, .reminder-card p {
-            font-size: 1.05rem;
-            line-height: 1.5;
-            color: var(--dark-blue);
-            margin: 0;
-        }
-
-        .reminder-card ol {
-            padding-left: 20px;
-        }
-
-        .reminder-card ol li {
-            margin-bottom: 8px;
-        }
-
-        .reminder-card strong {
-            color: var(--pink);
-        }
-
-        .back-btn {
-            background: var(--pink);
-            color: white;
-            border: none;
-            padding: 12px 35px;
-            font-family: 'Luckiest Guy', cursive;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 5px 0px #b83d73;
-            transition: all 0.2s;
-            display: block;
-            margin: 30px auto 0 auto;
-        }
-
-        .back-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 7px 0px #b83d73;
-        }
-
-        .back-btn:active {
-            transform: translateY(3px);
-            box-shadow: 0 2px 0px #b83d73;
-        }
-
-        /* --- HEADER & SEARCH --- */
-        .header-container {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 20px 40px;
-            border-radius: 35px;
-            border: 5px solid var(--blue);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            margin-bottom: 45px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .website-name {
-            font-family: 'Luckiest Guy', cursive;
-            font-size: clamp(25px, 5vw, 60px);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin: 0;
-        }
-
-        .letter {
-            position: relative;
-            text-shadow: 2px 2px 0px var(--dark-blue);
-            display: inline-block;
-            transform: rotate(-2deg);
-        }
-
-        /* --- SEARCH AND CONTACT BAR DESIGN --- */
-        .search-contact-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            width: 100%;
-            max-width: 750px;
-        }
-
-        .contact-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 45px;
-            height: 45px;
-            border-radius: 50px;
-            color: white;
-            text-decoration: none;
-            font-size: 1.3rem;
-            box-shadow: 0 4px 0px var(--dark-blue);
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
-        }
-
-        .contact-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 0px var(--dark-blue);
-        }
-
-        .contact-btn:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0px var(--dark-blue);
-        }
-
-        .contact-btn.fb { background: #1877f2; }
-        .contact-btn.ig { background: #e1306c; }
-        .contact-btn.yt { background: #ff0000; }
-        .contact-btn.blogger { background: #f57d00; }
-        .contact-btn.tiktok { background: #000000; }
-        .contact-btn.help { background: var(--purple); }
-
-        #gameSearch {
-            flex-grow: 1;
-            max-width: 350px; 
-            padding: 12px 20px;
-            border-radius: 25px;
-            border: 3px solid var(--pink);
-            font-family: 'Chalkboard SE', sans-serif;
-            font-size: 1rem;
-            outline: none;
-            box-shadow: 0 4px 0px var(--dark-blue);
-        }
-
-        @media (max-width: 580px) {
-            .search-contact-wrapper {
-                flex-wrap: wrap;
-            }
-            #gameSearch {
-                order: -1;
-                width: 100%;
-                max-width: 100%;
-            }
-        }
-
-        /* --- GAME GRID --- */
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 50px 20px;
-        }
-
-        .game-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 320px));
-            justify-content: center; 
-            gap: 30px;
-            width: 100%;
-            max-width: 1300px;
-            padding: 20px;
-        }
-
-        .game-card {
-            background: white;
-            border: 6px solid var(--blue);
-            border-radius: 25px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 0px var(--dark-blue);
-            text-decoration: none;
-            aspect-ratio: 1/1;
-            display: flex;
-            flex-direction: column;
-            width: 100%; 
-        }
-
-        .game-card.hidden { display: none !important; }
-        .game-card:hover { transform: translateY(-10px); border-color: var(--pink); }
-
-        .game-img-container {
-            flex-grow: 1;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f9f9f9;
-        }
-        
-        .game-img-container img { width: 100%; height: 100%; object-fit: cover; }
-
-        .game-title {
-            background: var(--dark-blue);
-            color: white;
-            padding: 15px 10px;
-            text-align: center;
-            font-family: 'Luckiest Guy', cursive;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-            line-height: 1.3;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* --- DONATION QR CODE DISPLAY --- */
-        .qr-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-
-        .qr-box {
-            background: #f0f4f8;
-            border: 3px solid var(--blue);
-            border-radius: 20px;
-            padding: 15px;
-            text-align: center;
-            flex: 1;
-            min-width: 140px;
-            max-width: 200px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-
-        .qr-box img {
-            width: 100%;
-            max-width: 160px;
-            height: auto;
-            border-radius: 12px;
-            border: 2px solid white;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-        }
-
-        .qr-label {
-            font-family: 'Luckiest Guy', cursive;
-            font-size: 1.2rem;
-            margin-top: 10px;
-            color: var(--dark-blue);
-            letter-spacing: 0.5px;
-        }
-
-        /* --- BOTTOM DONATE SECTION --- */
-        .bottom-donate-container {
-            margin-top: 40px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .donate-btn {
-            background: var(--pink);
-            color: white;
-            border: none;
-            padding: 16px 45px;
-            font-family: 'Luckiest Guy', cursive;
-            font-size: 1.5rem;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 6px 0px #b83d73;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .donate-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 0px #b83d73;
-        }
-
-        .donate-btn:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0px #b83d73;
-        }
-
-        #donate-modal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(26, 26, 75, 0.85);
-            backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 3000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        #donate-modal.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .donate-card {
-            background: white;
-            border: 8px solid var(--pink);
-            border-radius: 35px;
-            padding: 40px;
-            max-width: 600px;
-            width: 100%;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            position: relative;
-            text-align: center;
-            animation: popUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-sizing: border-box;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .donate-card h2 {
-            font-family: 'Luckiest Guy', cursive;
-            color: var(--pink);
-            font-size: 2.2rem;
-            margin-top: 0;
-            margin-bottom: 15px;
-        }
-
-        .donate-card p {
-            font-size: 1.05rem;
-            line-height: 1.5;
-            color: var(--dark-blue);
-            margin-bottom: 20px;
-        }
-    </style>
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
+    <!-- Background -->
     <div class="bg-container"></div>
 
+
+    <!-- =========================================================
+         WELCOME SCREEN
+         ========================================================= -->
+
     <div id="welcome-overlay">
+
         <div class="welcome-card">
-            <div class="welcome-msg">Welcome to my website!</div>
-            <p style="font-weight: bold; color: var(--pink);">Enjoy FREE learning materials for your classroom!</p>
-            <button class="enter-btn" onclick="enterSite()">START LEARNING ➔</button>
+
+            <div class="welcome-msg">
+                Welcome to my website!
+            </div>
+
+            <p class="welcome-subtitle">
+                Enjoy FREE learning materials for your classroom!
+            </p>
+
+            <button class="enter-btn"
+                    onclick="enterSite()">
+
+                START LEARNING ➔
+
+            </button>
+
         </div>
+
     </div>
+
+
+    <!-- =========================================================
+         HUB REMINDERS & INFO
+         ========================================================= -->
 
     <div id="reminder-overlay">
+
         <div class="reminder-card">
-            <div class="close-x" onclick="toggleReminder(false)"><i class="fas fa-times"></i></div>
-            <h2>Hub Reminders & Info</h2>
-            
+
+            <div class="close-x"
+                 onclick="toggleReminder(false)">
+
+                <i class="fas fa-times"></i>
+
+            </div>
+
+
+            <h2>
+                Hub Reminders & Info
+            </h2>
+
+
             <div class="reminder-section">
-                <h3>🎮 How to Utilize the Games</h3>
+
+                <h3>
+                    🎮 How to Utilize the Games
+                </h3>
+
                 <ol>
-                    <li>Each interactive game uses a custom <strong>.json</strong> file to store its structure, data, and your specific progress.</li>
-                    <li>If you want to use your game data on <strong>another device</strong>, make sure to first click <strong>Export Data</strong> inside the game dashboard and save that generated <strong>.json</strong> file.</li>
-                    <li>Then, simply open this website layout on your target new device, run the game, and <strong>load the .json file</strong> right back into it to resume!</li>
+
+                    <li>
+                        Each interactive game uses a custom
+                        <strong>.json</strong> file to store its structure,
+                        data, and your specific progress.
+                    </li>
+
+                    <li>
+                        If you want to use your game data on
+                        <strong>another device</strong>, make sure to first
+                        click <strong>Export Data</strong> inside the game
+                        dashboard and save that generated
+                        <strong>.json</strong> file.
+                    </li>
+
+                    <li>
+                        Then, simply open this website layout on your target
+                        new device, run the game, and
+                        <strong>load the .json file</strong> right back into
+                        it to resume!
+                    </li>
+
                 </ol>
+
             </div>
+
 
             <div class="reminder-section">
-                <h3>✉️ Contact Me</h3>
-                <p>Have questions, running into technical issues, or want to share feedback? Feel free to reach out directly via my personal email at: <a href="mailto:khenetsherwin97@gmail.com" style="color: var(--blue); font-weight: bold; text-decoration: underline;">khenetsherwin97@gmail.com</a></p>
+
+                <h3>
+                    ✉️ Contact Me
+                </h3>
+
+                <p>
+
+                    Have questions, technical issues, or feedback?
+                    Feel free to reach out directly at:
+
+                    <a href="mailto:khenetsherwin97@gmail.com"
+                       class="reminder-email">
+
+                        khenetsherwin97@gmail.com
+
+                    </a>
+
+                </p>
+
             </div>
 
-            <div class="reminder-section" style="border-top: 3px dashed var(--purple); padding-top: 15px; margin-bottom: 0;">
-                <h3>💖 Support My Efforts</h3>
-                <p>Creating and hosting these free educational classroom tools requires time and continuous development effort. If you enjoy using these resources and would love to support Teacher Khen's Learning Hub, you can scan either QR code below to donate directly. Every little bit helps keep these tools free for teachers and students everywhere!</p>
-                
+
+            <div class="reminder-section support-section">
+
+                <h3>
+                    💖 Support My Efforts
+                </h3>
+
+                <p>
+
+                    Creating and hosting these free educational classroom
+                    tools requires time and continuous development effort.
+                    If you enjoy using these resources and would love to
+                    support Teacher Khen's Learning Hub, you can scan either
+                    QR code below to donate directly.
+
+                    Every little bit helps keep these tools free for teachers
+                    and students everywhere!
+
+                </p>
+
+
                 <div class="qr-container">
+
                     <div class="qr-box">
-                        <img src="GCASH.png" alt="GCash QR Code">
-                        <div class="qr-label">GCash</div>
+
+                        <img src="GCASH.png"
+                             alt="GCash QR Code">
+
+                        <div class="qr-label">
+                            GCash
+                        </div>
+
                     </div>
+
+
                     <div class="qr-box">
-                        <img src="Paypal.png" alt="PayPal QR Code">
-                        <div class="qr-label">PayPal</div>
+
+                        <img src="Paypal.png"
+                             alt="PayPal QR Code">
+
+                        <div class="qr-label">
+                            PayPal
+                        </div>
+
                     </div>
+
                 </div>
+
             </div>
 
-            <button class="back-btn" onclick="toggleReminder(false)">Back to Learning Hub</button>
+
+            <button class="back-btn"
+                    onclick="toggleReminder(false)">
+
+                Back to Learning Hub
+
+            </button>
+
         </div>
+
     </div>
+
+
+    <!-- =========================================================
+         DONATION MODAL
+         ========================================================= -->
 
     <div id="donate-modal">
+
         <div class="donate-card">
-            <div class="close-x" onclick="toggleDonateModal(false)"><i class="fas fa-times"></i></div>
-            <h2>Support Teacher Khen 💖</h2>
-            <p>If you find these resources helpful for your lessons, any small contribution helps me keep this hub running and continuously updated with new free materials for your classroom!</p>
-            
-            <div class="qr-container">
-                <div class="qr-box">
-                    <img src="GCASH.png" alt="GCash QR Code">
-                    <div class="qr-label">GCash</div>
-                </div>
-                <div class="qr-box">
-                    <img src="Paypal.png" alt="PayPal QR Code">
-                    <div class="qr-label">PayPal</div>
-                </div>
+
+            <div class="close-x"
+                 onclick="toggleDonateModal(false)">
+
+                <i class="fas fa-times"></i>
+
             </div>
 
-            <button class="back-btn" onclick="toggleDonateModal(false)">Close</button>
+
+            <h2>
+                Support Teacher Khen 💖
+            </h2>
+
+
+            <p>
+
+                If you find these resources helpful for your lessons,
+                any small contribution helps me keep this hub running
+                and continuously updated with new free materials for
+                your classroom!
+
+            </p>
+
+
+            <div class="qr-container">
+
+                <div class="qr-box">
+
+                    <img src="GCASH.png"
+                         alt="GCash QR Code">
+
+                    <div class="qr-label">
+                        GCash
+                    </div>
+
+                </div>
+
+
+                <div class="qr-box">
+
+                    <img src="Paypal.png"
+                         alt="PayPal QR Code">
+
+                    <div class="qr-label">
+                        PayPal
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button class="back-btn"
+                    onclick="toggleDonateModal(false)">
+
+                Close
+
+            </button>
+
         </div>
+
     </div>
 
-    <div class="main-content">
-        <div class="header-container">
-            <div class="website-name" id="main-title"></div>
-            
-            <div class="search-contact-wrapper">
-                <div class="contact-btn help" onclick="toggleReminder(true)" title="Reminders & Info"><i class="fas fa-question"></i></div>
 
-                <a href="https://www.facebook.com/khenethsherwin.avila.9" target="_blank" class="contact-btn fb" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://www.instagram.com/kheneth_02/" target="_blank" class="contact-btn ig" title="Instagram"><i class="fab fa-instagram"></i></a>
-                
-                <input type="text" id="gameSearch" placeholder="🔍 Type game name here..." onkeyup="filterGames()">
-                
-                <a href="https://www.youtube.com/@khenethavila" target="_blank" class="contact-btn yt" title="YouTube"><i class="fab fa-youtube"></i></a>
-                <a href="https://teacherkhenlearninghub.blogspot.com/" target="_blank" class="contact-btn blogger" title="Blogger"><i class="fab fa-blogger-b"></i></a>
-                <a href="https://www.tiktok.com/@khenethavila" target="_blank" class="contact-btn tiktok" title="TikTok"><i class="fab fa-tiktok"></i></a>
+    <!-- =========================================================
+         MAIN CONTENT
+         ========================================================= -->
+
+    <main class="main-content">
+
+
+        <!-- =====================================================
+             HEADER
+             ===================================================== -->
+
+        <header class="header-container">
+
+            <div class="website-name"
+                 id="main-title">
             </div>
+
+
+            <div class="search-contact-wrapper">
+
+
+                <!-- Help -->
+                <button class="contact-btn help"
+                        onclick="toggleReminder(true)"
+                        title="Reminders & Info"
+                        aria-label="Reminders and Information">
+
+                    <i class="fas fa-question"></i>
+
+                </button>
+
+
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/khenethsherwin.avila.9"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="contact-btn fb"
+                   title="Facebook">
+
+                    <i class="fab fa-facebook-f"></i>
+
+                </a>
+
+
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/kheneth_02/"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="contact-btn ig"
+                   title="Instagram">
+
+                    <i class="fab fa-instagram"></i>
+
+                </a>
+
+
+                <!-- Search -->
+                <input type="text"
+                       id="gameSearch"
+                       placeholder="🔍 Type game name here..."
+                       oninput="filterGames()"
+                       aria-label="Search games">
+
+
+                <!-- YouTube -->
+                <a href="https://www.youtube.com/@khenethavila"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="contact-btn yt"
+                   title="YouTube">
+
+                    <i class="fab fa-youtube"></i>
+
+                </a>
+
+
+                <!-- Blogger -->
+                <a href="https://teacherkhenlearninghub.blogspot.com/"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="contact-btn blogger"
+                   title="Blogger">
+
+                    <i class="fab fa-blogger-b"></i>
+
+                </a>
+
+
+                <!-- TikTok -->
+                <a href="https://www.tiktok.com/@khenethavila"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="contact-btn tiktok"
+                   title="TikTok">
+
+                    <i class="fab fa-tiktok"></i>
+
+                </a>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================================
+             GAME GRID
+             ===================================================== -->
+
+        <div class="game-grid"
+             id="gameGrid">
+
+            <!--
+                GAME CARDS ARE GENERATED AUTOMATICALLY
+                FROM games.js
+            -->
+
         </div>
 
-        <div class="game-grid" id="gameGrid">
-            <a href="https://class-cafe-khen.base44.app" class="game-card" data-name="classroom cafe food restaurant drink ordering lesson">
-                <div class="game-img-container"><img src="cafe.gif" alt="Classroom Cafe"></div> 
-                <div class="game-title">Classroom Cafe</div>
-            </a>
 
-            <a href="https://teacherkhen.github.io/giveorkeepreviewgame/" class="game-card" data-name="give or keep review game mystery box points">
-                <div class="game-img-container"><img src="titlepage.gif" alt="Give or Keep Review Game"></div> 
-                <div class="game-title">Give or Keep Review Game</div>
-            </a>
+        <!-- =====================================================
+             NO SEARCH RESULTS MESSAGE
+             ===================================================== -->
 
-            <a href="https://teacherkhen.github.io/connect-the-dots-spelling-sentencethesentence/" class="game-card" data-name="spelling jungle connect dots sentence">
-                <div class="game-img-container"><img src="Intro picture.gif" alt="Spelling Jungle"></div> 
-                <div class="game-title">Spelling Jungle</div>
-            </a>
+        <div id="noResults"
+             class="no-results">
 
-            <a href="https://teacherkhen.github.io/fishing/" class="game-card" data-name="fishing catch it">
-                <div class="game-img-container"><img src="catch it.gif" alt="Fishing"></div> 
-                <div class="game-title">The Great Fishing Challenge</div>
-            </a>
-            
-            <a href="https://teacherkhen.github.io/spelling/" class="game-card" data-name="spelling warriors">
-                <div class="game-img-container"><img src="spelling.gif" alt="Spelling"></div> 
-                <div class="game-title">Spelling Warriors</div>
-            </a>
+            🔎 No games found. Try another search!
 
-            <a href="https://teacherkhen.github.io/pacman/" class="game-card" data-name="pacman vocabulary quest">
-                <div class="game-img-container"><img src="pacman.gif" alt="Pacman"></div> 
-                <div class="game-title">Pacman Vocabulary Quest</div>
-            </a>
-
-            <a href="https://teacherkhen.github.io/whiteboard/" class="game-card" data-name="whiteboard single double draw">
-                <div class="game-img-container"><img src="whiteboard.jpg" alt="Whiteboard"></div> 
-                <div class="game-title">Interactive Whiteboard [S & D]</div>
-            </a>
-
-            <a href="https://teacherkhen.github.io/whiteboard-quiz/" class="game-card" data-name="whiteboard quiz master">
-                <div class="game-img-container"><img src="whiteboard+quiz.jpg" alt="Whiteboard Quiz"></div> 
-                <div class="game-title">Whiteboard & Quiz Master</div>
-            </a>
-
-            <a href="https://teacherkhen.github.io/phonics-reading-board/" class="game-card" data-name="phonics reading sounds">
-                <div class="game-img-container"><img src="phonics reading.jpg" alt="Phonics"></div> 
-                <div class="game-title">Phonics Reading Lab</div>
-            </a>
-
-            <a href="https://teacherkhen.github.io/clothinglesson/" class="game-card" data-name="fashion mall clothing shopping">
-                <div class="game-img-container"><img src="clothing.png" alt="Clothing"></div> 
-                <div class="game-title">Fashion Mall: Clothing Lesson</div>
-            </a>
-
-            <a href="https://teacherkhen.github.io/past-time/" class="game-card" data-name="time traveler past expressions calendar">
-                <div class="game-img-container"><img src="calendar.gif" alt="Past Time"></div> 
-                <div class="game-title">Time Traveler: Past Expressions</div>
-            </a>
-
-            <a href="https://teacherkhen.github.io/monster-card-flip-game/" class="game-card" data-name="monster flip card game match">
-                <div class="game-img-container"><img src="monster flip game.png" alt="Monster Flip"></div> 
-                <div class="game-title">Monster Card Flip Game</div>
-            </a>
-
-            <a href="https://teacherkhen.github.io/phonicsreading/" class="game-card" data-name="reading roll quest phonics game book children">
-                <div class="game-img-container"><img src="reading.png" alt="Reading Roll Quest"></div> 
-                <div class="game-title">Reading Roll Quest [Phonics Game]</div>
-            </a>
-
-            <a href="https://teacherkhen.github.io/Phonicsrace1/" class="game-card" data-name="phonics race game learning ABC sounds">
-                <div class="game-img-container"><img src="Phonics Race.png" alt="Phonics Race"></div> 
-                <div class="game-title">Phonics Race</div>
-            </a>
-
-            <a href="https://teacherkhen.github.io/Clickit/" class="game-card" data-name="click it fast reaction quiz game">
-                <div class="game-img-container"><img src="clickit.png" alt="Click It!"></div> 
-                <div class="game-title">Click It!</div>
-            </a>
-
-            <!-- NEW GAME ADDED BELOW -->
-            <a href="https://teacherkhen.github.io/SpiderWebreading/" class="game-card" data-name="spider web reading phonics game learning words english">
-                <div class="game-img-container"><img src="background.gif" alt="Spider Web Reading"></div> 
-                <div class="game-title">Spider Web Reading</div>
-            </a>
         </div>
+
+
+        <!-- =====================================================
+             DONATE BUTTON
+             ===================================================== -->
 
         <div class="bottom-donate-container">
-            <button class="donate-btn" onclick="toggleDonateModal(true)"><i class="fas fa-heart"></i> Donate & Support</button>
+
+            <button class="donate-btn"
+                    onclick="toggleDonateModal(true)">
+
+                <i class="fas fa-heart"></i>
+
+                Donate & Support
+
+            </button>
+
         </div>
+
+    </main>
+
+
+    <!-- =========================================================
+         COMPACT FOOTER
+         ========================================================= -->
+
+    <footer class="site-footer">
+
+        <div class="footer-content">
+
+
+            <div class="footer-title">
+                Teacher Khen's Learning Hub
+            </div>
+
+
+            <div class="footer-links">
+
+
+                <button type="button"
+                        onclick="openFooterInfo('about-info')">
+
+                    👨‍🏫 About Teacher Khen
+
+                </button>
+
+
+                <button type="button"
+                        onclick="openFooterInfo('how-to-use-info')">
+
+                    🚀 How to Use
+
+                </button>
+
+
+                <button type="button"
+                        onclick="openFooterInfo('resources-info')">
+
+                    ✨ Resources
+
+                </button>
+
+
+                <button type="button"
+                        onclick="openFooterInfo('contact-info')">
+
+                    ✉️ Contact
+
+                </button>
+
+
+                <button type="button"
+                        onclick="openFooterInfo('teacher-info')">
+
+                    📚 Teacher Information
+
+                </button>
+
+
+            </div>
+
+
+            <div class="footer-social">
+
+
+                <a href="https://www.facebook.com/khenethsherwin.avila.9"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   title="Facebook">
+
+                    <i class="fab fa-facebook-f"></i>
+
+                </a>
+
+
+                <a href="https://www.instagram.com/kheneth_02/"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   title="Instagram">
+
+                    <i class="fab fa-instagram"></i>
+
+                </a>
+
+
+                <a href="https://www.youtube.com/@khenethavila"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   title="YouTube">
+
+                    <i class="fab fa-youtube"></i>
+
+                </a>
+
+
+                <a href="https://www.tiktok.com/@khenethavila"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   title="TikTok">
+
+                    <i class="fab fa-tiktok"></i>
+
+                </a>
+
+
+            </div>
+
+
+            <div class="footer-divider"></div>
+
+
+            <div class="footer-bottom">
+
+                <strong>
+                    © 2026 Teacher Khen's Learning Hub
+                </strong>
+
+                <br>
+
+                All rights reserved.
+
+                <br>
+
+                <span>
+                    Made with ❤️ for teachers and learners.
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================================================
+         ABOUT FOOTER POPUP
+         ========================================================= -->
+
+    <div id="about-info"
+         class="footer-info-overlay"
+         onclick="closeFooterInfo(event)">
+
+        <div class="footer-info-card">
+
+
+            <button class="footer-info-close"
+                    onclick="closeFooterInfo()"
+                    aria-label="Close">
+
+                ×
+
+            </button>
+
+
+            <h2>
+                👨‍🏫 About Teacher Khen
+            </h2>
+
+
+            <div class="about-highlight">
+
+                Teaching English • Designing Lessons • Creating Learning Experiences
+
+            </div>
+
+
+            <p>
+
+                Hello! I'm <strong>Teacher Khen</strong>, an English teacher
+                fond of designing creative lessons and finding new ways to make
+                learning more interactive, meaningful, and enjoyable.
+
+            </p>
+
+
+            <p>
+
+                Over the years, teaching has become more than simply presenting
+                lessons. I enjoy turning ideas into classroom activities, games,
+                visual materials, and interactive experiences that encourage
+                students to participate, communicate, and learn by doing.
+
+            </p>
+
+
+            <p>
+
+                This Learning Hub grew from that passion. Many of the resources
+                found here are created to make everyday English lessons a little
+                more exciting — whether you're reviewing vocabulary, practicing
+                phonics, building sentences, or simply looking for a fun way to
+                get your students involved.
+
+            </p>
+
+
+            <div class="teacher-badges">
+
+
+                <div class="teacher-badge">
+                    🎨 Creative Lessons
+                </div>
+
+
+                <div class="teacher-badge">
+                    🎮 Interactive Learning
+                </div>
+
+
+                <div class="teacher-badge">
+                    📚 English Education
+                </div>
+
+
+                <div class="teacher-badge">
+                    💡 Classroom Innovation
+                </div>
+
+
+            </div>
+
+        </div>
+
     </div>
 
-    <audio id="welcome-sound" src="winner sound effect.mp3"></audio> 
-    
-    <script>
-        const colors = ['#29abe2', '#f06eaa', '#009245', '#fbb03b', '#b481f1'];
-        const titleText = "Teacher Khen's Learning Hub";
-        
-        function generateTitle() {
-            const titleContainer = document.getElementById('main-title');
-            let colorIndex = 0;
-            titleText.split(' ').forEach((word, wIdx) => {
-                const wordSpan = document.createElement('span');
-                wordSpan.style.whiteSpace = "nowrap";
-                [...word].forEach(char => {
-                    const span = document.createElement('span');
-                    span.className = 'letter';
-                    span.textContent = char;
-                    span.style.color = colors[colorIndex % colors.length];
-                    wordSpan.appendChild(span);
-                    colorIndex++;
-                });
-                titleContainer.appendChild(wordSpan);
-                if (wIdx < titleText.split(' ').length - 1) {
-                    const space = document.createElement('span');
-                    space.innerHTML = "&nbsp;";
-                    titleContainer.appendChild(space);
-                }
-            });
-        }
 
-        function enterSite() {
-            document.getElementById('welcome-sound').play().catch(() => {});
-            document.getElementById('welcome-overlay').style.transform = "translateY(-100%)";
-        }
+    <!-- =========================================================
+         HOW TO USE FOOTER POPUP
+         ========================================================= -->
 
-        // Toggle Fullscreen Reminder Modal Visibility
-        function toggleReminder(show) {
-            const overlay = document.getElementById('reminder-overlay');
-            if (show) {
-                overlay.classList.add('active');
-            } else {
-                overlay.classList.remove('active');
-            }
-        }
+    <div id="how-to-use-info"
+         class="footer-info-overlay"
+         onclick="closeFooterInfo(event)">
 
-        // Toggle Donate Modal Visibility
-        function toggleDonateModal(show) {
-            const overlay = document.getElementById('donate-modal');
-            if (show) {
-                overlay.classList.add('active');
-            } else {
-                overlay.classList.remove('active');
-            }
-        }
+        <div class="footer-info-card">
 
-        function filterGames() {
-            const input = document.getElementById('gameSearch').value.toLowerCase().trim();
-            const cards = document.getElementsByClassName('game-card');
-            
-            for (let i = 0; i < cards.length; i++) {
-                const keywords = cards[i].getAttribute('data-name').toLowerCase();
-                const actualTitle = cards[i].querySelector('.game-title').innerText.toLowerCase();
-                
-                if (keywords.includes(input) || actualTitle.includes(input)) {
-                    cards[i].classList.remove('hidden');
-                } else {
-                    cards[i].classList.add('hidden');
-                }
-            }
-        }
 
-        window.onload = generateTitle;
-    </script>
+            <button class="footer-info-close"
+                    onclick="closeFooterInfo()"
+                    aria-label="Close">
+
+                ×
+
+            </button>
+
+
+            <h2>
+                🚀 How to Use
+            </h2>
+
+
+            <p>
+
+                Everything is designed to be simple. Choose a resource,
+                open it, and bring it into your classroom!
+
+            </p>
+
+
+            <div class="steps-container">
+
+
+                <div class="step-card">
+
+                    <div class="step-number">
+                        1
+                    </div>
+
+                    <h3>
+                        Choose
+                    </h3>
+
+                    <p>
+                        Browse the game collection and find a resource
+                        that fits your lesson.
+                    </p>
+
+                </div>
+
+
+                <div class="step-card">
+
+                    <div class="step-number">
+                        2
+                    </div>
+
+                    <h3>
+                        Open
+                    </h3>
+
+                    <p>
+                        Click the game card to open the interactive
+                        learning activity.
+                    </p>
+
+                </div>
+
+
+                <div class="step-card">
+
+                    <div class="step-number">
+                        3
+                    </div>
+
+                    <h3>
+                        Customize
+                    </h3>
+
+                    <p>
+                        Add your own words, questions, or lesson content
+                        whenever the game supports customization.
+                    </p>
+
+                </div>
+
+
+                <div class="step-card">
+
+                    <div class="step-number">
+                        4
+                    </div>
+
+                    <h3>
+                        Teach!
+                    </h3>
+
+                    <p>
+                        Put the activity on your screen and let your
+                        students learn through play.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         RESOURCES FOOTER POPUP
+         ========================================================= -->
+
+    <div id="resources-info"
+         class="footer-info-overlay"
+         onclick="closeFooterInfo(event)">
+
+        <div class="footer-info-card">
+
+
+            <button class="footer-info-close"
+                    onclick="closeFooterInfo()"
+                    aria-label="Close">
+
+                ×
+
+            </button>
+
+
+            <h2>
+                ✨ Resources
+            </h2>
+
+
+            <p>
+
+                The Learning Hub is built around practical classroom use,
+                creativity, and student participation.
+
+            </p>
+
+
+            <div class="value-grid">
+
+
+                <div class="value-card">
+
+                    <i class="fas fa-gamepad"></i>
+
+                    <h3>
+                        Interactive Games
+                    </h3>
+
+                    <p>
+                        Classroom-friendly games that turn practice
+                        into an engaging learning experience.
+                    </p>
+
+                </div>
+
+
+                <div class="value-card">
+
+                    <i class="fas fa-book-open"></i>
+
+                    <h3>
+                        English Practice
+                    </h3>
+
+                    <p>
+                        Activities covering areas such as phonics,
+                        vocabulary, spelling, reading, and language practice.
+                    </p>
+
+                </div>
+
+
+                <div class="value-card">
+
+                    <i class="fas fa-lightbulb"></i>
+
+                    <h3>
+                        Creative Ideas
+                    </h3>
+
+                    <p>
+                        Resources inspired by real classroom experiences
+                        and the continuous search for better ways to teach.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         CONTACT FOOTER POPUP
+         ========================================================= -->
+
+    <div id="contact-info"
+         class="footer-info-overlay"
+         onclick="closeFooterInfo(event)">
+
+        <div class="footer-info-card">
+
+
+            <button class="footer-info-close"
+                    onclick="closeFooterInfo()"
+                    aria-label="Close">
+
+                ×
+
+            </button>
+
+
+            <h2>
+                ✉️ Contact Teacher Khen
+            </h2>
+
+
+            <p>
+
+                Have a question, suggestion, technical concern, or an idea
+                for a future classroom resource? I'd love to hear from you.
+
+            </p>
+
+
+            <div class="contact-box">
+
+                <p class="contact-intro">
+                    You can reach me directly at:
+                </p>
+
+
+                <a class="contact-email"
+                   href="mailto:khenetsherwin97@gmail.com">
+
+                    <i class="fas fa-envelope"></i>
+
+                    khenetsherwin97@gmail.com
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         TEACHER INFORMATION FOOTER POPUP
+         ========================================================= -->
+
+    <div id="teacher-info"
+         class="footer-info-overlay"
+         onclick="closeFooterInfo(event)">
+
+        <div class="footer-info-card">
+
+
+            <button class="footer-info-close"
+                    onclick="closeFooterInfo()"
+                    aria-label="Close">
+
+                ×
+
+            </button>
+
+
+            <h2>
+                📚 Teacher Information
+            </h2>
+
+
+            <h3>
+                For Teachers
+            </h3>
+
+            <p>
+
+                These resources are created to support teachers and make
+                classroom preparation more creative and engaging.
+
+            </p>
+
+
+            <h3>
+                👩‍🏫 Adapt the Activities
+            </h3>
+
+            <p>
+
+                Teachers are encouraged to adapt activities to suit their
+                students' age, English level, classroom environment, and
+                learning objectives.
+
+            </p>
+
+
+            <h3>
+                🎯 Preview Before Use
+            </h3>
+
+            <p>
+
+                Always preview a resource before using it with your class
+                and make any adjustments necessary for your learners.
+
+            </p>
+
+
+            <h3>
+                💡 The Goal
+            </h3>
+
+            <p>
+
+                The goal of Teacher Khen's Learning Hub is simple:
+
+                <strong>
+                    make teaching more creative and learning more fun.
+                </strong>
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         AUDIO
+         ========================================================= -->
+
+    <audio id="welcome-sound"
+           src="winner sound effect.mp3">
+    </audio>
+
+
+    <!-- =========================================================
+         JAVASCRIPT FILES
+         ========================================================= -->
+
+    <script src="games.js"></script>
+    <script src="script.js"></script>
+
 </body>
 </html>
