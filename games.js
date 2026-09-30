@@ -371,7 +371,7 @@ const games = [
             "background.gif",
 
         url:
-            "https://teacherkhen.github.io/SpiderWebreading/",
+            "https://spiderwebreading.teacherkhen.com",
 
         category:
             "Phonics",
