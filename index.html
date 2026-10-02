@@ -22,8 +22,8 @@
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="style.css">
 
-<!-- Supabase -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
@@ -270,152 +270,312 @@
 
     </div>
 
-<!-- =========================================================
-     SUPABASE AUTHENTICATION MODAL
-     ========================================================= -->
 
-<div
-    id="auth-modal"
-    class="auth-modal">
+    <!-- =========================================================
+         SUPABASE AUTHENTICATION MODAL
+         ========================================================= -->
 
-    <div class="auth-card">
+    <div
+        id="auth-modal"
+        class="auth-modal">
 
-        <button
-            class="auth-close"
-            onclick="closeAuthModal()"
-            aria-label="Close">
-
-            ×
-
-        </button>
-
-
-        <div class="auth-icon">
-
-            <i class="fas fa-user-circle"></i>
-
-        </div>
-
-
-        <h2 id="authTitle">
-            Welcome Back!
-        </h2>
-
-
-        <p
-            id="authSubtitle"
-            class="auth-subtitle">
-
-            Log in to access your Teacher Khen account.
-
-        </p>
-
-
-        <!-- LOGIN FORM -->
-
-        <div id="loginForm">
-
-            <input
-                type="email"
-                id="loginEmail"
-                class="auth-input"
-                placeholder="Email address"
-                autocomplete="email">
-
-
-            <input
-                type="password"
-                id="loginPassword"
-                class="auth-input"
-                placeholder="Password"
-                autocomplete="current-password">
-
+        <div class="auth-card">
 
             <button
-                class="auth-submit-btn"
-                onclick="loginUser()">
+                class="auth-close"
+                onclick="closeAuthModal()"
+                aria-label="Close">
 
-                <i class="fas fa-right-to-bracket"></i>
-                Login
+                ×
 
             </button>
 
 
-            <button
-                class="auth-switch-btn"
-                onclick="showSignupForm()">
+            <div class="auth-icon">
 
-                Don't have an account?
-                <strong>Sign Up</strong>
+                <i class="fas fa-user-circle"></i>
 
-            </button>
-
-        </div>
+            </div>
 
 
-        <!-- SIGNUP FORM -->
-
-        <div
-            id="signupForm"
-            style="display: none;">
-
-            <input
-                type="email"
-                id="signupEmail"
-                class="auth-input"
-                placeholder="Email address"
-                autocomplete="email">
+            <h2 id="authTitle">
+                Welcome Back!
+            </h2>
 
 
-            <input
-                type="password"
-                id="signupPassword"
-                class="auth-input"
-                placeholder="Create a password"
-                autocomplete="new-password">
+            <p
+                id="authSubtitle"
+                class="auth-subtitle">
+
+                Log in to access your Teacher Khen account.
+
+            </p>
 
 
-            <input
-                type="password"
-                id="signupPasswordConfirm"
-                class="auth-input"
-                placeholder="Confirm password"
-                autocomplete="new-password">
+            <!-- LOGIN FORM -->
+
+            <div id="loginForm">
+
+                <input
+                    type="email"
+                    id="loginEmail"
+                    class="auth-input"
+                    placeholder="Email address"
+                    autocomplete="email">
 
 
-            <button
-                class="auth-submit-btn"
-                onclick="signupUser()">
-
-                <i class="fas fa-user-plus"></i>
-                Create Account
-
-            </button>
+                <input
+                    type="password"
+                    id="loginPassword"
+                    class="auth-input"
+                    placeholder="Password"
+                    autocomplete="current-password">
 
 
-            <button
-                class="auth-switch-btn"
-                onclick="showLoginForm()">
+                <button
+                    class="auth-submit-btn"
+                    onclick="loginUser()">
 
-                Already have an account?
-                <strong>Login</strong>
+                    <i class="fas fa-right-to-bracket"></i>
+                    Login
 
-            </button>
-
-        </div>
+                </button>
 
 
-        <!-- AUTH MESSAGE -->
+                <button
+                    class="auth-switch-btn"
+                    onclick="showSignupForm()">
 
-        <div
-            id="authMessage"
-            class="auth-message">
+                    Don't have an account?
+                    <strong>Sign Up</strong>
+
+                </button>
+
+            </div>
+
+
+            <!-- SIGNUP FORM -->
+
+            <div
+                id="signupForm"
+                style="display: none;">
+
+                <input
+                    type="email"
+                    id="signupEmail"
+                    class="auth-input"
+                    placeholder="Email address"
+                    autocomplete="email">
+
+
+                <input
+                    type="password"
+                    id="signupPassword"
+                    class="auth-input"
+                    placeholder="Create a password"
+                    autocomplete="new-password">
+
+
+                <input
+                    type="password"
+                    id="signupPasswordConfirm"
+                    class="auth-input"
+                    placeholder="Confirm password"
+                    autocomplete="new-password">
+
+
+                <button
+                    class="auth-submit-btn"
+                    onclick="signupUser()">
+
+                    <i class="fas fa-user-plus"></i>
+                    Create Account
+
+                </button>
+
+
+                <button
+                    class="auth-switch-btn"
+                    onclick="showLoginForm()">
+
+                    Already have an account?
+                    <strong>Login</strong>
+
+                </button>
+
+            </div>
+
+
+            <!-- AUTH MESSAGE -->
+
+            <div
+                id="authMessage"
+                class="auth-message">
+
+            </div>
 
         </div>
 
     </div>
 
-</div>
+
+    <!-- =========================================================
+         PREMIUM UPGRADE MODAL
+         ========================================================= -->
+
+    <div
+        id="premium-modal"
+        class="premium-modal">
+
+        <div class="premium-card">
+
+            <!-- Close -->
+
+            <button
+                class="premium-close"
+                onclick="closePremiumModal()"
+                aria-label="Close">
+
+                ×
+
+            </button>
+
+
+            <!-- Premium Icon -->
+
+            <div class="premium-icon">
+
+                ⭐
+
+            </div>
+
+
+            <!-- Title -->
+
+            <h2>
+                Unlock Premium Games!
+            </h2>
+
+
+            <p class="premium-subtitle">
+
+                This game is available to Premium members.
+
+                Unlock more interactive classroom games
+                and resources for your lessons.
+
+            </p>
+
+
+            <!-- Benefits -->
+
+            <div class="premium-benefits">
+
+                <div class="premium-benefit">
+
+                    <span class="premium-benefit-icon">
+                        🎮
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Premium Games
+                        </strong>
+
+                        <p>
+                            Access exclusive interactive
+                            classroom games.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="premium-benefit">
+
+                    <span class="premium-benefit-icon">
+                        ⭐
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            New Resources
+                        </strong>
+
+                        <p>
+                            Get access to future Premium
+                            games and activities.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="premium-benefit">
+
+                    <span class="premium-benefit-icon">
+                        👨‍🏫
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Teacher-Friendly
+                        </strong>
+
+                        <p>
+                            Designed for practical classroom
+                            teaching and student engagement.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Upgrade Button -->
+
+            <button
+                class="premium-upgrade-btn"
+                onclick="openUpgradePage()">
+
+                ⭐ UPGRADE TO PREMIUM
+
+            </button>
+
+
+            <!-- Temporary Payment Message -->
+
+            <div
+                class="premium-coming-soon">
+
+                <i class="fas fa-credit-card"></i>
+
+                Payment options coming soon.
+
+            </div>
+
+
+            <!-- Continue -->
+
+            <button
+                class="premium-continue-btn"
+                onclick="closePremiumModal()">
+
+                Continue Browsing Free Games
+
+            </button>
+
+        </div>
+
+    </div>
+
 
     <!-- =========================================================
          MAIN CONTENT
@@ -517,44 +677,46 @@
                 </a>
 
             </div>
-<!-- =====================================================
-     ACCOUNT / LOGIN
-     ===================================================== -->
-
-<div class="account-area">
-
-    <button
-        id="loginBtn"
-        class="account-btn"
-        onclick="openAuthModal()">
-
-        <i class="fas fa-user"></i>
-        Login
-
-    </button>
 
 
-    <div
-        id="userAccount"
-        class="user-account"
-        style="display: none;">
+            <!-- =====================================================
+                 ACCOUNT / LOGIN
+                 ===================================================== -->
 
-        <span id="userEmail">
-            User
-        </span>
+            <div class="account-area">
 
-        <button
-            class="logout-btn"
-            onclick="logoutUser()">
+                <button
+                    id="loginBtn"
+                    class="account-btn"
+                    onclick="openAuthModal()">
 
-            <i class="fas fa-right-from-bracket"></i>
-            Logout
+                    <i class="fas fa-user"></i>
+                    Login
 
-        </button>
+                </button>
 
-    </div>
 
-</div>
+                <div
+                    id="userAccount"
+                    class="user-account"
+                    style="display: none;">
+
+                    <span id="userEmail">
+                        User
+                    </span>
+
+                    <button
+                        class="logout-btn"
+                        onclick="logoutUser()">
+
+                        <i class="fas fa-right-from-bracket"></i>
+                        Logout
+
+                    </button>
+
+                </div>
+
+            </div>
 
         </header>
 
