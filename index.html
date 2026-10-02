@@ -42,8 +42,9 @@
          MAIN STYLESHEET
          ========================================================= -->
 
-    <link rel="stylesheet"
-          href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css">
 
 
     <!-- =========================================================
@@ -496,7 +497,7 @@
         <div class="premium-card">
 
 
-            <!-- Close -->
+            <!-- CLOSE -->
 
             <button
                 class="premium-close"
@@ -508,14 +509,14 @@
             </button>
 
 
-            <!-- Premium Icon -->
+            <!-- PREMIUM ICON -->
 
             <div class="premium-icon">
                 ⭐
             </div>
 
 
-            <!-- Title -->
+            <!-- TITLE -->
 
             <h2>
                 Unlock Premium Games!
@@ -618,10 +619,17 @@
                     Choose Your Premium Plan
                 </h3>
 
+                <p class="premium-plan-description">
+                    Choose the plan that works best for you.
+                </p>
+
+
                 <div class="premium-plan-options">
 
 
-                    <!-- MONTHLY -->
+                    <!-- =================================================
+                         MONTHLY PLAN
+                         ================================================= -->
 
                     <button
                         type="button"
@@ -642,7 +650,11 @@
                         </span>
 
                         <span class="premium-plan-period">
-                            / month
+                            per month
+                        </span>
+
+                        <span class="premium-plan-description">
+                            Flexible monthly access
                         </span>
 
                         <span class="premium-plan-select">
@@ -653,13 +665,19 @@
 
 
 
-                    <!-- YEARLY -->
+                    <!-- =================================================
+                         YEARLY PLAN
+                         ================================================= -->
 
                     <button
                         type="button"
                         class="premium-plan-option"
                         id="premium-plan-yearly"
                         onclick="selectPremiumPlan('yearly')">
+
+                        <span class="premium-plan-value-badge">
+                            BEST VALUE
+                        </span>
 
                         <span class="premium-plan-icon">
                             🏆
@@ -674,7 +692,11 @@
                         </span>
 
                         <span class="premium-plan-period">
-                            / year
+                            per year
+                        </span>
+
+                        <span class="premium-plan-description">
+                            Full-year Premium access
                         </span>
 
                         <span class="premium-plan-select">
@@ -783,7 +805,7 @@
             <div class="search-contact-wrapper">
 
 
-                <!-- Help -->
+                <!-- HELP -->
 
                 <button
                     class="contact-btn help"
@@ -796,7 +818,7 @@
                 </button>
 
 
-                <!-- Facebook -->
+                <!-- FACEBOOK -->
 
                 <a
                     href="https://www.facebook.com/khenethsherwin.avila.9"
@@ -810,7 +832,7 @@
                 </a>
 
 
-                <!-- Instagram -->
+                <!-- INSTAGRAM -->
 
                 <a
                     href="https://www.instagram.com/kheneth_02/"
@@ -824,7 +846,7 @@
                 </a>
 
 
-                <!-- Search -->
+                <!-- SEARCH -->
 
                 <input
                     type="text"
@@ -834,7 +856,7 @@
                     aria-label="Search games">
 
 
-                <!-- YouTube -->
+                <!-- YOUTUBE -->
 
                 <a
                     href="https://www.youtube.com/@khenethavila"
@@ -848,7 +870,7 @@
                 </a>
 
 
-                <!-- Blogger -->
+                <!-- BLOGGER -->
 
                 <a
                     href="https://teacherkhenlearninghub.blogspot.com/"
@@ -862,7 +884,7 @@
                 </a>
 
 
-                <!-- TikTok -->
+                <!-- TIKTOK -->
 
                 <a
                     href="https://www.tiktok.com/@khenethavila"
@@ -909,7 +931,7 @@
                     style="display: none;">
 
 
-                    <!-- User Identity -->
+                    <!-- USER IDENTITY -->
 
                     <div class="user-account-info">
 
@@ -947,7 +969,7 @@
 
 
 
-                    <!-- Account Actions -->
+                    <!-- ACCOUNT ACTIONS -->
 
                     <div class="user-account-actions">
 
@@ -989,11 +1011,6 @@
         <div
             class="game-grid"
             id="gameGrid">
-
-            <!--
-                GAME CARDS ARE GENERATED AUTOMATICALLY
-                FROM games.js
-            -->
 
         </div>
 
