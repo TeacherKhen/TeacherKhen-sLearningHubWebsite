@@ -607,41 +607,141 @@
             </div>
 
 
-            <!-- Upgrade Button -->
+            <!-- =====================================================
+     PREMIUM PLAN SELECTOR
+     ===================================================== -->
 
-            <button
-                class="premium-upgrade-btn"
-                onclick="openUpgradePage()">
+<div class="premium-plan-section">
 
-                ⭐ UPGRADE TO PREMIUM
+    <h3 class="premium-plan-heading">
+        Choose Your Premium Plan
+    </h3>
 
-            </button>
+    <div class="premium-plan-options">
+
+        <!-- MONTHLY -->
+
+        <button
+            type="button"
+            class="premium-plan-option selected"
+            id="premium-plan-monthly"
+            onclick="selectPremiumPlan('monthly')">
+
+            <span class="premium-plan-icon">
+                ⭐
+            </span>
+
+            <span class="premium-plan-name">
+                MONTHLY
+            </span>
+
+            <span class="premium-plan-price">
+                $4
+            </span>
+
+            <span class="premium-plan-period">
+                / month
+            </span>
+
+            <span class="premium-plan-select">
+                SELECTED
+            </span>
+
+        </button>
 
 
-            <!-- Temporary Payment Message -->
+        <!-- YEARLY -->
 
-            <div class="premium-coming-soon">
+        <button
+            type="button"
+            class="premium-plan-option"
+            id="premium-plan-yearly"
+            onclick="selectPremiumPlan('yearly')">
 
-                <i class="fas fa-credit-card"></i>
+            <span class="premium-plan-icon">
+                🏆
+            </span>
 
-                Payment options coming soon.
+            <span class="premium-plan-name">
+                YEARLY
+            </span>
 
-            </div>
+            <span class="premium-plan-price">
+                $20
+            </span>
 
+            <span class="premium-plan-period">
+                / year
+            </span>
 
-            <!-- Continue -->
+            <span class="premium-plan-select">
+                SELECT
+            </span>
 
-            <button
-                class="premium-continue-btn"
-                onclick="closePremiumModal()">
-
-                Continue Browsing Free Games
-
-            </button>
-
-        </div>
+        </button>
 
     </div>
+
+</div>
+
+
+<!-- =====================================================
+     SELECTED PLAN SUMMARY
+     ===================================================== -->
+
+<div
+    class="premium-selected-plan"
+    id="premium-selected-plan">
+
+    Selected plan:
+    <strong id="selected-premium-plan-label">
+        $4 / month
+    </strong>
+
+</div>
+
+
+<!-- =====================================================
+     CONTINUE TO PAYMENT
+     ===================================================== -->
+
+<button
+    type="button"
+    class="premium-upgrade-btn"
+    onclick="continueToPayment()">
+
+    Continue to Payment
+
+</button>
+
+
+<!-- =====================================================
+     PAYMENT STATUS
+     ===================================================== -->
+
+<div
+    class="premium-coming-soon"
+    id="premium-payment-message">
+
+    <i class="fas fa-credit-card"></i>
+
+    Payment integration will be connected soon.
+
+</div>
+
+
+<!-- =====================================================
+     CONTINUE BROWSING
+     ===================================================== -->
+
+<button
+    type="button"
+    class="premium-continue-btn"
+    onclick="closePremiumModal()">
+
+    Maybe Later
+
+</button>
 
 
 
