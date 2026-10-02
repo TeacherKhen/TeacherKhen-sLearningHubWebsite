@@ -172,7 +172,7 @@ const games = [
         category: "Review",
         grade: "Grades 1–6",
         keywords: "click it fast reaction quiz game review",
-        access: "free"
+        access: "premium"
     },
 
     {
