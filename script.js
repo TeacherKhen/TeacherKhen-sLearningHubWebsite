@@ -9,10 +9,10 @@
    ========================================================= */
 
 const SUPABASE_URL =
-    "https://unvrtytjplzpqarwgyzk.supabase.co";
+    "https://onigbrcsfcbuporhylxv.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_Gg2OzV3piK7i8SJUihZ9TQ_UspMmvd5";
+    "sb_publishable_MMXsHQKzKYn0mAA3MQOlWA_pEdCS-r3";
 
 
 const supabaseClient =
@@ -20,6 +20,14 @@ const supabaseClient =
         SUPABASE_URL,
         SUPABASE_PUBLISHABLE_KEY
     );
+
+
+/* =========================================================
+   CURRENT USER / MEMBERSHIP
+   ========================================================= */
+
+let currentUser = null;
+let currentMembership = null;
 
 
 /* =========================================================
@@ -395,26 +403,56 @@ function closeAuthModal() {
 
 function showLoginForm() {
 
-    document.getElementById(
-        'loginForm'
-    ).style.display = 'block';
+    const loginForm =
+        document.getElementById(
+            'loginForm'
+        );
 
 
-    document.getElementById(
-        'signupForm'
-    ).style.display = 'none';
+    const signupForm =
+        document.getElementById(
+            'signupForm'
+        );
 
 
-    document.getElementById(
-        'authTitle'
-    ).textContent =
-        'Welcome Back!';
+    if (loginForm) {
+        loginForm.style.display =
+            'block';
+    }
 
 
-    document.getElementById(
-        'authSubtitle'
-    ).textContent =
-        'Log in to your Teacher Khen account.';
+    if (signupForm) {
+        signupForm.style.display =
+            'none';
+    }
+
+
+    const title =
+        document.getElementById(
+            'authTitle'
+        );
+
+
+    const subtitle =
+        document.getElementById(
+            'authSubtitle'
+        );
+
+
+    if (title) {
+
+        title.textContent =
+            'Welcome Back!';
+
+    }
+
+
+    if (subtitle) {
+
+        subtitle.textContent =
+            'Log in to your Teacher Khen account.';
+
+    }
 
 
     clearAuthMessage();
@@ -424,26 +462,56 @@ function showLoginForm() {
 
 function showSignupForm() {
 
-    document.getElementById(
-        'loginForm'
-    ).style.display = 'none';
+    const loginForm =
+        document.getElementById(
+            'loginForm'
+        );
 
 
-    document.getElementById(
-        'signupForm'
-    ).style.display = 'block';
+    const signupForm =
+        document.getElementById(
+            'signupForm'
+        );
 
 
-    document.getElementById(
-        'authTitle'
-    ).textContent =
-        'Create Your Account';
+    if (loginForm) {
+        loginForm.style.display =
+            'none';
+    }
 
 
-    document.getElementById(
-        'authSubtitle'
-    ).textContent =
-        'Create an account for Teacher Khen\'s Learning Hub.';
+    if (signupForm) {
+        signupForm.style.display =
+            'block';
+    }
+
+
+    const title =
+        document.getElementById(
+            'authTitle'
+        );
+
+
+    const subtitle =
+        document.getElementById(
+            'authSubtitle'
+        );
+
+
+    if (title) {
+
+        title.textContent =
+            'Create Your Account';
+
+    }
+
+
+    if (subtitle) {
+
+        subtitle.textContent =
+            'Create an account for Teacher Khen\'s Learning Hub.';
+
+    }
 
 
     clearAuthMessage();
@@ -732,6 +800,15 @@ async function loginUser() {
     );
 
 
+    if (data.session && data.session.user) {
+
+        await loadMembership(
+            data.session.user
+        );
+
+    }
+
+
     setTimeout(
         function() {
 
@@ -767,6 +844,9 @@ async function logoutUser() {
 
     }
 
+
+    currentUser = null;
+    currentMembership = null;
 
     updateAuthUI(null);
 
@@ -804,6 +884,10 @@ function updateAuthUI(user) {
 
     if (user) {
 
+        currentUser =
+            user;
+
+
         loginBtn.style.display =
             'none';
 
@@ -821,6 +905,14 @@ function updateAuthUI(user) {
 
     } else {
 
+        currentUser =
+            null;
+
+
+        currentMembership =
+            null;
+
+
         loginBtn.style.display =
             'flex';
 
@@ -829,6 +921,67 @@ function updateAuthUI(user) {
             'none';
 
     }
+
+}
+
+
+/* =========================================================
+   LOAD MEMBERSHIP
+   ========================================================= */
+
+async function loadMembership(user) {
+
+    if (!user) {
+        return null;
+    }
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from(
+                'learning_hub_memberships'
+            )
+            .select(
+                'id, user_id, plan, status, expires_at, created_at'
+            )
+            .eq(
+                'user_id',
+                user.id
+            )
+            .maybeSingle();
+
+
+    if (error) {
+
+        console.error(
+            'Membership error:',
+            error
+        );
+
+
+        currentMembership =
+            null;
+
+
+        return null;
+
+    }
+
+
+    currentMembership =
+        data || null;
+
+
+    console.log(
+        'Current membership:',
+        currentMembership
+    );
+
+
+    return currentMembership;
 
 }
 
@@ -871,6 +1024,11 @@ async function checkAuthSession() {
             session.user
         );
 
+
+        await loadMembership(
+            session.user
+        );
+
     } else {
 
         updateAuthUI(
@@ -900,6 +1058,25 @@ supabaseClient.auth.onAuthStateChange(
                 ? session.user
                 : null
         );
+
+
+        if (
+            session &&
+            session.user
+        ) {
+
+            setTimeout(
+                function() {
+
+                    loadMembership(
+                        session.user
+                    );
+
+                },
+                0
+            );
+
+        }
 
     }
 );
