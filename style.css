@@ -748,10 +748,145 @@ body.modal-open {
 
 
 /* =========================================================
-   GAME GRID
+   MAIN GAME CONTAINER
    ========================================================= */
 
 .game-grid {
+
+    width: 100%;
+
+    max-width: 1300px;
+
+    padding:
+        20px;
+
+    box-sizing:
+        border-box;
+
+}
+
+
+/* =========================================================
+   FREE / PREMIUM GAME SECTIONS
+   ========================================================= */
+
+.game-section {
+
+    width: 100%;
+
+    max-width: 1300px;
+
+    margin-bottom:
+        65px;
+
+}
+
+
+/* =========================================================
+   SECTION HEADINGS
+   ========================================================= */
+
+.section-heading {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    margin:
+        10px auto 30px;
+
+    padding:
+        14px 25px;
+
+    width:
+        fit-content;
+
+    border-radius:
+        50px;
+
+    background:
+        white;
+
+    box-shadow:
+        0 7px 0
+        rgba(26,26,75,0.2);
+
+}
+
+
+.section-heading h2 {
+
+    margin:
+        0;
+
+    font-family:
+        'Luckiest Guy',
+        cursive;
+
+    font-size:
+        clamp(
+            1.6rem,
+            4vw,
+            2.4rem
+        );
+
+    letter-spacing:
+        1px;
+
+}
+
+
+.section-heading span {
+
+    font-size:
+        1.5rem;
+
+}
+
+
+.free-heading {
+
+    border:
+        5px solid
+        var(--green);
+
+}
+
+
+.free-heading h2 {
+
+    color:
+        var(--green);
+
+}
+
+
+.premium-heading {
+
+    border:
+        5px solid
+        var(--orange);
+
+}
+
+
+.premium-heading h2 {
+
+    color:
+        var(--orange);
+
+}
+
+
+/* =========================================================
+   GAME GRID INSIDE EACH SECTION
+   ========================================================= */
+
+.game-section-grid {
 
     display: grid;
 
@@ -764,32 +899,42 @@ body.modal-open {
             )
         );
 
-    justify-content: center;
+    justify-content:
+        center;
 
-    gap: 30px;
+    gap:
+        30px;
 
-    width: 100%;
+    width:
+        100%;
 
-    max-width: 1300px;
+    padding:
+        0 20px;
 
-    padding: 20px;
-
-    box-sizing: border-box;
+    box-sizing:
+        border-box;
 
 }
 
 
+/* =========================================================
+   GAME CARDS
+   ========================================================= */
+
 .game-card {
 
-    background: white;
+    background:
+        white;
 
     border:
         6px solid
         var(--blue);
 
-    border-radius: 25px;
+    border-radius:
+        25px;
 
-    overflow: hidden;
+    overflow:
+        hidden;
 
     transition:
         all 0.3s ease;
@@ -798,15 +943,20 @@ body.modal-open {
         0 8px 0px
         var(--dark-blue);
 
-    text-decoration: none;
+    text-decoration:
+        none;
 
-    aspect-ratio: 1 / 1;
+    aspect-ratio:
+        1 / 1;
 
-    display: flex;
+    display:
+        flex;
 
-    flex-direction: column;
+    flex-direction:
+        column;
 
-    width: 100%;
+    width:
+        100%;
 
 }
 
@@ -824,31 +974,43 @@ body.modal-open {
 
 .game-img-container {
 
-    flex-grow: 1;
+    flex-grow:
+        1;
 
-    overflow: hidden;
+    overflow:
+        hidden;
 
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    justify-content: center;
+    justify-content:
+        center;
 
     background:
         #f9f9f9;
+
+    position:
+        relative;
 
 }
 
 
 .game-img-container img {
 
-    width: 100%;
+    width:
+        100%;
 
-    height: 100%;
+    height:
+        100%;
 
-    object-fit: cover;
+    object-fit:
+        cover;
 
-    display: block;
+    display:
+        block;
 
 }
 
@@ -858,44 +1020,138 @@ body.modal-open {
     background:
         var(--dark-blue);
 
-    color: white;
+    color:
+        white;
 
     padding:
         15px 10px;
 
-    text-align: center;
+    text-align:
+        center;
 
     font-family:
         'Luckiest Guy',
         cursive;
 
-    font-size: 1.1rem;
+    font-size:
+        1.1rem;
 
-    letter-spacing: 1px;
+    letter-spacing:
+        1px;
 
-    line-height: 1.3;
+    line-height:
+        1.3;
 
-    min-height: 60px;
+    min-height:
+        60px;
 
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    justify-content: center;
+    justify-content:
+        center;
 
 }
 
 
 .game-card.hidden {
 
-    display: none !important;
+    display:
+        none !important;
 
 }
 
 
+/* =========================================================
+   GAME ACCESS BADGES
+   ========================================================= */
+
+.game-badge {
+
+    position:
+        absolute;
+
+    top:
+        12px;
+
+    right:
+        12px;
+
+    z-index:
+        2;
+
+    padding:
+        7px 12px;
+
+    border-radius:
+        20px;
+
+    color:
+        white;
+
+    font-family:
+        'Luckiest Guy',
+        cursive;
+
+    font-size:
+        0.8rem;
+
+    letter-spacing:
+        0.5px;
+
+    box-shadow:
+        0 3px 0
+        rgba(0,0,0,0.3);
+
+}
+
+
+.free-badge {
+
+    background:
+        var(--green);
+
+}
+
+
+.premium-badge {
+
+    background:
+        var(--orange);
+
+}
+
+
+/* =========================================================
+   PREMIUM SECTION SEPARATOR
+   ========================================================= */
+
+.premium-section {
+
+    margin-top:
+        25px;
+
+    padding-top:
+        25px;
+
+    border-top:
+        5px dashed
+        rgba(180,129,241,0.6);
+
+}
+
+
+/* =========================================================
+   NO RESULTS
+   ========================================================= */
+
 .no-results {
 
-    display: none;
+    display:
+        none;
 
     margin:
         20px auto;
@@ -903,13 +1159,15 @@ body.modal-open {
     padding:
         20px 30px;
 
-    background: white;
+    background:
+        white;
 
     border:
         4px solid
         var(--pink);
 
-    border-radius: 25px;
+    border-radius:
+        25px;
 
     color:
         var(--dark-blue);
@@ -918,9 +1176,11 @@ body.modal-open {
         'Luckiest Guy',
         cursive;
 
-    font-size: 1.3rem;
+    font-size:
+        1.3rem;
 
-    text-align: center;
+    text-align:
+        center;
 
 }
 
@@ -931,15 +1191,20 @@ body.modal-open {
 
 .qr-container {
 
-    display: flex;
+    display:
+        flex;
 
-    justify-content: center;
+    justify-content:
+        center;
 
-    gap: 20px;
+    gap:
+        20px;
 
-    margin-top: 15px;
+    margin-top:
+        15px;
 
-    flex-wrap: wrap;
+    flex-wrap:
+        wrap;
 
 }
 
@@ -953,17 +1218,23 @@ body.modal-open {
         3px solid
         var(--blue);
 
-    border-radius: 20px;
+    border-radius:
+        20px;
 
-    padding: 15px;
+    padding:
+        15px;
 
-    text-align: center;
+    text-align:
+        center;
 
-    flex: 1;
+    flex:
+        1;
 
-    min-width: 140px;
+    min-width:
+        140px;
 
-    max-width: 200px;
+    max-width:
+        200px;
 
     box-shadow:
         0 5px 15px
@@ -974,13 +1245,17 @@ body.modal-open {
 
 .qr-box img {
 
-    width: 100%;
+    width:
+        100%;
 
-    max-width: 160px;
+    max-width:
+        160px;
 
-    height: auto;
+    height:
+        auto;
 
-    border-radius: 12px;
+    border-radius:
+        12px;
 
     border:
         2px solid white;
@@ -998,9 +1273,11 @@ body.modal-open {
         'Luckiest Guy',
         cursive;
 
-    font-size: 1.2rem;
+    font-size:
+        1.2rem;
 
-    margin-top: 10px;
+    margin-top:
+        10px;
 
     color:
         var(--dark-blue);
@@ -1017,11 +1294,14 @@ body.modal-open {
 
 .bottom-donate-container {
 
-    margin-top: 40px;
+    margin-top:
+        40px;
 
-    margin-bottom: 20px;
+    margin-bottom:
+        20px;
 
-    text-align: center;
+    text-align:
+        center;
 
 }
 
@@ -1031,9 +1311,11 @@ body.modal-open {
     background:
         var(--pink);
 
-    color: white;
+    color:
+        white;
 
-    border: none;
+    border:
+        none;
 
     padding:
         16px 45px;
@@ -1042,11 +1324,14 @@ body.modal-open {
         'Luckiest Guy',
         cursive;
 
-    font-size: 1.5rem;
+    font-size:
+        1.5rem;
 
-    border-radius: 50px;
+    border-radius:
+        50px;
 
-    cursor: pointer;
+    cursor:
+        pointer;
 
     box-shadow:
         0 6px 0px
@@ -1055,11 +1340,14 @@ body.modal-open {
     transition:
         all 0.2s;
 
-    display: inline-flex;
+    display:
+        inline-flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    gap: 10px;
+    gap:
+        10px;
 
 }
 
@@ -1094,9 +1382,11 @@ body.modal-open {
 
 #donate-modal {
 
-    position: fixed;
+    position:
+        fixed;
 
-    inset: 0;
+    inset:
+        0;
 
     background:
         rgba(26,26,75,0.85);
@@ -1104,60 +1394,77 @@ body.modal-open {
     backdrop-filter:
         blur(10px);
 
-    display: flex;
+    display:
+        flex;
 
-    justify-content: center;
+    justify-content:
+        center;
 
-    align-items: center;
+    align-items:
+        center;
 
-    z-index: 3000;
+    z-index:
+        3000;
 
-    opacity: 0;
+    opacity:
+        0;
 
-    pointer-events: none;
+    pointer-events:
+        none;
 
     transition:
         opacity 0.4s ease;
 
-    padding: 20px;
+    padding:
+        20px;
 
-    box-sizing: border-box;
+    box-sizing:
+        border-box;
 
 }
 
 
 #donate-modal.active {
 
-    opacity: 1;
+    opacity:
+        1;
 
-    pointer-events: auto;
+    pointer-events:
+        auto;
 
 }
 
 
 .donate-card {
 
-    background: white;
+    background:
+        white;
 
     border:
         8px solid
         var(--pink);
 
-    border-radius: 35px;
+    border-radius:
+        35px;
 
-    padding: 40px;
+    padding:
+        40px;
 
-    max-width: 600px;
+    max-width:
+        600px;
 
-    width: 100%;
+    width:
+        100%;
 
     box-shadow:
         0 20px 50px
         rgba(0,0,0,0.3);
 
-    position: relative;
+    position:
+        relative;
 
-    text-align: center;
+    text-align:
+        center;
 
     animation:
         popUp 0.4s
@@ -1168,11 +1475,14 @@ body.modal-open {
             1.275
         );
 
-    box-sizing: border-box;
+    box-sizing:
+        border-box;
 
-    max-height: 90vh;
+    max-height:
+        90vh;
 
-    overflow-y: auto;
+    overflow-y:
+        auto;
 
 }
 
@@ -1189,9 +1499,11 @@ body.modal-open {
     font-size:
         2.2rem;
 
-    margin-top: 0;
+    margin-top:
+        0;
 
-    margin-bottom: 15px;
+    margin-bottom:
+        15px;
 
 }
 
@@ -1219,34 +1531,41 @@ body.modal-open {
 
 .site-footer {
 
-    width: 100%;
+    width:
+        100%;
 
-    margin-top: 65px;
+    margin-top:
+        65px;
 
     background:
         rgba(26,26,75,0.98);
 
-    color: white;
+    color:
+        white;
 
     border-top:
         7px solid
         var(--blue);
 
-    box-sizing: border-box;
+    box-sizing:
+        border-box;
 
 }
 
 
 .footer-content {
 
-    max-width: 1100px;
+    max-width:
+        1100px;
 
-    margin: 0 auto;
+    margin:
+        0 auto;
 
     padding:
         32px 20px 22px;
 
-    text-align: center;
+    text-align:
+        center;
 
 }
 
@@ -1278,26 +1597,34 @@ body.modal-open {
 
 .footer-links {
 
-    display: flex;
+    display:
+        flex;
 
-    justify-content: center;
+    justify-content:
+        center;
 
-    align-items: center;
+    align-items:
+        center;
 
-    flex-wrap: wrap;
+    flex-wrap:
+        wrap;
 
-    gap: 10px;
+    gap:
+        10px;
 
-    margin: 0 auto;
+    margin:
+        0 auto;
 
 }
 
 
 .footer-links button {
 
-    border: none;
+    border:
+        none;
 
-    color: white;
+    color:
+        white;
 
     background:
         rgba(255,255,255,0.11);
@@ -1305,7 +1632,8 @@ body.modal-open {
     padding:
         11px 16px;
 
-    border-radius: 25px;
+    border-radius:
+        25px;
 
     font-family:
         'Chalkboard SE',
@@ -1315,9 +1643,11 @@ body.modal-open {
     font-size:
         0.95rem;
 
-    font-weight: bold;
+    font-weight:
+        bold;
 
-    cursor: pointer;
+    cursor:
+        pointer;
 
     transition:
         all 0.25s ease;
@@ -1345,32 +1675,39 @@ body.modal-open {
 
 
 .footer-links button:nth-child(2):hover {
-    background: var(--green);
+    background:
+        var(--green);
 }
 
 
 .footer-links button:nth-child(3):hover {
-    background: var(--orange);
+    background:
+        var(--orange);
 }
 
 
 .footer-links button:nth-child(4):hover {
-    background: var(--pink);
+    background:
+        var(--pink);
 }
 
 
 .footer-links button:nth-child(5):hover {
-    background: var(--purple);
+    background:
+        var(--purple);
 }
 
 
 .footer-social {
 
-    display: flex;
+    display:
+        flex;
 
-    justify-content: center;
+    justify-content:
+        center;
 
-    gap: 10px;
+    gap:
+        10px;
 
     margin:
         22px 0 10px;
@@ -1380,26 +1717,35 @@ body.modal-open {
 
 .footer-social a {
 
-    width: 38px;
+    width:
+        38px;
 
-    height: 38px;
+    height:
+        38px;
 
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    justify-content: center;
+    justify-content:
+        center;
 
-    border-radius: 50%;
+    border-radius:
+        50%;
 
-    background: white;
+    background:
+        white;
 
     color:
         var(--dark-blue);
 
-    text-decoration: none;
+    text-decoration:
+        none;
 
-    font-size: 1rem;
+    font-size:
+        1rem;
 
     transition:
         all 0.2s ease;
@@ -1412,7 +1758,8 @@ body.modal-open {
     background:
         var(--pink);
 
-    color: white;
+    color:
+        white;
 
     transform:
         translateY(-3px);
@@ -1422,7 +1769,8 @@ body.modal-open {
 
 .footer-divider {
 
-    height: 2px;
+    height:
+        2px;
 
     background:
         rgba(255,255,255,0.12);
@@ -1449,7 +1797,8 @@ body.modal-open {
 
 .footer-bottom strong {
 
-    color: white;
+    color:
+        white;
 
 }
 
@@ -1460,11 +1809,14 @@ body.modal-open {
 
 .footer-info-overlay {
 
-    position: fixed;
+    position:
+        fixed;
 
-    inset: 0;
+    inset:
+        0;
 
-    z-index: 5000;
+    z-index:
+        5000;
 
     background:
         rgba(26,26,75,0.82);
@@ -1472,21 +1824,29 @@ body.modal-open {
     backdrop-filter:
         blur(8px);
 
-    display: flex;
+    display:
+        flex;
 
-    justify-content: center;
+    justify-content:
+        center;
 
-    align-items: center;
+    align-items:
+        center;
 
-    padding: 20px;
+    padding:
+        20px;
 
-    box-sizing: border-box;
+    box-sizing:
+        border-box;
 
-    opacity: 0;
+    opacity:
+        0;
 
-    visibility: hidden;
+    visibility:
+        hidden;
 
-    pointer-events: none;
+    pointer-events:
+        none;
 
     transition:
         opacity 0.3s ease,
@@ -1497,29 +1857,37 @@ body.modal-open {
 
 .footer-info-overlay.active {
 
-    opacity: 1;
+    opacity:
+        1;
 
-    visibility: visible;
+    visibility:
+        visible;
 
-    pointer-events: auto;
+    pointer-events:
+        auto;
 
 }
 
 
 .footer-info-card {
 
-    position: relative;
+    position:
+        relative;
 
     width:
         min(720px, 95%);
 
-    max-height: 85vh;
+    max-height:
+        85vh;
 
-    overflow-y: auto;
+    overflow-y:
+        auto;
 
-    box-sizing: border-box;
+    box-sizing:
+        border-box;
 
-    background: white;
+    background:
+        white;
 
     color:
         var(--dark-blue);
@@ -1558,7 +1926,8 @@ body.modal-open {
             translateY(25px)
             scale(0.94);
 
-        opacity: 0;
+        opacity:
+            0;
 
     }
 
@@ -1568,7 +1937,8 @@ body.modal-open {
             translateY(0)
             scale(1);
 
-        opacity: 1;
+        opacity:
+            1;
 
     }
 
@@ -1647,29 +2017,41 @@ body.modal-open {
 
 .footer-info-close {
 
-    position: absolute;
+    position:
+        absolute;
 
-    top: 12px;
-    right: 15px;
+    top:
+        12px;
 
-    width: 42px;
-    height: 42px;
+    right:
+        15px;
 
-    border: none;
+    width:
+        42px;
 
-    border-radius: 50%;
+    height:
+        42px;
+
+    border:
+        none;
+
+    border-radius:
+        50%;
 
     background:
         var(--pink);
 
-    color: white;
+    color:
+        white;
 
     font-size:
         1.4rem;
 
-    font-weight: bold;
+    font-weight:
+        bold;
 
-    cursor: pointer;
+    cursor:
+        pointer;
 
     transition:
         all 0.2s ease;
@@ -1707,7 +2089,8 @@ body.modal-open {
 
 .about-highlight {
 
-    text-align: center;
+    text-align:
+        center;
 
     font-family:
         'Luckiest Guy',
@@ -1727,13 +2110,17 @@ body.modal-open {
 
 .teacher-badges {
 
-    display: flex;
+    display:
+        flex;
 
-    justify-content: center;
+    justify-content:
+        center;
 
-    flex-wrap: wrap;
+    flex-wrap:
+        wrap;
 
-    gap: 12px;
+    gap:
+        12px;
 
     margin-top:
         25px;
@@ -1775,12 +2162,14 @@ body.modal-open {
 
 .steps-container {
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
         repeat(2, 1fr);
 
-    gap: 15px;
+    gap:
+        15px;
 
     margin-top:
         25px;
@@ -1790,7 +2179,8 @@ body.modal-open {
 
 .step-card {
 
-    text-align: center;
+    text-align:
+        center;
 
     background:
         #f8fbff;
@@ -1814,8 +2204,11 @@ body.modal-open {
 
 .step-number {
 
-    width: 45px;
-    height: 45px;
+    width:
+        45px;
+
+    height:
+        45px;
 
     margin:
         0 auto 10px;
@@ -1826,13 +2219,17 @@ body.modal-open {
     background:
         var(--orange);
 
-    color: white;
+    color:
+        white;
 
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    justify-content: center;
+    justify-content:
+        center;
 
     font-family:
         'Luckiest Guy',
@@ -1886,12 +2283,14 @@ body.modal-open {
 
 .value-grid {
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
         repeat(3, 1fr);
 
-    gap: 15px;
+    gap:
+        15px;
 
     margin-top:
         25px;
@@ -2033,7 +2432,8 @@ body.modal-open {
     background:
         var(--blue);
 
-    color: white;
+    color:
+        white;
 
     border-radius:
         30px;
@@ -2144,13 +2544,73 @@ body.modal-open {
     }
 
 
-    .game-grid {
+    /* Mobile game sections */
+
+    .game-section {
+
+        margin-bottom:
+            50px;
+
+    }
+
+
+    .section-heading {
+
+        margin:
+            10px auto 22px;
+
+        padding:
+            11px 18px;
+
+    }
+
+
+    .section-heading h2 {
+
+        font-size:
+            1.5rem;
+
+    }
+
+
+    .section-heading span {
+
+        font-size:
+            1.2rem;
+
+    }
+
+
+    .game-section-grid {
 
         grid-template-columns:
             minmax(
                 260px,
                 320px
             );
+
+        gap:
+            25px;
+
+        padding:
+            0 10px;
+
+    }
+
+
+    .game-badge {
+
+        top:
+            10px;
+
+        right:
+            10px;
+
+        padding:
+            6px 10px;
+
+        font-size:
+            0.72rem;
 
     }
 
@@ -2252,6 +2712,604 @@ body.modal-open {
 
         text-align:
             center;
+
+    }
+
+}
+/* =========================================================
+   SUPABASE ACCOUNT / AUTHENTICATION
+   ========================================================= */
+
+.account-area {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    flex-shrink: 0;
+
+}
+
+
+.account-btn,
+.logout-btn {
+
+    border: none;
+
+    border-radius: 25px;
+
+    padding: 10px 16px;
+
+    color: white;
+
+    font-family:
+        'Chalkboard SE',
+        'Arial',
+        sans-serif;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        all 0.2s ease;
+
+    box-shadow:
+        0 4px 0
+        var(--dark-blue);
+
+}
+
+
+.account-btn {
+
+    background:
+        var(--purple);
+
+}
+
+
+.logout-btn {
+
+    background:
+        var(--pink);
+
+}
+
+
+.account-btn:hover,
+.logout-btn:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 6px 0
+        var(--dark-blue);
+
+}
+
+
+.account-btn:active,
+.logout-btn:active {
+
+    transform:
+        translateY(2px);
+
+    box-shadow:
+        0 2px 0
+        var(--dark-blue);
+
+}
+
+
+.user-account {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+
+}
+
+
+#userEmail {
+
+    max-width: 180px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    background:
+        white;
+
+    color:
+        var(--dark-blue);
+
+    border:
+        3px solid
+        var(--purple);
+
+    border-radius:
+        20px;
+
+    padding:
+        7px 12px;
+
+    font-size:
+        0.85rem;
+
+    font-weight:
+        bold;
+
+}
+
+
+/* =========================================================
+   AUTH MODAL
+   ========================================================= */
+
+.auth-modal {
+
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    background:
+        rgba(26,26,75,0.85);
+
+    backdrop-filter:
+        blur(10px);
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    z-index:
+        6000;
+
+    opacity:
+        0;
+
+    visibility:
+        hidden;
+
+    pointer-events:
+        none;
+
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease;
+
+    padding:
+        20px;
+
+    box-sizing:
+        border-box;
+
+}
+
+
+.auth-modal.active {
+
+    opacity:
+        1;
+
+    visibility:
+        visible;
+
+    pointer-events:
+        auto;
+
+}
+
+
+.auth-card {
+
+    position:
+        relative;
+
+    width:
+        min(440px, 95%);
+
+    background:
+        white;
+
+    border:
+        7px solid
+        var(--purple);
+
+    border-radius:
+        32px;
+
+    padding:
+        40px 30px 30px;
+
+    box-sizing:
+        border-box;
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,0.4);
+
+    text-align:
+        center;
+
+    animation:
+        authPop 0.35s
+        cubic-bezier(
+            0.175,
+            0.885,
+            0.32,
+            1.275
+        );
+
+}
+
+
+@keyframes authPop {
+
+    from {
+
+        transform:
+            scale(0.85)
+            translateY(20px);
+
+        opacity:
+            0;
+
+    }
+
+    to {
+
+        transform:
+            scale(1)
+            translateY(0);
+
+        opacity:
+            1;
+
+    }
+
+}
+
+
+.auth-close {
+
+    position:
+        absolute;
+
+    top:
+        12px;
+
+    right:
+        15px;
+
+    width:
+        40px;
+
+    height:
+        40px;
+
+    border:
+        none;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--pink);
+
+    color:
+        white;
+
+    font-size:
+        1.5rem;
+
+    font-weight:
+        bold;
+
+    cursor:
+        pointer;
+
+}
+
+
+.auth-icon {
+
+    font-size:
+        3.5rem;
+
+    color:
+        var(--purple);
+
+    margin-bottom:
+        10px;
+
+}
+
+
+.auth-card h2 {
+
+    font-family:
+        'Luckiest Guy',
+        cursive;
+
+    color:
+        var(--blue);
+
+    font-size:
+        2rem;
+
+    margin:
+        5px 0 8px;
+
+}
+
+
+.auth-subtitle {
+
+    color:
+        var(--dark-blue);
+
+    font-size:
+        0.95rem;
+
+    line-height:
+        1.5;
+
+    margin:
+        0 0 20px;
+
+}
+
+
+.auth-input {
+
+    width:
+        100%;
+
+    box-sizing:
+        border-box;
+
+    padding:
+        13px 15px;
+
+    margin-bottom:
+        12px;
+
+    border:
+        3px solid
+        var(--blue);
+
+    border-radius:
+        15px;
+
+    outline:
+        none;
+
+    font-family:
+        'Chalkboard SE',
+        'Arial',
+        sans-serif;
+
+    font-size:
+        1rem;
+
+}
+
+
+.auth-input:focus {
+
+    border-color:
+        var(--pink);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(240,110,170,0.15);
+
+}
+
+
+.auth-submit-btn {
+
+    width:
+        100%;
+
+    border:
+        none;
+
+    padding:
+        14px;
+
+    margin-top:
+        5px;
+
+    background:
+        var(--green);
+
+    color:
+        white;
+
+    border-radius:
+        25px;
+
+    font-family:
+        'Luckiest Guy',
+        cursive;
+
+    font-size:
+        1.15rem;
+
+    cursor:
+        pointer;
+
+    box-shadow:
+        0 5px 0
+        #005e2c;
+
+    transition:
+        all 0.2s;
+
+}
+
+
+.auth-submit-btn:hover {
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+.auth-submit-btn:active {
+
+    transform:
+        translateY(2px);
+
+    box-shadow:
+        0 2px 0
+        #005e2c;
+
+}
+
+
+.auth-switch-btn {
+
+    border:
+        none;
+
+    background:
+        transparent;
+
+    color:
+        var(--dark-blue);
+
+    margin-top:
+        18px;
+
+    cursor:
+        pointer;
+
+    font-family:
+        'Chalkboard SE',
+        'Arial',
+        sans-serif;
+
+}
+
+
+.auth-switch-btn strong {
+
+    color:
+        var(--pink);
+
+}
+
+
+.auth-message {
+
+    min-height:
+        20px;
+
+    margin-top:
+        15px;
+
+    font-size:
+        0.9rem;
+
+    font-weight:
+        bold;
+
+    line-height:
+        1.4;
+
+}
+
+
+.auth-message.error {
+
+    color:
+        #d93025;
+
+}
+
+
+.auth-message.success {
+
+    color:
+        var(--green);
+
+}
+
+
+.auth-message.info {
+
+    color:
+        var(--blue);
+
+}
+
+
+/* =========================================================
+   AUTH MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .account-area {
+
+        width:
+            100%;
+
+    }
+
+
+    .user-account {
+
+        width:
+            100%;
+
+    }
+
+
+    #userEmail {
+
+        max-width:
+            200px;
+
+    }
+
+
+    .auth-card {
+
+        padding:
+            35px 20px 25px;
+
+        border-width:
+            5px;
+
+        border-radius:
+            25px;
 
     }
 
