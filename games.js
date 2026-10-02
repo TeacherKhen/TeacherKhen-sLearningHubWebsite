@@ -163,43 +163,24 @@ const games = [
 
 function hasPremiumAccess() {
 
-    /*
-     * currentMembership is created and updated
-     * inside script.js.
-     */
-
     if (!currentMembership) {
         return false;
     }
-
-
-    /*
-     * User must have Premium plan.
-     */
 
     if (currentMembership.plan !== "premium") {
         return false;
     }
 
-
-    /*
-     * Membership must be active.
-     */
-
     if (currentMembership.status !== "active") {
         return false;
     }
 
-
-    /*
-     * If there is an expiration date,
-     * make sure it has not expired.
-     */
-
     if (currentMembership.expires_at) {
 
         const expiration =
-            new Date(currentMembership.expires_at);
+            new Date(
+                currentMembership.expires_at
+            );
 
         const now =
             new Date();
@@ -209,7 +190,6 @@ function hasPremiumAccess() {
         }
 
     }
-
 
     return true;
 }
@@ -221,45 +201,44 @@ function hasPremiumAccess() {
 
 function createGameCard(game) {
 
+    /*
+     * IMPORTANT:
+     *
+     * The original website CSS expects:
+     *
+     * .game-card
+     * .game-img-container
+     * .game-img-container img
+     * .game-title
+     *
+     * We are restoring that exact structure.
+     */
+
     const card =
         document.createElement("a");
 
 
-    /*
-     * Determine whether this game is Premium.
-     */
+    /* =====================================================
+       PREMIUM STATUS
+       ===================================================== */
 
     const isPremium =
         game.access === "premium";
 
 
-    /*
-     * Determine whether the current user
-     * can access the Premium game.
-     */
-
     const premiumUnlocked =
-        isPremium && hasPremiumAccess();
+        isPremium &&
+        hasPremiumAccess();
 
-
-    /*
-     * A game is locked only when:
-     *
-     * 1. It is Premium
-     * 2. The user does not have Premium access
-     */
 
     const isLocked =
-        isPremium && !premiumUnlocked;
+        isPremium &&
+        !premiumUnlocked;
 
 
-    /*
-     * Normal game URL.
-     *
-     * Locked Premium games do NOT receive
-     * their real URL. This prevents the normal
-     * card click from opening the game.
-     */
+    /* =====================================================
+       CARD LINK
+       ===================================================== */
 
     if (isLocked) {
 
@@ -272,139 +251,97 @@ function createGameCard(game) {
     }
 
 
-    /*
-     * Open games in a new tab.
-     */
-
     card.target = "_blank";
 
-    card.rel = "noopener noreferrer";
+    card.rel =
+        "noopener noreferrer";
 
 
-    /*
-     * Main card class.
-     */
-
-    card.className = "game-card";
+    card.className =
+        "game-card";
 
 
-    /*
-     * Add Premium class when applicable.
-     */
+    /* =====================================================
+       PREMIUM CLASS
+       ===================================================== */
 
     if (isPremium) {
 
-        card.classList.add("premium-game");
+        card.classList.add(
+            "premium-game"
+        );
 
     }
 
-
-    /*
-     * Add locked class when applicable.
-     */
 
     if (isLocked) {
 
-        card.classList.add("premium-locked");
+        card.classList.add(
+            "premium-locked"
+        );
+
+        card.dataset.locked =
+            "true";
 
     }
 
 
-    /*
-     * Store locked state.
-     */
+    /* =====================================================
+       IMAGE CONTAINER
+       ===================================================== */
 
-    if (isLocked) {
-
-        card.dataset.locked = "true";
-
-    }
+    const imageContainer =
+        document.createElement("div");
 
 
-    /*
-     * Create game image.
-     */
+    imageContainer.className =
+        "game-img-container";
+
+
+    /* =====================================================
+       GAME IMAGE
+       ===================================================== */
 
     const image =
         document.createElement("img");
 
-    image.src = game.image;
 
-    image.alt = game.title;
-
-    image.className = "game-image";
+    image.src =
+        game.image;
 
 
-    /*
-     * Prevent broken images from making
-     * the card look broken.
-     */
-
-    image.onerror = function() {
-
-        this.style.display = "none";
-
-    };
-
-
-    /*
-     * Game information container.
-     */
-
-    const info =
-        document.createElement("div");
-
-    info.className = "game-info";
-
-
-    /*
-     * Game title.
-     */
-
-    const title =
-        document.createElement("h3");
-
-    title.textContent =
+    image.alt =
         game.title;
 
 
     /*
-     * Category.
+     * This class is useful for the
+     * existing CSS.
      */
 
-    const category =
-        document.createElement("div");
-
-    category.className =
-        "game-category";
-
-    category.textContent =
-        game.category;
+    image.className =
+        "game-image";
 
 
-    /*
-     * Grades.
-     */
+    image.onerror =
+        function() {
 
-    const grades =
-        document.createElement("div");
+            this.style.display =
+                "none";
 
-    grades.className =
-        "game-grades";
-
-    grades.textContent =
-        game.grades;
+        };
 
 
-    /*
-     * Access badge.
-     */
+    /* =====================================================
+       PREMIUM BADGE
+       ===================================================== */
 
     const badge =
         document.createElement("div");
 
+
     badge.className =
-        "game-access-badge";
+        "game-badge";
 
 
     if (isPremium) {
@@ -415,7 +352,7 @@ function createGameCard(game) {
                 "⭐ PREMIUM";
 
             badge.classList.add(
-                "premium-unlocked"
+                "premium-badge"
             );
 
         } else {
@@ -424,7 +361,7 @@ function createGameCard(game) {
                 "🔒 PREMIUM";
 
             badge.classList.add(
-                "premium-locked-badge"
+                "premium-badge"
             );
 
         }
@@ -441,26 +378,46 @@ function createGameCard(game) {
     }
 
 
-    /*
-     * Put game information together.
-     */
+    /* =====================================================
+       PUT IMAGE + BADGE TOGETHER
+       ===================================================== */
 
-    info.appendChild(title);
+    imageContainer.appendChild(
+        image
+    );
 
-    info.appendChild(category);
-
-    info.appendChild(grades);
-
-    info.appendChild(badge);
+    imageContainer.appendChild(
+        badge
+    );
 
 
-    /*
-     * Put image and information into card.
-     */
+    /* =====================================================
+       GAME TITLE
+       ===================================================== */
 
-    card.appendChild(image);
+    const title =
+        document.createElement("div");
 
-    card.appendChild(info);
+
+    title.className =
+        "game-title";
+
+
+    title.textContent =
+        game.title;
+
+
+    /* =====================================================
+       PUT EVERYTHING INTO CARD
+       ===================================================== */
+
+    card.appendChild(
+        imageContainer
+    );
+
+    card.appendChild(
+        title
+    );
 
 
     /* =====================================================
@@ -480,18 +437,12 @@ function createGameCard(game) {
                 !hasPremiumAccess()
             ) {
 
-                /*
-                 * Prevent the "#" link from opening.
-                 */
-
                 event.preventDefault();
 
 
                 /*
-                 * USER IS NOT LOGGED IN
-                 *
-                 * Send them to the Login / Sign Up
-                 * interface first.
+                 * Not logged in:
+                 * show Login / Sign Up.
                  */
 
                 if (!currentUser) {
@@ -504,9 +455,8 @@ function createGameCard(game) {
 
 
                 /*
-                 * USER IS LOGGED IN BUT IS FREE
-                 *
-                 * Show Premium upgrade interface.
+                 * Logged in but Free:
+                 * show Premium upgrade modal.
                  */
 
                 if (
@@ -517,11 +467,6 @@ function createGameCard(game) {
                     openPremiumModal();
 
                 } else {
-
-                    /*
-                     * Safety fallback in case the
-                     * Premium modal has not loaded.
-                     */
 
                     alert(
                         "This game is available to Premium members."
@@ -560,7 +505,7 @@ function generateGames(
 
 
     /*
-     * Clear current games.
+     * Clear existing games.
      */
 
     gameGrid.innerHTML = "";
@@ -585,74 +530,132 @@ function generateGames(
 
 
     /* =====================================================
-       FREE GAMES SECTION
+       FREE GAMES
        ===================================================== */
 
     if (freeGames.length > 0) {
 
+        const freeSection =
+            document.createElement("section");
+
+
+        freeSection.className =
+            "game-section";
+
+
         const freeHeading =
             document.createElement("div");
 
+
         freeHeading.className =
-            "game-section-title";
+            "section-heading free-heading";
+
 
         freeHeading.innerHTML =
-            "🎮 FREE GAMES";
+            "<span>🎮</span><h2>FREE GAMES</h2>";
 
-        gameGrid.appendChild(
-            freeHeading
-        );
+
+        const freeGrid =
+            document.createElement("div");
+
+
+        freeGrid.className =
+            "game-section-grid";
 
 
         freeGames.forEach(
             game => {
 
-                gameGrid.appendChild(
+                freeGrid.appendChild(
                     createGameCard(game)
                 );
 
             }
+        );
+
+
+        freeSection.appendChild(
+            freeHeading
+        );
+
+
+        freeSection.appendChild(
+            freeGrid
+        );
+
+
+        gameGrid.appendChild(
+            freeSection
         );
 
     }
 
 
     /* =====================================================
-       PREMIUM GAMES SECTION
+       PREMIUM GAMES
        ===================================================== */
 
     if (premiumGames.length > 0) {
 
+        const premiumSection =
+            document.createElement("section");
+
+
+        premiumSection.className =
+            "game-section premium-section";
+
+
         const premiumHeading =
             document.createElement("div");
 
+
         premiumHeading.className =
-            "game-section-title premium-section-title";
+            "section-heading premium-heading";
+
 
         premiumHeading.innerHTML =
-            "⭐ PREMIUM GAMES";
+            "<span>⭐</span><h2>PREMIUM GAMES</h2>";
 
-        gameGrid.appendChild(
-            premiumHeading
-        );
+
+        const premiumGrid =
+            document.createElement("div");
+
+
+        premiumGrid.className =
+            "game-section-grid";
 
 
         premiumGames.forEach(
             game => {
 
-                gameGrid.appendChild(
+                premiumGrid.appendChild(
                     createGameCard(game)
                 );
 
             }
         );
 
+
+        premiumSection.appendChild(
+            premiumHeading
+        );
+
+
+        premiumSection.appendChild(
+            premiumGrid
+        );
+
+
+        gameGrid.appendChild(
+            premiumSection
+        );
+
     }
 
 
-    /*
-     * Update "No Results" message.
-     */
+    /* =====================================================
+       NO RESULTS
+       ===================================================== */
 
     const noResults =
         document.getElementById(
@@ -702,27 +705,16 @@ function filterGames() {
             .trim();
 
 
-    /*
-     * If search box is empty,
-     * display everything.
-     */
-
     if (!searchTerm) {
 
-        generateGames(games);
+        generateGames(
+            games
+        );
 
         return;
 
     }
 
-
-    /*
-     * Search by:
-     *
-     * - title
-     * - category
-     * - grade level
-     */
 
     const filteredGames =
         games.filter(
@@ -732,9 +724,11 @@ function filterGames() {
                     game.title
                         .toLowerCase();
 
+
                 const category =
                     game.category
                         .toLowerCase();
+
 
                 const grades =
                     game.grades
@@ -742,9 +736,17 @@ function filterGames() {
 
 
                 return (
-                    title.includes(searchTerm) ||
-                    category.includes(searchTerm) ||
-                    grades.includes(searchTerm)
+                    title.includes(
+                        searchTerm
+                    ) ||
+
+                    category.includes(
+                        searchTerm
+                    ) ||
+
+                    grades.includes(
+                        searchTerm
+                    )
                 );
 
             }
