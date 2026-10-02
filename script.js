@@ -800,11 +800,25 @@ async function loginUser() {
     );
 
 
-    if (data.session && data.session.user) {
+    if (
+        data.session &&
+        data.session.user
+    ) {
 
         await loadMembership(
             data.session.user
         );
+
+        /*
+         * IMPORTANT:
+         * Rebuild the game cards AFTER
+         * the membership has been loaded.
+         *
+         * This allows Premium users to
+         * immediately unlock Premium games.
+         */
+
+        generateGames();
 
     }
 
@@ -849,6 +863,14 @@ async function logoutUser() {
     currentMembership = null;
 
     updateAuthUI(null);
+
+
+    /*
+     * Rebuild the games so Premium games
+     * become locked again after logout.
+     */
+
+    generateGames();
 
 }
 
@@ -1009,6 +1031,8 @@ async function checkAuthSession() {
 
         updateAuthUI(null);
 
+        generateGames();
+
         return;
 
     }
@@ -1025,15 +1049,27 @@ async function checkAuthSession() {
         );
 
 
+        /*
+         * IMPORTANT:
+         * Wait for the membership before
+         * generating the game cards.
+         */
+
         await loadMembership(
             session.user
         );
+
+
+        generateGames();
 
     } else {
 
         updateAuthUI(
             null
         );
+
+
+        generateGames();
 
     }
 
@@ -1066,15 +1102,40 @@ supabaseClient.auth.onAuthStateChange(
         ) {
 
             setTimeout(
-                function() {
+                async function() {
 
-                    loadMembership(
+                    /*
+                     * Load membership first.
+                     */
+
+                    await loadMembership(
                         session.user
                     );
+
+
+                    /*
+                     * Then rebuild the games.
+                     */
+
+                    generateGames();
 
                 },
                 0
             );
+
+        } else {
+
+            /*
+             * User logged out.
+             * Clear membership and rebuild
+             * the games as a Free user.
+             */
+
+            currentMembership =
+                null;
+
+
+            generateGames();
 
         }
 
@@ -1174,6 +1235,14 @@ window.addEventListener(
     function() {
 
         generateTitle();
+
+        /*
+         * Generate the games immediately so the
+         * page appears without waiting.
+         *
+         * checkAuthSession() will generate them
+         * again after membership information loads.
+         */
 
         generateGames();
 
