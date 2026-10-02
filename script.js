@@ -21,6 +21,24 @@ const supabaseClient =
         SUPABASE_PUBLISHABLE_KEY
     );
 
+/* =========================================================
+   PREMIUM PRICING
+   Change these values anytime in the future.
+   ========================================================= */
+
+const PREMIUM_PRICING = {
+
+    monthly: {
+        price: 4,
+        label: "$4 / month"
+    },
+
+    yearly: {
+        price: 20,
+        label: "$20 / year"
+    }
+
+};
 
 /* =========================================================
    CURRENT USER / MEMBERSHIP
