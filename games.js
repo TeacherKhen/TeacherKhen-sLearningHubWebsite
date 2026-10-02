@@ -1,188 +1,156 @@
 /* =========================================================
    TEACHER KHEN'S LEARNING HUB
-   GAME DATABASE
-
-   access:
-   "free"    = Free game
-   "premium" = Premium game
+   GAME DATABASE + GAME DISPLAY
    ========================================================= */
 
+
+/* =========================================================
+   GAME DATABASE
+   ========================================================= */
 
 const games = [
 
     {
         title: "Classroom Cafe",
-        description: "Interactive classroom food, restaurant, and ordering lesson.",
-        image: "cafe.gif",
         url: "https://class-cafe-khen.base44.app",
+        image: "cafe.gif",
         category: "Speaking",
-        grade: "Grades 1–6",
-        keywords: "classroom cafe food restaurant drink ordering lesson speaking",
+        grades: "Grades 1–6",
         access: "free"
     },
 
     {
         title: "Give or Keep Review Game",
-        description: "A mystery-box style review game with points and surprises.",
-        image: "titlepage.gif",
         url: "https://teacherkhen.github.io/giveorkeepreviewgame/",
+        image: "titlepage.gif",
         category: "Review",
-        grade: "Grades 1–6",
-        keywords: "give or keep review game mystery box points review",
+        grades: "Grades 1–6",
         access: "free"
     },
 
     {
         title: "Spelling Jungle",
-        description: "Interactive spelling and sentence-building adventure.",
-        image: "Intro picture.gif",
         url: "https://teacherkhen.github.io/connect-the-dots-spelling-sentencethesentence/",
+        image: "Intro picture.gif",
         category: "Spelling",
-        grade: "Grades 2–6",
-        keywords: "spelling jungle connect dots sentence spelling reading",
+        grades: "Grades 2–6",
         access: "free"
     },
 
     {
         title: "The Great Fishing Challenge",
-        description: "Catch the correct answers in this fun fishing challenge.",
-        image: "catch it.gif",
         url: "https://teacherkhen.github.io/fishing/",
+        image: "catch it.gif",
         category: "Vocabulary",
-        grade: "Grades 1–6",
-        keywords: "fishing catch it vocabulary game",
+        grades: "Grades 1–6",
         access: "free"
     },
 
     {
         title: "Spelling Warriors",
-        description: "A fun spelling challenge for classroom practice.",
-        image: "spelling.gif",
         url: "https://teacherkhen.github.io/spelling/",
+        image: "spelling.gif",
         category: "Spelling",
-        grade: "Grades 2–6",
-        keywords: "spelling warriors spelling words",
+        grades: "Grades 2–6",
         access: "free"
     },
 
     {
         title: "Pacman Vocabulary Quest",
-        description: "Practice vocabulary while navigating a Pacman-style game.",
-        image: "pacman.gif",
         url: "https://teacherkhen.github.io/pacman/",
+        image: "pacman.gif",
         category: "Vocabulary",
-        grade: "Grades 2–6",
-        keywords: "pacman vocabulary quest vocabulary game words",
+        grades: "Grades 2–6",
         access: "free"
     },
 
     {
         title: "Interactive Whiteboard [S & D]",
-        description: "Interactive digital whiteboard for classroom teaching.",
-        image: "whiteboard.jpg",
         url: "https://teacherkhen.github.io/whiteboard/",
+        image: "whiteboard.jpg",
         category: "Teaching Tool",
-        grade: "Grades 1–6",
-        keywords: "whiteboard single double draw interactive board",
+        grades: "Grades 1–6",
         access: "free"
     },
 
     {
         title: "Whiteboard & Quiz Master",
-        description: "Combine an interactive whiteboard with classroom quizzes.",
-        image: "whiteboard+quiz.jpg",
         url: "https://teacherkhen.github.io/whiteboard-quiz/",
+        image: "whiteboard+quiz.jpg",
         category: "Teaching Tool",
-        grade: "Grades 1–6",
-        keywords: "whiteboard quiz master quiz teaching tool",
+        grades: "Grades 1–6",
         access: "free"
     },
 
     {
         title: "Phonics Reading Lab",
-        description: "Practice phonics sounds and reading skills.",
-        image: "phonics reading.jpg",
         url: "https://teacherkhen.github.io/phonics-reading-board/",
+        image: "phonics reading.jpg",
         category: "Phonics",
-        grade: "Grades 1–4",
-        keywords: "phonics reading sounds phonics reading board",
+        grades: "Grades 1–4",
         access: "free"
     },
 
     {
         title: "Fashion Mall: Clothing Lesson",
-        description: "Learn and practice clothing vocabulary through an interactive mall.",
-        image: "clothing.png",
         url: "https://teacherkhen.github.io/clothinglesson/",
+        image: "clothing.png",
         category: "Vocabulary",
-        grade: "Grades 1–6",
-        keywords: "fashion mall clothing shopping clothes vocabulary",
+        grades: "Grades 1–6",
         access: "free"
     },
 
     {
         title: "Time Traveler: Past Expressions",
-        description: "Practice past-time expressions and calendar language.",
-        image: "calendar.gif",
         url: "https://teacherkhen.github.io/past-time/",
+        image: "calendar.gif",
         category: "Grammar",
-        grade: "Grades 4–6",
-        keywords: "time traveler past expressions calendar past tense grammar",
+        grades: "Grades 4–6",
         access: "free"
     },
 
     {
         title: "Monster Card Flip Game",
-        description: "A fun card-flipping game for matching and review.",
-        image: "monster flip game.png",
         url: "https://teacherkhen.github.io/monster-card-flip-game/",
+        image: "monster flip game.png",
         category: "Review",
-        grade: "Grades 1–6",
-        keywords: "monster flip card game match memory review",
+        grades: "Grades 1–6",
         access: "free"
     },
 
     {
         title: "Reading Roll Quest [Phonics Game]",
-        description: "A phonics reading adventure with a fun roll-and-play format.",
-        image: "reading.png",
         url: "https://teacherkhen.github.io/phonicsreading/",
+        image: "reading.png",
         category: "Phonics",
-        grade: "Grades 1–4",
-        keywords: "reading roll quest phonics game book children reading",
+        grades: "Grades 1–4",
         access: "free"
     },
 
     {
         title: "Phonics Race",
-        description: "Teams race to read phonics words correctly.",
-        image: "Phonics Race.png",
         url: "https://teacherkhen.github.io/Phonicsrace1/",
+        image: "Phonics Race.png",
         category: "Phonics",
-        grade: "Grades 1–6",
-        keywords: "phonics race game learning ABC sounds phonics reading",
+        grades: "Grades 1–6",
         access: "free"
     },
 
     {
         title: "Click It!",
-        description: "A fast-paced reaction and quiz game for classroom review.",
-        image: "clickit.png",
         url: "https://teacherkhen.github.io/Clickit/",
+        image: "clickit.png",
         category: "Review",
-        grade: "Grades 1–6",
-        keywords: "click it fast reaction quiz game review",
+        grades: "Grades 1–6",
         access: "premium"
     },
 
     {
         title: "Spider Web Reading",
-        description: "An interactive phonics reading activity for building words.",
-        image: "background.gif",
         url: "https://spiderwebreading.teacherkhen.com",
+        image: "background.gif",
         category: "Phonics",
-        grade: "Grades 1–6",
-        keywords: "spider web reading phonics game learning words english reading",
+        grades: "Grades 1–6",
         access: "free"
     }
 
@@ -190,77 +158,65 @@ const games = [
 
 
 /* =========================================================
-   CHECK PREMIUM ACCESS
+   PREMIUM ACCESS CHECK
    ========================================================= */
 
 function hasPremiumAccess() {
 
     /*
-     * currentMembership is created
-     * by script.js.
+     * currentMembership is created and updated
+     * inside script.js.
      */
 
-    if (
-        typeof currentMembership === "undefined" ||
-        !currentMembership
-    ) {
-
+    if (!currentMembership) {
         return false;
-
     }
 
 
-    if (
-        currentMembership.plan !== "premium"
-    ) {
+    /*
+     * User must have Premium plan.
+     */
 
+    if (currentMembership.plan !== "premium") {
         return false;
-
     }
 
 
-    if (
-        currentMembership.status !== "active"
-    ) {
+    /*
+     * Membership must be active.
+     */
 
+    if (currentMembership.status !== "active") {
         return false;
-
     }
 
 
     /*
      * If there is an expiration date,
-     * make sure it has not passed.
+     * make sure it has not expired.
      */
 
-    if (
-        currentMembership.expires_at
-    ) {
+    if (currentMembership.expires_at) {
 
         const expiration =
-            new Date(
-                currentMembership.expires_at
-            );
+            new Date(currentMembership.expires_at);
 
+        const now =
+            new Date();
 
-        if (
-            expiration <= new Date()
-        ) {
-
+        if (expiration <= now) {
             return false;
-
         }
 
     }
 
 
     return true;
-
 }
 
 
 /* =========================================================
-   CREATE ONE GAME CARD
+   CREATE GAME CARD
    ========================================================= */
 
 function createGameCard(game) {
@@ -269,169 +225,278 @@ function createGameCard(game) {
         document.createElement("a");
 
 
-    card.className =
-        "game-card";
-
-
     /*
-     * FREE games can open normally.
-     *
-     * PREMIUM games are initially prevented
-     * from opening unless the user has access.
+     * Determine whether this game is Premium.
      */
 
     const isPremium =
         game.access === "premium";
 
 
+    /*
+     * Determine whether the current user
+     * can access the Premium game.
+     */
+
     const premiumUnlocked =
-        isPremium &&
-        hasPremiumAccess();
+        isPremium && hasPremiumAccess();
 
 
-    if (
-        !isPremium ||
-        premiumUnlocked
-    ) {
+    /*
+     * A game is locked only when:
+     *
+     * 1. It is Premium
+     * 2. The user does not have Premium access
+     */
 
-        card.href =
-            game.url;
+    const isLocked =
+        isPremium && !premiumUnlocked;
 
-        card.target =
-            "_blank";
 
-        card.rel =
-            "noopener noreferrer";
+    /*
+     * Normal game URL.
+     *
+     * Locked Premium games do NOT receive
+     * their real URL. This prevents the normal
+     * card click from opening the game.
+     */
+
+    if (isLocked) {
+
+        card.href = "#";
 
     } else {
 
-        /*
-         * No direct game URL for locked
-         * premium users.
-         */
-
-        card.href =
-            "#";
-
-        card.setAttribute(
-            "data-locked",
-            "true"
-        );
+        card.href = game.url;
 
     }
 
 
-    card.classList.toggle(
-        "premium-locked",
-        isPremium && !premiumUnlocked
-    );
+    /*
+     * Open games in a new tab.
+     */
+
+    card.target = "_blank";
+
+    card.rel = "noopener noreferrer";
 
 
-    card.classList.toggle(
-        "premium-unlocked",
-        isPremium && premiumUnlocked
-    );
+    /*
+     * Main card class.
+     */
+
+    card.className = "game-card";
 
 
-    card.setAttribute(
-        "data-access",
-        game.access || "free"
-    );
+    /*
+     * Add Premium class when applicable.
+     */
+
+    if (isPremium) {
+
+        card.classList.add("premium-game");
+
+    }
 
 
-    card.setAttribute(
-        "data-name",
-        (
-            (game.title || "") + " " +
-            (game.description || "") + " " +
-            (game.category || "") + " " +
-            (game.grade || "") + " " +
-            (game.keywords || "")
-        ).toLowerCase()
-    );
+    /*
+     * Add locked class when applicable.
+     */
+
+    if (isLocked) {
+
+        card.classList.add("premium-locked");
+
+    }
 
 
-    let badge = "";
+    /*
+     * Store locked state.
+     */
+
+    if (isLocked) {
+
+        card.dataset.locked = "true";
+
+    }
 
 
-    if (game.access === "premium") {
+    /*
+     * Create game image.
+     */
+
+    const image =
+        document.createElement("img");
+
+    image.src = game.image;
+
+    image.alt = game.title;
+
+    image.className = "game-image";
+
+
+    /*
+     * Prevent broken images from making
+     * the card look broken.
+     */
+
+    image.onerror = function() {
+
+        this.style.display = "none";
+
+    };
+
+
+    /*
+     * Game information container.
+     */
+
+    const info =
+        document.createElement("div");
+
+    info.className = "game-info";
+
+
+    /*
+     * Game title.
+     */
+
+    const title =
+        document.createElement("h3");
+
+    title.textContent =
+        game.title;
+
+
+    /*
+     * Category.
+     */
+
+    const category =
+        document.createElement("div");
+
+    category.className =
+        "game-category";
+
+    category.textContent =
+        game.category;
+
+
+    /*
+     * Grades.
+     */
+
+    const grades =
+        document.createElement("div");
+
+    grades.className =
+        "game-grades";
+
+    grades.textContent =
+        game.grades;
+
+
+    /*
+     * Access badge.
+     */
+
+    const badge =
+        document.createElement("div");
+
+    badge.className =
+        "game-access-badge";
+
+
+    if (isPremium) {
 
         if (premiumUnlocked) {
 
-            badge =
-                '<div class="game-badge premium-badge">⭐ PREMIUM</div>';
+            badge.textContent =
+                "⭐ PREMIUM";
+
+            badge.classList.add(
+                "premium-unlocked"
+            );
 
         } else {
 
-            badge =
-                '<div class="game-badge premium-badge">🔒 PREMIUM</div>';
+            badge.textContent =
+                "🔒 PREMIUM";
+
+            badge.classList.add(
+                "premium-locked-badge"
+            );
 
         }
 
     } else {
 
-        badge =
-            '<div class="game-badge free-badge">FREE</div>';
+        badge.textContent =
+            "FREE";
+
+        badge.classList.add(
+            "free-badge"
+        );
 
     }
 
 
-    card.innerHTML = `
+    /*
+     * Put game information together.
+     */
 
-        <div class="game-img-container">
+    info.appendChild(title);
 
-            <img
-                src="${game.image}"
-                alt="${game.title}"
-                loading="lazy"
-            >
+    info.appendChild(category);
 
-            ${badge}
+    info.appendChild(grades);
 
-        </div>
-
-        <div class="game-title">
-            ${game.title}
-        </div>
-
-    `;
+    info.appendChild(badge);
 
 
     /*
-     * Handle locked Premium games.
+     * Put image and information into card.
      */
 
-    if (
-        isPremium &&
-        !premiumUnlocked
-    ) {
+    card.appendChild(image);
 
-        card.addEventListener(
-            "click",
-            function(event) {
+    card.appendChild(info);
+
+
+    /* =====================================================
+       PREMIUM LOCK CLICK BEHAVIOR
+       ===================================================== */
+
+    card.addEventListener(
+        "click",
+        function(event) {
+
+            /*
+             * Only intercept locked Premium games.
+             */
+
+            if (
+                game.access === "premium" &&
+                !hasPremiumAccess()
+            ) {
+
+                /*
+                 * Prevent the "#" link from opening.
+                 */
 
                 event.preventDefault();
 
-                event.stopPropagation();
-
 
                 /*
-                 * If the user is not logged in,
-                 * open the login window.
+                 * USER IS NOT LOGGED IN
+                 *
+                 * Send them to the Login / Sign Up
+                 * interface first.
                  */
 
-                if (
-                    typeof currentUser === "undefined" ||
-                    !currentUser
-                ) {
+                if (!currentUser) {
 
-                    if (
-                        typeof openAuthModal === "function"
-                    ) {
-
-                        openAuthModal();
-
-                    }
+                    openAuthModal();
 
                     return;
 
@@ -439,27 +504,35 @@ function createGameCard(game) {
 
 
                 /*
-                 * Logged-in FREE users receive
-                 * a simple premium message.
+                 * USER IS LOGGED IN BUT IS FREE
+                 *
+                 * Show Premium upgrade interface.
                  */
 
                 if (
-                    typeof showAuthMessage === "function"
+                    typeof openPremiumModal ===
+                    "function"
                 ) {
 
-                    openAuthModal();
+                    openPremiumModal();
 
-                    showAuthMessage(
-                        "This is a Premium game. Upgrade your account to unlock it.",
-                        "info"
+                } else {
+
+                    /*
+                     * Safety fallback in case the
+                     * Premium modal has not loaded.
+                     */
+
+                    alert(
+                        "This game is available to Premium members."
                     );
 
                 }
 
             }
-        );
 
-    }
+        }
+    );
 
 
     return card;
@@ -468,10 +541,12 @@ function createGameCard(game) {
 
 
 /* =========================================================
-   GENERATE FREE + PREMIUM GAME SECTIONS
+   GENERATE GAMES
    ========================================================= */
 
-function generateGames() {
+function generateGames(
+    gameList = games
+) {
 
     const gameGrid =
         document.getElementById(
@@ -480,162 +555,132 @@ function generateGames() {
 
 
     if (!gameGrid) {
-
-        console.error(
-            "Teacher Khen's Learning Hub: #gameGrid was not found."
-        );
-
         return;
-
     }
 
 
-    /* Clear existing content */
+    /*
+     * Clear current games.
+     */
 
     gameGrid.innerHTML = "";
 
 
-    /* =====================================================
-       DIVIDE GAMES
-       ===================================================== */
+    /*
+     * Separate Free and Premium games.
+     */
 
     const freeGames =
-        games.filter(function(game) {
-
-            return game.access !== "premium";
-
-        });
+        gameList.filter(
+            game =>
+                game.access !== "premium"
+        );
 
 
     const premiumGames =
-        games.filter(function(game) {
-
-            return game.access === "premium";
-
-        });
+        gameList.filter(
+            game =>
+                game.access === "premium"
+        );
 
 
     /* =====================================================
        FREE GAMES SECTION
        ===================================================== */
 
-    const freeSection =
-        document.createElement(
-            "section"
+    if (freeGames.length > 0) {
+
+        const freeHeading =
+            document.createElement("div");
+
+        freeHeading.className =
+            "game-section-title";
+
+        freeHeading.innerHTML =
+            "🎮 FREE GAMES";
+
+        gameGrid.appendChild(
+            freeHeading
         );
 
 
-    freeSection.className =
-        "game-section free-section";
+        freeGames.forEach(
+            game => {
 
+                gameGrid.appendChild(
+                    createGameCard(game)
+                );
 
-    freeSection.innerHTML = `
-
-        <div class="section-heading free-heading">
-
-            <span>🟢</span>
-
-            <h2>FREE GAMES</h2>
-
-            <span>🎮</span>
-
-        </div>
-
-        <div class="game-section-grid free-game-grid"></div>
-
-    `;
-
-
-    gameGrid.appendChild(
-        freeSection
-    );
-
-
-    const freeGrid =
-        freeSection.querySelector(
-            ".free-game-grid"
+            }
         );
 
-
-    freeGames.forEach(function(game) {
-
-        const card =
-            createGameCard(game);
-
-        freeGrid.appendChild(
-            card
-        );
-
-    });
+    }
 
 
     /* =====================================================
        PREMIUM GAMES SECTION
        ===================================================== */
 
-    const premiumSection =
-        document.createElement(
-            "section"
+    if (premiumGames.length > 0) {
+
+        const premiumHeading =
+            document.createElement("div");
+
+        premiumHeading.className =
+            "game-section-title premium-section-title";
+
+        premiumHeading.innerHTML =
+            "⭐ PREMIUM GAMES";
+
+        gameGrid.appendChild(
+            premiumHeading
         );
 
 
-    premiumSection.className =
-        "game-section premium-section";
+        premiumGames.forEach(
+            game => {
+
+                gameGrid.appendChild(
+                    createGameCard(game)
+                );
+
+            }
+        );
+
+    }
 
 
-    premiumSection.innerHTML = `
+    /*
+     * Update "No Results" message.
+     */
 
-        <div class="section-heading premium-heading">
-
-            <span>⭐</span>
-
-            <h2>PREMIUM GAMES</h2>
-
-            <span>⭐</span>
-
-        </div>
-
-        <div class="game-section-grid premium-game-grid"></div>
-
-    `;
-
-
-    gameGrid.appendChild(
-        premiumSection
-    );
-
-
-    const premiumGrid =
-        premiumSection.querySelector(
-            ".premium-game-grid"
+    const noResults =
+        document.getElementById(
+            "noResults"
         );
 
 
-    premiumGames.forEach(function(game) {
+    if (noResults) {
 
-        const card =
-            createGameCard(game);
+        if (gameList.length === 0) {
 
-        premiumGrid.appendChild(
-            card
-        );
+            noResults.style.display =
+                "block";
 
-    });
+        } else {
 
+            noResults.style.display =
+                "none";
 
-    console.log(
-        "Teacher Khen's Learning Hub:",
-        freeGames.length,
-        "free games,",
-        premiumGames.length,
-        "premium games."
-    );
+        }
+
+    }
 
 }
 
 
 /* =========================================================
-   GAME SEARCH
+   SEARCH / FILTER GAMES
    ========================================================= */
 
 function filterGames() {
@@ -651,89 +696,77 @@ function filterGames() {
     }
 
 
-    const input =
+    const searchTerm =
         searchInput.value
             .toLowerCase()
             .trim();
 
 
-    const cards =
-        document.querySelectorAll(
-            ".game-card"
-        );
+    /*
+     * If search box is empty,
+     * display everything.
+     */
 
+    if (!searchTerm) {
 
-    let visibleCount = 0;
+        generateGames(games);
 
-
-    cards.forEach(function(card) {
-
-        const keywords =
-            (
-                card.getAttribute(
-                    "data-name"
-                ) || ""
-            ).toLowerCase();
-
-
-        if (
-            keywords.includes(input)
-        ) {
-
-            card.classList.remove(
-                "hidden"
-            );
-
-            visibleCount++;
-
-        } else {
-
-            card.classList.add(
-                "hidden"
-            );
-
-        }
-
-    });
-
-
-    /* Hide an entire section if it has no visible games */
-
-    document
-        .querySelectorAll(
-            ".game-section"
-        )
-        .forEach(function(section) {
-
-            const visibleGames =
-                section.querySelectorAll(
-                    ".game-card:not(.hidden)"
-                );
-
-
-            section.style.display =
-                visibleGames.length > 0
-                    ? ""
-                    : "none";
-
-        });
-
-
-    /* Show no-results message */
-
-    const noResults =
-        document.getElementById(
-            "noResults"
-        );
-
-
-    if (noResults) {
-
-        noResults.style.display =
-            visibleCount === 0
-                ? "block"
-                : "none";
+        return;
 
     }
 
+
+    /*
+     * Search by:
+     *
+     * - title
+     * - category
+     * - grade level
+     */
+
+    const filteredGames =
+        games.filter(
+            game => {
+
+                const title =
+                    game.title
+                        .toLowerCase();
+
+                const category =
+                    game.category
+                        .toLowerCase();
+
+                const grades =
+                    game.grades
+                        .toLowerCase();
+
+
+                return (
+                    title.includes(searchTerm) ||
+                    category.includes(searchTerm) ||
+                    grades.includes(searchTerm)
+                );
+
+            }
+        );
+
+
+    generateGames(
+        filteredGames
+    );
+
 }
+
+
+/* =========================================================
+   INITIAL GAME DISPLAY
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        generateGames();
+
+    }
+);
