@@ -1,8 +1,30 @@
 /* =========================================================
    TEACHER KHEN'S LEARNING HUB
-   GENERAL WEBSITE FUNCTIONS
+   GENERAL WEBSITE FUNCTIONS + SUPABASE AUTHENTICATION
    ========================================================= */
 
+
+/* =========================================================
+   SUPABASE CONFIGURATION
+   ========================================================= */
+
+const SUPABASE_URL =
+    "https://unvrtytjplzpqarwgyzk.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_Gg2OzV3piK7i8SJUihZ9TQ_UspMmvd5";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+/* =========================================================
+   WEBSITE COLORS
+   ========================================================= */
 
 const colors = [
     '#29abe2',
@@ -277,11 +299,6 @@ function openFooterInfo(id) {
 
 function closeFooterInfo(event) {
 
-    /*
-     * If the click happened inside
-     * the popup card, do nothing.
-     */
-
     if (
         event &&
         event.target &&
@@ -317,7 +334,579 @@ function closeFooterInfo(event) {
 
 
 /* =========================================================
-   CLOSE MODALS WITH ESCAPE
+   AUTH MODAL
+   ========================================================= */
+
+function openAuthModal() {
+
+    const modal =
+        document.getElementById(
+            'auth-modal'
+        );
+
+
+    if (!modal) {
+        return;
+    }
+
+
+    modal.classList.add(
+        'active'
+    );
+
+
+    document.body.classList.add(
+        'modal-open'
+    );
+
+
+    showLoginForm();
+
+}
+
+
+function closeAuthModal() {
+
+    const modal =
+        document.getElementById(
+            'auth-modal'
+        );
+
+
+    if (!modal) {
+        return;
+    }
+
+
+    modal.classList.remove(
+        'active'
+    );
+
+
+    document.body.classList.remove(
+        'modal-open'
+    );
+
+
+    clearAuthMessage();
+
+}
+
+
+function showLoginForm() {
+
+    document.getElementById(
+        'loginForm'
+    ).style.display = 'block';
+
+
+    document.getElementById(
+        'signupForm'
+    ).style.display = 'none';
+
+
+    document.getElementById(
+        'authTitle'
+    ).textContent =
+        'Welcome Back!';
+
+
+    document.getElementById(
+        'authSubtitle'
+    ).textContent =
+        'Log in to your Teacher Khen account.';
+
+
+    clearAuthMessage();
+
+}
+
+
+function showSignupForm() {
+
+    document.getElementById(
+        'loginForm'
+    ).style.display = 'none';
+
+
+    document.getElementById(
+        'signupForm'
+    ).style.display = 'block';
+
+
+    document.getElementById(
+        'authTitle'
+    ).textContent =
+        'Create Your Account';
+
+
+    document.getElementById(
+        'authSubtitle'
+    ).textContent =
+        'Create an account for Teacher Khen\'s Learning Hub.';
+
+
+    clearAuthMessage();
+
+}
+
+
+/* =========================================================
+   AUTH MESSAGE
+   ========================================================= */
+
+function showAuthMessage(
+    message,
+    type = 'info'
+) {
+
+    const messageBox =
+        document.getElementById(
+            'authMessage'
+        );
+
+
+    if (!messageBox) {
+        return;
+    }
+
+
+    messageBox.textContent =
+        message;
+
+
+    messageBox.className =
+        'auth-message ' + type;
+
+}
+
+
+function clearAuthMessage() {
+
+    const messageBox =
+        document.getElementById(
+            'authMessage'
+        );
+
+
+    if (!messageBox) {
+        return;
+    }
+
+
+    messageBox.textContent =
+        '';
+
+
+    messageBox.className =
+        'auth-message';
+
+}
+
+
+/* =========================================================
+   SIGN UP
+   ========================================================= */
+
+async function signupUser() {
+
+    const email =
+        document
+            .getElementById(
+                'signupEmail'
+            )
+            .value
+            .trim();
+
+
+    const password =
+        document
+            .getElementById(
+                'signupPassword'
+            )
+            .value;
+
+
+    const confirmPassword =
+        document
+            .getElementById(
+                'signupPasswordConfirm'
+            )
+            .value;
+
+
+    if (!email || !password) {
+
+        showAuthMessage(
+            'Please enter your email and password.',
+            'error'
+        );
+
+        return;
+
+    }
+
+
+    if (password.length < 6) {
+
+        showAuthMessage(
+            'Password must be at least 6 characters.',
+            'error'
+        );
+
+        return;
+
+    }
+
+
+    if (
+        password !==
+        confirmPassword
+    ) {
+
+        showAuthMessage(
+            'Passwords do not match.',
+            'error'
+        );
+
+        return;
+
+    }
+
+
+    showAuthMessage(
+        'Creating your account...',
+        'info'
+    );
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient.auth.signUp({
+
+            email: email,
+
+            password: password
+
+        });
+
+
+    if (error) {
+
+        console.error(
+            'Signup error:',
+            error
+        );
+
+
+        showAuthMessage(
+            error.message,
+            'error'
+        );
+
+
+        return;
+
+    }
+
+
+    console.log(
+        'Signup successful:',
+        data
+    );
+
+
+    if (
+        data.user &&
+        !data.session
+    ) {
+
+        showAuthMessage(
+            'Account created! Please check your email and confirm your account before logging in.',
+            'success'
+        );
+
+    } else {
+
+        showAuthMessage(
+            'Account created successfully!',
+            'success'
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LOGIN
+   ========================================================= */
+
+async function loginUser() {
+
+    const email =
+        document
+            .getElementById(
+                'loginEmail'
+            )
+            .value
+            .trim();
+
+
+    const password =
+        document
+            .getElementById(
+                'loginPassword'
+            )
+            .value;
+
+
+    if (!email || !password) {
+
+        showAuthMessage(
+            'Please enter your email and password.',
+            'error'
+        );
+
+        return;
+
+    }
+
+
+    showAuthMessage(
+        'Logging in...',
+        'info'
+    );
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient.auth.signInWithPassword({
+
+            email: email,
+
+            password: password
+
+        });
+
+
+    if (error) {
+
+        console.error(
+            'Login error:',
+            error
+        );
+
+
+        showAuthMessage(
+            error.message,
+            'error'
+        );
+
+
+        return;
+
+    }
+
+
+    console.log(
+        'Login successful:',
+        data
+    );
+
+
+    showAuthMessage(
+        'Login successful!',
+        'success'
+    );
+
+
+    updateAuthUI(
+        data.session
+            ? data.session.user
+            : null
+    );
+
+
+    setTimeout(
+        function() {
+
+            closeAuthModal();
+
+        },
+        700
+    );
+
+}
+
+
+/* =========================================================
+   LOGOUT
+   ========================================================= */
+
+async function logoutUser() {
+
+    const {
+        error
+    } =
+        await supabaseClient.auth.signOut();
+
+
+    if (error) {
+
+        console.error(
+            'Logout error:',
+            error
+        );
+
+        return;
+
+    }
+
+
+    updateAuthUI(null);
+
+}
+
+
+/* =========================================================
+   UPDATE LOGIN / LOGOUT UI
+   ========================================================= */
+
+function updateAuthUI(user) {
+
+    const loginBtn =
+        document.getElementById(
+            'loginBtn'
+        );
+
+
+    const userAccount =
+        document.getElementById(
+            'userAccount'
+        );
+
+
+    const userEmail =
+        document.getElementById(
+            'userEmail'
+        );
+
+
+    if (!loginBtn || !userAccount) {
+        return;
+    }
+
+
+    if (user) {
+
+        loginBtn.style.display =
+            'none';
+
+
+        userAccount.style.display =
+            'flex';
+
+
+        if (userEmail) {
+
+            userEmail.textContent =
+                user.email || 'Account';
+
+        }
+
+    } else {
+
+        loginBtn.style.display =
+            'flex';
+
+
+        userAccount.style.display =
+            'none';
+
+    }
+
+}
+
+
+/* =========================================================
+   CHECK CURRENT SESSION
+   ========================================================= */
+
+async function checkAuthSession() {
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient.auth.getSession();
+
+
+    if (error) {
+
+        console.error(
+            'Session error:',
+            error
+        );
+
+
+        updateAuthUI(null);
+
+        return;
+
+    }
+
+
+    const session =
+        data.session;
+
+
+    if (session) {
+
+        updateAuthUI(
+            session.user
+        );
+
+    } else {
+
+        updateAuthUI(
+            null
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LISTEN FOR LOGIN / LOGOUT CHANGES
+   ========================================================= */
+
+supabaseClient.auth.onAuthStateChange(
+    function(event, session) {
+
+        console.log(
+            'Auth event:',
+            event
+        );
+
+
+        updateAuthUI(
+            session
+                ? session.user
+                : null
+        );
+
+    }
+);
+
+
+/* =========================================================
+   CLOSE AUTH MODAL WITH ESCAPE
    ========================================================= */
 
 document.addEventListener(
@@ -331,6 +920,9 @@ document.addEventListener(
             toggleReminder(false);
 
             toggleDonateModal(false);
+
+            closeAuthModal();
+
 
             document
                 .querySelectorAll(
@@ -382,6 +974,16 @@ document.addEventListener(
 
         }
 
+
+        if (
+            event.target.id ===
+            'auth-modal'
+        ) {
+
+            closeAuthModal();
+
+        }
+
     }
 );
 
@@ -397,6 +999,8 @@ window.addEventListener(
         generateTitle();
 
         generateGames();
+
+        checkAuthSession();
 
     }
 );
