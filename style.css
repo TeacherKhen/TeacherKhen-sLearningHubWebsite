@@ -2511,10 +2511,6 @@ body.modal-open {
 }
 
 
-/* =========================================================
-   LOGIN BUTTON
-   ========================================================= */
-
 .account-btn {
 
     display:
@@ -2642,10 +2638,6 @@ body.modal-open {
 }
 
 
-/* =========================================================
-   USER ACCOUNT INFORMATION
-   ========================================================= */
-
 .user-account-info {
 
     display:
@@ -2665,10 +2657,6 @@ body.modal-open {
 
 }
 
-
-/* =========================================================
-   USER ICON
-   ========================================================= */
 
 .user-account-icon {
 
@@ -2709,10 +2697,6 @@ body.modal-open {
 }
 
 
-/* =========================================================
-   USER DETAILS
-   ========================================================= */
-
 .user-account-details {
 
     display:
@@ -2738,10 +2722,6 @@ body.modal-open {
 
 }
 
-
-/* =========================================================
-   USER EMAIL
-   ========================================================= */
 
 .user-email {
 
@@ -2779,10 +2759,6 @@ body.modal-open {
 
 }
 
-
-/* =========================================================
-   USER PLAN
-   ========================================================= */
 
 .user-plan {
 
@@ -2823,10 +2799,6 @@ body.modal-open {
 }
 
 
-/* =========================================================
-   ACCOUNT ACTIONS
-   ========================================================= */
-
 .user-account-actions {
 
     display:
@@ -2846,10 +2818,6 @@ body.modal-open {
 
 }
 
-
-/* =========================================================
-   UPGRADE BUTTON
-   ========================================================= */
 
 .account-upgrade-btn {
 
@@ -2933,10 +2901,6 @@ body.modal-open {
 
 }
 
-
-/* =========================================================
-   LOGOUT BUTTON
-   ========================================================= */
 
 .logout-btn {
 
@@ -3597,7 +3561,7 @@ body.modal-open {
         relative;
 
     width:
-        min(520px,94vw);
+        min(650px,94vw);
 
     max-height:
         90vh;
@@ -3855,7 +3819,7 @@ body.modal-open {
         0 auto 24px;
 
     max-width:
-        430px;
+        500px;
 
     color:
         #475569;
@@ -3887,10 +3851,10 @@ body.modal-open {
         column;
 
     gap:
-        12px;
+        10px;
 
     margin:
-        20px 0 24px;
+        18px 0 24px;
 
     text-align:
         left;
@@ -3910,7 +3874,7 @@ body.modal-open {
         14px;
 
     padding:
-        14px 16px;
+        12px 16px;
 
     background:
         #fffaf0;
@@ -4017,6 +3981,497 @@ body.modal-open {
 
     line-height:
         1.4;
+
+}
+
+
+/* =========================================================
+   PREMIUM PLAN SELECTOR
+   ========================================================= */
+
+.premium-plan-section {
+
+    margin:
+        28px 0 24px;
+
+    padding:
+        24px 0 0;
+
+    border-top:
+        3px dashed
+        #fde68a;
+
+}
+
+
+.premium-plan-heading {
+
+    margin:
+        0;
+
+    color:
+        #1e293b;
+
+    font-family:
+        'Luckiest Guy',
+        cursive;
+
+    font-size:
+        24px;
+
+    letter-spacing:
+        0.5px;
+
+}
+
+
+.premium-plan-section > .premium-plan-description {
+
+    margin:
+        7px 0 20px;
+
+    color:
+        #64748b;
+
+    font-family:
+        'Chalkboard SE',
+        'Arial',
+        sans-serif;
+
+    font-size:
+        14px;
+
+}
+
+
+.premium-plan-options {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap:
+        18px;
+
+    width:
+        100%;
+
+}
+
+
+/* =========================================================
+   INDIVIDUAL PLAN CARD
+   ========================================================= */
+
+.premium-plan-option {
+
+    position:
+        relative;
+
+    min-height:
+        245px;
+
+    box-sizing:
+        border-box;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        25px 18px 20px;
+
+    background:
+        white;
+
+    border:
+        3px solid
+        #e2e8f0;
+
+    border-radius:
+        22px;
+
+    color:
+        #1e293b;
+
+    font-family:
+        'Chalkboard SE',
+        'Arial',
+        sans-serif;
+
+    cursor:
+        pointer;
+
+    box-shadow:
+        0 6px 0
+        #cbd5e1;
+
+    transition:
+        all 0.2s ease;
+
+}
+
+
+.premium-plan-option:hover {
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        #fbbf24;
+
+    box-shadow:
+        0 10px 0
+        #d9a20b;
+
+}
+
+
+.premium-plan-option.selected {
+
+    border:
+        4px solid
+        #f59e0b;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fffdf5,
+            #fff7d6
+        );
+
+    box-shadow:
+        0 7px 0
+        #d97706,
+
+        0 12px 25px
+        rgba(245,158,11,0.18);
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+.premium-plan-option.selected:hover {
+
+    transform:
+        translateY(-5px);
+
+}
+
+
+/* =========================================================
+   PLAN ICON
+   ========================================================= */
+
+.premium-plan-icon {
+
+    width:
+        58px;
+
+    height:
+        58px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    margin-bottom:
+        10px;
+
+    border-radius:
+        50%;
+
+    background:
+        #fff8dc;
+
+    border:
+        3px solid
+        #fde68a;
+
+    font-size:
+        28px;
+
+    box-shadow:
+        0 4px 10px
+        rgba(0,0,0,0.08);
+
+}
+
+
+/* =========================================================
+   PLAN NAME
+   ========================================================= */
+
+.premium-plan-name {
+
+    margin-bottom:
+        5px;
+
+    font-family:
+        'Luckiest Guy',
+        cursive;
+
+    font-size:
+        18px;
+
+    letter-spacing:
+        1px;
+
+    color:
+        #475569;
+
+}
+
+
+.premium-plan-option.selected
+.premium-plan-name {
+
+    color:
+        #d97706;
+
+}
+
+
+/* =========================================================
+   PLAN PRICE
+   ========================================================= */
+
+.premium-plan-price {
+
+    font-family:
+        'Luckiest Guy',
+        cursive;
+
+    font-size:
+        38px;
+
+    line-height:
+        1;
+
+    color:
+        #1e293b;
+
+    margin:
+        5px 0 2px;
+
+}
+
+
+.premium-plan-option.selected
+.premium-plan-price {
+
+    color:
+        #f59e0b;
+
+}
+
+
+/* =========================================================
+   PLAN PERIOD
+   ========================================================= */
+
+.premium-plan-period {
+
+    color:
+        #64748b;
+
+    font-size:
+        13px;
+
+    font-weight:
+        bold;
+
+}
+
+
+/* =========================================================
+   PLAN DESCRIPTION
+   ========================================================= */
+
+.premium-plan-option .premium-plan-description {
+
+    color:
+        #64748b;
+
+    font-size:
+        12px;
+
+    line-height:
+        1.4;
+
+    margin:
+        8px 0 14px;
+
+}
+
+
+/* =========================================================
+   PLAN SELECT LABEL
+   ========================================================= */
+
+.premium-plan-select {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    min-width:
+        120px;
+
+    padding:
+        8px 14px;
+
+    border-radius:
+        20px;
+
+    background:
+        #f1f5f9;
+
+    color:
+        #475569;
+
+    font-family:
+        'Luckiest Guy',
+        cursive;
+
+    font-size:
+        12px;
+
+    letter-spacing:
+        0.5px;
+
+}
+
+
+.premium-plan-option.selected
+.premium-plan-select {
+
+    background:
+        #f59e0b;
+
+    color:
+        white;
+
+    box-shadow:
+        0 3px 0
+        #d97706;
+
+}
+
+
+/* =========================================================
+   BEST VALUE BADGE
+   ========================================================= */
+
+.premium-plan-value-badge {
+
+    position:
+        absolute;
+
+    top:
+        -12px;
+
+    right:
+        14px;
+
+    padding:
+        5px 11px;
+
+    border-radius:
+        20px;
+
+    background:
+        #009245;
+
+    color:
+        white;
+
+    font-family:
+        'Luckiest Guy',
+        cursive;
+
+    font-size:
+        10px;
+
+    letter-spacing:
+        0.5px;
+
+    box-shadow:
+        0 3px 0
+        #006b32;
+
+}
+
+
+/* =========================================================
+   SELECTED PLAN SUMMARY
+   ========================================================= */
+
+.premium-selected-plan {
+
+    margin:
+        18px 0 18px;
+
+    padding:
+        13px 16px;
+
+    border:
+        2px solid
+        #fde68a;
+
+    border-radius:
+        14px;
+
+    background:
+        #fffdf5;
+
+    color:
+        #64748b;
+
+    font-family:
+        'Chalkboard SE',
+        'Arial',
+        sans-serif;
+
+    font-size:
+        14px;
+
+}
+
+
+.premium-selected-plan strong {
+
+    color:
+        #f59e0b;
+
+    font-family:
+        'Luckiest Guy',
+        cursive;
+
+    font-size:
+        16px;
 
 }
 
@@ -4201,7 +4656,6 @@ body.modal-open {
 
 /* =========================================================
    PREMIUM ACCESS BADGES
-   These do NOT affect game logo/image dimensions.
    ========================================================= */
 
 .game-access-badge {
@@ -4374,6 +4828,95 @@ body.modal-open {
     .premium-benefit p {
 
         font-size:
+            12px;
+
+    }
+
+
+    /* =====================================================
+       PREMIUM PLAN MOBILE
+       ===================================================== */
+
+    .premium-plan-section {
+
+        margin-top:
+            22px;
+
+        padding-top:
+            20px;
+
+    }
+
+
+    .premium-plan-heading {
+
+        font-size:
+            21px;
+
+    }
+
+
+    .premium-plan-section > .premium-plan-description {
+
+        font-size:
+            13px;
+
+        margin-bottom:
+            18px;
+
+    }
+
+
+    .premium-plan-options {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            16px;
+
+    }
+
+
+    .premium-plan-option {
+
+        min-height:
+            220px;
+
+        padding:
+            22px 16px 18px;
+
+    }
+
+
+    .premium-plan-price {
+
+        font-size:
+            34px;
+
+    }
+
+
+    .premium-plan-icon {
+
+        width:
+            52px;
+
+        height:
+            52px;
+
+        font-size:
+            25px;
+
+    }
+
+
+    .premium-plan-value-badge {
+
+        top:
+            -10px;
+
+        right:
             12px;
 
     }
