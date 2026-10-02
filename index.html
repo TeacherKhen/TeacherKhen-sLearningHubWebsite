@@ -1,35 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Teacher Khen's Learning Hub</title>
 
-    <!-- Google AdSense -->
+
+    <!-- =========================================================
+         GOOGLE ADSENSE
+         ========================================================= -->
+
     <script async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1688473629636200"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+    </script>
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Chalkboard+SE&display=swap"
-          rel="stylesheet">
 
-    <!-- Font Awesome -->
+    <!-- =========================================================
+         GOOGLE FONTS
+         ========================================================= -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Chalkboard+SE&display=swap"
+        rel="stylesheet">
+
+
+    <!-- =========================================================
+         FONT AWESOME
+         ========================================================= -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+    <!-- =========================================================
+         MAIN STYLESHEET
+         ========================================================= -->
+
     <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+          href="style.css">
 
-    <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="style.css">
 
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- =========================================================
+         SUPABASE
+         ========================================================= -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+    </script>
+
 </head>
+
 
 <body>
 
-    <!-- Background -->
+
+    <!-- =========================================================
+         BACKGROUND
+         ========================================================= -->
+
     <div class="bg-container"></div>
+
 
 
     <!-- =========================================================
@@ -48,8 +84,9 @@
                 Enjoy FREE learning materials for your classroom!
             </p>
 
-            <button class="enter-btn"
-                    onclick="enterSite()">
+            <button
+                class="enter-btn"
+                onclick="enterSite()">
 
                 START LEARNING ➔
 
@@ -60,6 +97,7 @@
     </div>
 
 
+
     <!-- =========================================================
          HUB REMINDERS & INFO
          ========================================================= -->
@@ -68,8 +106,9 @@
 
         <div class="reminder-card">
 
-            <div class="close-x"
-                 onclick="toggleReminder(false)">
+            <div
+                class="close-x"
+                onclick="toggleReminder(false)">
 
                 <i class="fas fa-times"></i>
 
@@ -126,8 +165,9 @@
                     Have questions, technical issues, or feedback?
                     Feel free to reach out directly at:
 
-                    <a href="mailto:khenetsherwin97@gmail.com"
-                       class="reminder-email">
+                    <a
+                        href="mailto:khenetsherwin97@gmail.com"
+                        class="reminder-email">
 
                         khenetsherwin97@gmail.com
 
@@ -162,8 +202,9 @@
 
                     <div class="qr-box">
 
-                        <img src="GCASH.png"
-                             alt="GCash QR Code">
+                        <img
+                            src="GCASH.png"
+                            alt="GCash QR Code">
 
                         <div class="qr-label">
                             GCash
@@ -174,8 +215,9 @@
 
                     <div class="qr-box">
 
-                        <img src="Paypal.png"
-                             alt="PayPal QR Code">
+                        <img
+                            src="Paypal.png"
+                            alt="PayPal QR Code">
 
                         <div class="qr-label">
                             PayPal
@@ -188,8 +230,9 @@
             </div>
 
 
-            <button class="back-btn"
-                    onclick="toggleReminder(false)">
+            <button
+                class="back-btn"
+                onclick="toggleReminder(false)">
 
                 Back to Learning Hub
 
@@ -200,6 +243,7 @@
     </div>
 
 
+
     <!-- =========================================================
          DONATION MODAL
          ========================================================= -->
@@ -208,8 +252,9 @@
 
         <div class="donate-card">
 
-            <div class="close-x"
-                 onclick="toggleDonateModal(false)">
+            <div
+                class="close-x"
+                onclick="toggleDonateModal(false)">
 
                 <i class="fas fa-times"></i>
 
@@ -235,8 +280,9 @@
 
                 <div class="qr-box">
 
-                    <img src="GCASH.png"
-                         alt="GCash QR Code">
+                    <img
+                        src="GCASH.png"
+                        alt="GCash QR Code">
 
                     <div class="qr-label">
                         GCash
@@ -247,8 +293,9 @@
 
                 <div class="qr-box">
 
-                    <img src="Paypal.png"
-                         alt="PayPal QR Code">
+                    <img
+                        src="Paypal.png"
+                        alt="PayPal QR Code">
 
                     <div class="qr-label">
                         PayPal
@@ -259,8 +306,9 @@
             </div>
 
 
-            <button class="back-btn"
-                    onclick="toggleDonateModal(false)">
+            <button
+                class="back-btn"
+                onclick="toggleDonateModal(false)">
 
                 Close
 
@@ -269,6 +317,7 @@
         </div>
 
     </div>
+
 
 
     <!-- =========================================================
@@ -312,7 +361,10 @@
             </p>
 
 
-            <!-- LOGIN FORM -->
+
+            <!-- =====================================================
+                 LOGIN FORM
+                 ===================================================== -->
 
             <div id="loginForm">
 
@@ -337,6 +389,7 @@
                     onclick="loginUser()">
 
                     <i class="fas fa-right-to-bracket"></i>
+
                     Login
 
                 </button>
@@ -347,14 +400,20 @@
                     onclick="showSignupForm()">
 
                     Don't have an account?
-                    <strong>Sign Up</strong>
+
+                    <strong>
+                        Sign Up
+                    </strong>
 
                 </button>
 
             </div>
 
 
-            <!-- SIGNUP FORM -->
+
+            <!-- =====================================================
+                 SIGNUP FORM
+                 ===================================================== -->
 
             <div
                 id="signupForm"
@@ -389,6 +448,7 @@
                     onclick="signupUser()">
 
                     <i class="fas fa-user-plus"></i>
+
                     Create Account
 
                 </button>
@@ -399,24 +459,30 @@
                     onclick="showLoginForm()">
 
                     Already have an account?
-                    <strong>Login</strong>
+
+                    <strong>
+                        Login
+                    </strong>
 
                 </button>
 
             </div>
 
 
-            <!-- AUTH MESSAGE -->
+
+            <!-- =====================================================
+                 AUTH MESSAGE
+                 ===================================================== -->
 
             <div
                 id="authMessage"
                 class="auth-message">
-
             </div>
 
         </div>
 
     </div>
+
 
 
     <!-- =========================================================
@@ -428,6 +494,7 @@
         class="premium-modal">
 
         <div class="premium-card">
+
 
             <!-- Close -->
 
@@ -444,9 +511,7 @@
             <!-- Premium Icon -->
 
             <div class="premium-icon">
-
                 ⭐
-
             </div>
 
 
@@ -467,9 +532,12 @@
             </p>
 
 
-            <!-- Benefits -->
+            <!-- =====================================================
+                 BENEFITS
+                 ===================================================== -->
 
             <div class="premium-benefits">
+
 
                 <div class="premium-benefit">
 
@@ -552,8 +620,7 @@
 
             <!-- Temporary Payment Message -->
 
-            <div
-                class="premium-coming-soon">
+            <div class="premium-coming-soon">
 
                 <i class="fas fa-credit-card"></i>
 
@@ -577,6 +644,7 @@
     </div>
 
 
+
     <!-- =========================================================
          MAIN CONTENT
          ========================================================= -->
@@ -590,8 +658,10 @@
 
         <header class="header-container">
 
-            <div class="website-name"
-                 id="main-title">
+
+            <div
+                class="website-name"
+                id="main-title">
             </div>
 
 
@@ -599,10 +669,12 @@
 
 
                 <!-- Help -->
-                <button class="contact-btn help"
-                        onclick="toggleReminder(true)"
-                        title="Reminders & Info"
-                        aria-label="Reminders and Information">
+
+                <button
+                    class="contact-btn help"
+                    onclick="toggleReminder(true)"
+                    title="Reminders & Info"
+                    aria-label="Reminders and Information">
 
                     <i class="fas fa-question"></i>
 
@@ -610,11 +682,13 @@
 
 
                 <!-- Facebook -->
-                <a href="https://www.facebook.com/khenethsherwin.avila.9"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="contact-btn fb"
-                   title="Facebook">
+
+                <a
+                    href="https://www.facebook.com/khenethsherwin.avila.9"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="contact-btn fb"
+                    title="Facebook">
 
                     <i class="fab fa-facebook-f"></i>
 
@@ -622,11 +696,13 @@
 
 
                 <!-- Instagram -->
-                <a href="https://www.instagram.com/kheneth_02/"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="contact-btn ig"
-                   title="Instagram">
+
+                <a
+                    href="https://www.instagram.com/kheneth_02/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="contact-btn ig"
+                    title="Instagram">
 
                     <i class="fab fa-instagram"></i>
 
@@ -634,19 +710,23 @@
 
 
                 <!-- Search -->
-                <input type="text"
-                       id="gameSearch"
-                       placeholder="🔍 Type game name here..."
-                       oninput="filterGames()"
-                       aria-label="Search games">
+
+                <input
+                    type="text"
+                    id="gameSearch"
+                    placeholder="🔍 Type game name here..."
+                    oninput="filterGames()"
+                    aria-label="Search games">
 
 
                 <!-- YouTube -->
-                <a href="https://www.youtube.com/@khenethavila"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="contact-btn yt"
-                   title="YouTube">
+
+                <a
+                    href="https://www.youtube.com/@khenethavila"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="contact-btn yt"
+                    title="YouTube">
 
                     <i class="fab fa-youtube"></i>
 
@@ -654,11 +734,13 @@
 
 
                 <!-- Blogger -->
-                <a href="https://teacherkhenlearninghub.blogspot.com/"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="contact-btn blogger"
-                   title="Blogger">
+
+                <a
+                    href="https://teacherkhenlearninghub.blogspot.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="contact-btn blogger"
+                    title="Blogger">
 
                     <i class="fab fa-blogger-b"></i>
 
@@ -666,11 +748,13 @@
 
 
                 <!-- TikTok -->
-                <a href="https://www.tiktok.com/@khenethavila"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="contact-btn tiktok"
-                   title="TikTok">
+
+                <a
+                    href="https://www.tiktok.com/@khenethavila"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="contact-btn tiktok"
+                    title="TikTok">
 
                     <i class="fab fa-tiktok"></i>
 
@@ -679,11 +763,15 @@
             </div>
 
 
+
             <!-- =====================================================
                  ACCOUNT / LOGIN
                  ===================================================== -->
 
             <div class="account-area">
+
+
+                <!-- LOGIN BUTTON -->
 
                 <button
                     id="loginBtn"
@@ -691,28 +779,85 @@
                     onclick="openAuthModal()">
 
                     <i class="fas fa-user"></i>
+
                     Login
 
                 </button>
 
+
+
+                <!-- LOGGED-IN ACCOUNT -->
 
                 <div
                     id="userAccount"
                     class="user-account"
                     style="display: none;">
 
-                    <span id="userEmail">
-                        User
-                    </span>
 
-                    <button
-                        class="logout-btn"
-                        onclick="logoutUser()">
+                    <!-- User Identity -->
 
-                        <i class="fas fa-right-from-bracket"></i>
-                        Logout
+                    <div class="user-account-info">
 
-                    </button>
+
+                        <div class="user-account-icon">
+
+                            <i class="fas fa-user"></i>
+
+                        </div>
+
+
+                        <div class="user-account-details">
+
+
+                            <span
+                                id="userEmail"
+                                class="user-email">
+
+                                User
+
+                            </span>
+
+
+                            <span
+                                id="userPlan"
+                                class="user-plan">
+
+                                FREE MEMBER
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Account Actions -->
+
+                    <div class="user-account-actions">
+
+
+                        <button
+                            id="upgradeAccountBtn"
+                            class="account-upgrade-btn"
+                            onclick="openPremiumModal()">
+
+                            ⭐ Upgrade to Premium
+
+                        </button>
+
+
+                        <button
+                            class="logout-btn"
+                            onclick="logoutUser()">
+
+                            <i class="fas fa-right-from-bracket"></i>
+
+                            Logout
+
+                        </button>
+
+                    </div>
 
                 </div>
 
@@ -721,12 +866,14 @@
         </header>
 
 
+
         <!-- =====================================================
              GAME GRID
              ===================================================== -->
 
-        <div class="game-grid"
-             id="gameGrid">
+        <div
+            class="game-grid"
+            id="gameGrid">
 
             <!--
                 GAME CARDS ARE GENERATED AUTOMATICALLY
@@ -736,16 +883,19 @@
         </div>
 
 
+
         <!-- =====================================================
-             NO SEARCH RESULTS MESSAGE
+             NO SEARCH RESULTS
              ===================================================== -->
 
-        <div id="noResults"
-             class="no-results">
+        <div
+            id="noResults"
+            class="no-results">
 
             🔎 No games found. Try another search!
 
         </div>
+
 
 
         <!-- =====================================================
@@ -754,8 +904,9 @@
 
         <div class="bottom-donate-container">
 
-            <button class="donate-btn"
-                    onclick="toggleDonateModal(true)">
+            <button
+                class="donate-btn"
+                onclick="toggleDonateModal(true)">
 
                 <i class="fas fa-heart"></i>
 
@@ -766,6 +917,7 @@
         </div>
 
     </main>
+
 
 
     <!-- =========================================================
@@ -785,45 +937,49 @@
             <div class="footer-links">
 
 
-                <button type="button"
-                        onclick="openFooterInfo('about-info')">
+                <button
+                    type="button"
+                    onclick="openFooterInfo('about-info')">
 
                     👨‍🏫 About Teacher Khen
 
                 </button>
 
 
-                <button type="button"
-                        onclick="openFooterInfo('how-to-use-info')">
+                <button
+                    type="button"
+                    onclick="openFooterInfo('how-to-use-info')">
 
                     🚀 How to Use
 
                 </button>
 
 
-                <button type="button"
-                        onclick="openFooterInfo('resources-info')">
+                <button
+                    type="button"
+                    onclick="openFooterInfo('resources-info')">
 
                     ✨ Resources
 
                 </button>
 
 
-                <button type="button"
-                        onclick="openFooterInfo('contact-info')">
+                <button
+                    type="button"
+                    onclick="openFooterInfo('contact-info')">
 
                     ✉️ Contact
 
                 </button>
 
 
-                <button type="button"
-                        onclick="openFooterInfo('teacher-info')">
+                <button
+                    type="button"
+                    onclick="openFooterInfo('teacher-info')">
 
                     📚 Teacher Information
 
                 </button>
-
 
             </div>
 
@@ -831,45 +987,48 @@
             <div class="footer-social">
 
 
-                <a href="https://www.facebook.com/khenethsherwin.avila.9"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   title="Facebook">
+                <a
+                    href="https://www.facebook.com/khenethsherwin.avila.9"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Facebook">
 
                     <i class="fab fa-facebook-f"></i>
 
                 </a>
 
 
-                <a href="https://www.instagram.com/kheneth_02/"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   title="Instagram">
+                <a
+                    href="https://www.instagram.com/kheneth_02/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Instagram">
 
                     <i class="fab fa-instagram"></i>
 
                 </a>
 
 
-                <a href="https://www.youtube.com/@khenethavila"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   title="YouTube">
+                <a
+                    href="https://www.youtube.com/@khenethavila"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="YouTube">
 
                     <i class="fab fa-youtube"></i>
 
                 </a>
 
 
-                <a href="https://www.tiktok.com/@khenethavila"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   title="TikTok">
+                <a
+                    href="https://www.tiktok.com/@khenethavila"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="TikTok">
 
                     <i class="fab fa-tiktok"></i>
 
                 </a>
-
 
             </div>
 
@@ -895,26 +1054,28 @@
 
             </div>
 
-
         </div>
 
     </footer>
+
 
 
     <!-- =========================================================
          ABOUT FOOTER POPUP
          ========================================================= -->
 
-    <div id="about-info"
-         class="footer-info-overlay"
-         onclick="closeFooterInfo(event)">
+    <div
+        id="about-info"
+        class="footer-info-overlay"
+        onclick="closeFooterInfo(event)">
 
         <div class="footer-info-card">
 
 
-            <button class="footer-info-close"
-                    onclick="closeFooterInfo()"
-                    aria-label="Close">
+            <button
+                class="footer-info-close"
+                onclick="closeFooterInfo()"
+                aria-label="Close">
 
                 ×
 
@@ -985,7 +1146,6 @@
                     💡 Classroom Innovation
                 </div>
 
-
             </div>
 
         </div>
@@ -993,20 +1153,23 @@
     </div>
 
 
+
     <!-- =========================================================
          HOW TO USE FOOTER POPUP
          ========================================================= -->
 
-    <div id="how-to-use-info"
-         class="footer-info-overlay"
-         onclick="closeFooterInfo(event)">
+    <div
+        id="how-to-use-info"
+        class="footer-info-overlay"
+        onclick="closeFooterInfo(event)">
 
         <div class="footer-info-card">
 
 
-            <button class="footer-info-close"
-                    onclick="closeFooterInfo()"
-                    aria-label="Close">
+            <button
+                class="footer-info-close"
+                onclick="closeFooterInfo()"
+                aria-label="Close">
 
                 ×
 
@@ -1100,7 +1263,6 @@
 
                 </div>
 
-
             </div>
 
         </div>
@@ -1108,20 +1270,23 @@
     </div>
 
 
+
     <!-- =========================================================
          RESOURCES FOOTER POPUP
          ========================================================= -->
 
-    <div id="resources-info"
-         class="footer-info-overlay"
-         onclick="closeFooterInfo(event)">
+    <div
+        id="resources-info"
+        class="footer-info-overlay"
+        onclick="closeFooterInfo(event)">
 
         <div class="footer-info-card">
 
 
-            <button class="footer-info-close"
-                    onclick="closeFooterInfo()"
-                    aria-label="Close">
+            <button
+                class="footer-info-close"
+                onclick="closeFooterInfo()"
+                aria-label="Close">
 
                 ×
 
@@ -1191,7 +1356,6 @@
 
                 </div>
 
-
             </div>
 
         </div>
@@ -1199,20 +1363,23 @@
     </div>
 
 
+
     <!-- =========================================================
          CONTACT FOOTER POPUP
          ========================================================= -->
 
-    <div id="contact-info"
-         class="footer-info-overlay"
-         onclick="closeFooterInfo(event)">
+    <div
+        id="contact-info"
+        class="footer-info-overlay"
+        onclick="closeFooterInfo(event)">
 
         <div class="footer-info-card">
 
 
-            <button class="footer-info-close"
-                    onclick="closeFooterInfo()"
-                    aria-label="Close">
+            <button
+                class="footer-info-close"
+                onclick="closeFooterInfo()"
+                aria-label="Close">
 
                 ×
 
@@ -1239,8 +1406,9 @@
                 </p>
 
 
-                <a class="contact-email"
-                   href="mailto:khenetsherwin97@gmail.com">
+                <a
+                    class="contact-email"
+                    href="mailto:khenetsherwin97@gmail.com">
 
                     <i class="fas fa-envelope"></i>
 
@@ -1255,20 +1423,23 @@
     </div>
 
 
+
     <!-- =========================================================
          TEACHER INFORMATION FOOTER POPUP
          ========================================================= -->
 
-    <div id="teacher-info"
-         class="footer-info-overlay"
-         onclick="closeFooterInfo(event)">
+    <div
+        id="teacher-info"
+        class="footer-info-overlay"
+        onclick="closeFooterInfo(event)">
 
         <div class="footer-info-card">
 
 
-            <button class="footer-info-close"
-                    onclick="closeFooterInfo()"
-                    aria-label="Close">
+            <button
+                class="footer-info-close"
+                onclick="closeFooterInfo()"
+                aria-label="Close">
 
                 ×
 
@@ -1336,13 +1507,16 @@
     </div>
 
 
+
     <!-- =========================================================
          AUDIO
          ========================================================= -->
 
-    <audio id="welcome-sound"
-           src="winner sound effect.mp3">
+    <audio
+        id="welcome-sound"
+        src="winner sound effect.mp3">
     </audio>
+
 
 
     <!-- =========================================================
@@ -1350,7 +1524,9 @@
          ========================================================= -->
 
     <script src="games.js"></script>
+
     <script src="script.js"></script>
+
 
 </body>
 </html>
