@@ -64,6 +64,14 @@ function generateTitle() {
     }
 
 
+    /*
+     * Prevent duplicate titles if this
+     * function is ever called again.
+     */
+
+    titleContainer.innerHTML = "";
+
+
     let colorIndex = 0;
 
 
@@ -416,14 +424,18 @@ function showLoginForm() {
 
 
     if (loginForm) {
+
         loginForm.style.display =
             'block';
+
     }
 
 
     if (signupForm) {
+
         signupForm.style.display =
             'none';
+
     }
 
 
@@ -475,14 +487,18 @@ function showSignupForm() {
 
 
     if (loginForm) {
+
         loginForm.style.display =
             'none';
+
     }
 
 
     if (signupForm) {
+
         signupForm.style.display =
             'block';
+
     }
 
 
@@ -809,13 +825,18 @@ async function loginUser() {
             data.session.user
         );
 
+
         /*
-         * IMPORTANT:
-         * Rebuild the game cards AFTER
-         * the membership has been loaded.
-         *
-         * This allows Premium users to
-         * immediately unlock Premium games.
+         * Update the account area again
+         * after membership information loads.
+         */
+
+        updateMembershipUI();
+
+
+        /*
+         * Rebuild game cards after membership
+         * has been loaded.
          */
 
         generateGames();
@@ -860,7 +881,9 @@ async function logoutUser() {
 
 
     currentUser = null;
+
     currentMembership = null;
+
 
     updateAuthUI(null);
 
@@ -876,7 +899,7 @@ async function logoutUser() {
 
 
 /* =========================================================
-   UPDATE LOGIN / LOGOUT UI
+   UPDATE LOGIN / ACCOUNT UI
    ========================================================= */
 
 function updateAuthUI(user) {
@@ -925,6 +948,15 @@ function updateAuthUI(user) {
 
         }
 
+
+        /*
+         * Membership information will be
+         * filled in separately after the
+         * membership query completes.
+         */
+
+        updateMembershipUI();
+
     } else {
 
         currentUser =
@@ -942,6 +974,199 @@ function updateAuthUI(user) {
         userAccount.style.display =
             'none';
 
+
+        updateMembershipUI();
+
+    }
+
+}
+
+
+/* =========================================================
+   UPDATE MEMBERSHIP INFORMATION IN ACCOUNT AREA
+   ========================================================= */
+
+function updateMembershipUI() {
+
+    const userPlan =
+        document.getElementById(
+            'userPlan'
+        );
+
+
+    const upgradeButton =
+        document.getElementById(
+            'upgradeAccountBtn'
+        );
+
+
+    if (!userPlan) {
+        return;
+    }
+
+
+    /*
+     * No logged-in user.
+     */
+
+    if (!currentUser) {
+
+        userPlan.textContent =
+            'FREE MEMBER';
+
+
+        userPlan.classList.remove(
+            'premium-member'
+        );
+
+
+        if (upgradeButton) {
+
+            upgradeButton.style.display =
+                'none';
+
+        }
+
+        return;
+
+    }
+
+
+    /*
+     * No membership record.
+     *
+     * New accounts normally receive a
+     * membership automatically through
+     * the Supabase trigger.
+     */
+
+    if (!currentMembership) {
+
+        userPlan.textContent =
+            'FREE MEMBER';
+
+
+        userPlan.classList.remove(
+            'premium-member'
+        );
+
+
+        if (upgradeButton) {
+
+            upgradeButton.style.display =
+                'flex';
+
+        }
+
+        return;
+
+    }
+
+
+    /*
+     * Check whether the membership
+     * is currently valid.
+     */
+
+    const isPremium =
+        currentMembership.plan ===
+        'premium';
+
+
+    const isActive =
+        currentMembership.status ===
+        'active';
+
+
+    let isExpired =
+        false;
+
+
+    if (
+        currentMembership.expires_at
+    ) {
+
+        const expiration =
+            new Date(
+                currentMembership.expires_at
+            );
+
+
+        const now =
+            new Date();
+
+
+        if (
+            expiration <= now
+        ) {
+
+            isExpired =
+                true;
+
+        }
+
+    }
+
+
+    /*
+     * PREMIUM MEMBER
+     */
+
+    if (
+        isPremium &&
+        isActive &&
+        !isExpired
+    ) {
+
+        userPlan.textContent =
+            '⭐ PREMIUM MEMBER';
+
+
+        userPlan.classList.add(
+            'premium-member'
+        );
+
+
+        if (upgradeButton) {
+
+            upgradeButton.style.display =
+                'none';
+
+        }
+
+
+        return;
+
+    }
+
+
+    /*
+     * FREE / EXPIRED / INACTIVE
+     */
+
+    if (isExpired) {
+
+        userPlan.textContent =
+            'FREE MEMBER • EXPIRED';
+
+    } else {
+
+        userPlan.textContent =
+            'FREE MEMBER';
+
+    }
+
+
+    userPlan.classList.remove(
+        'premium-member'
+    );
+
+
+    if (upgradeButton) {
+
+        upgradeButton.style.display =
+            'flex';
+
     }
 
 }
@@ -954,7 +1179,14 @@ function updateAuthUI(user) {
 async function loadMembership(user) {
 
     if (!user) {
+
+        currentMembership =
+            null;
+
+        updateMembershipUI();
+
         return null;
+
     }
 
 
@@ -988,6 +1220,9 @@ async function loadMembership(user) {
             null;
 
 
+        updateMembershipUI();
+
+
         return null;
 
     }
@@ -1001,6 +1236,14 @@ async function loadMembership(user) {
         'Current membership:',
         currentMembership
     );
+
+
+    /*
+     * Update the account display after
+     * membership information is available.
+     */
+
+    updateMembershipUI();
 
 
     return currentMembership;
@@ -1050,15 +1293,18 @@ async function checkAuthSession() {
 
 
         /*
-         * IMPORTANT:
-         * Wait for the membership before
-         * generating the game cards.
+         * Wait for membership before
+         * generating the final game cards.
          */
 
         await loadMembership(
             session.user
         );
 
+
+        /*
+         * Refresh game access.
+         */
 
         generateGames();
 
@@ -1114,7 +1360,14 @@ supabaseClient.auth.onAuthStateChange(
 
 
                     /*
-                     * Then rebuild the games.
+                     * Update account information.
+                     */
+
+                    updateMembershipUI();
+
+
+                    /*
+                     * Then rebuild games.
                      */
 
                     generateGames();
@@ -1127,12 +1380,13 @@ supabaseClient.auth.onAuthStateChange(
 
             /*
              * User logged out.
-             * Clear membership and rebuild
-             * the games as a Free user.
              */
 
             currentMembership =
                 null;
+
+
+            updateMembershipUI();
 
 
             generateGames();
@@ -1160,6 +1414,8 @@ document.addEventListener(
             toggleDonateModal(false);
 
             closeAuthModal();
+
+            closePremiumModal();
 
 
             document
@@ -1222,6 +1478,16 @@ document.addEventListener(
 
         }
 
+
+        if (
+            event.target.id ===
+            'premium-modal'
+        ) {
+
+            closePremiumModal();
+
+        }
+
     }
 );
 
@@ -1236,20 +1502,25 @@ window.addEventListener(
 
         generateTitle();
 
+
         /*
-         * Generate the games immediately so the
-         * page appears without waiting.
-         *
-         * checkAuthSession() will generate them
-         * again after membership information loads.
+         * Generate games immediately.
          */
 
         generateGames();
+
+
+        /*
+         * Then check the current
+         * authentication session.
+         */
 
         checkAuthSession();
 
     }
 );
+
+
 /* =========================================================
    PREMIUM UPGRADE MODAL
    ========================================================= */
@@ -1257,32 +1528,77 @@ window.addEventListener(
 function openPremiumModal() {
 
     const modal =
-        document.getElementById("premium-modal");
+        document.getElementById(
+            "premium-modal"
+        );
+
 
     if (!modal) {
         return;
     }
 
-    modal.classList.add("active");
 
-    document.body.classList.add("modal-open");
+    /*
+     * If the user is already Premium,
+     * there is no reason to show the
+     * upgrade modal.
+     */
+
+    if (
+        currentMembership &&
+        currentMembership.plan === "premium" &&
+        currentMembership.status === "active"
+    ) {
+
+        return;
+
+    }
+
+
+    modal.classList.add(
+        "active"
+    );
+
+
+    document.body.classList.add(
+        "modal-open"
+    );
+
 }
 
+
+/* =========================================================
+   CLOSE PREMIUM MODAL
+   ========================================================= */
 
 function closePremiumModal() {
 
     const modal =
-        document.getElementById("premium-modal");
+        document.getElementById(
+            "premium-modal"
+        );
+
 
     if (!modal) {
         return;
     }
 
-    modal.classList.remove("active");
 
-    document.body.classList.remove("modal-open");
+    modal.classList.remove(
+        "active"
+    );
+
+
+    document.body.classList.remove(
+        "modal-open"
+    );
+
 }
 
+
+/* =========================================================
+   OPEN UPGRADE PAGE
+   ========================================================= */
 
 function openUpgradePage() {
 
@@ -1295,10 +1611,17 @@ function openUpgradePage() {
 }
 
 
+/* =========================================================
+   PREMIUM COMING SOON
+   ========================================================= */
+
 function showPremiumComingSoon() {
 
     const modal =
-        document.getElementById("premium-modal");
+        document.getElementById(
+            "premium-modal"
+        );
+
 
     if (!modal) {
         return;
