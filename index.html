@@ -607,141 +607,156 @@
             </div>
 
 
+
             <!-- =====================================================
-     PREMIUM PLAN SELECTOR
-     ===================================================== -->
+                 PREMIUM PLAN SELECTOR
+                 ===================================================== -->
 
-<div class="premium-plan-section">
+            <div class="premium-plan-section">
 
-    <h3 class="premium-plan-heading">
-        Choose Your Premium Plan
-    </h3>
+                <h3 class="premium-plan-heading">
+                    Choose Your Premium Plan
+                </h3>
 
-    <div class="premium-plan-options">
-
-        <!-- MONTHLY -->
-
-        <button
-            type="button"
-            class="premium-plan-option selected"
-            id="premium-plan-monthly"
-            onclick="selectPremiumPlan('monthly')">
-
-            <span class="premium-plan-icon">
-                ⭐
-            </span>
-
-            <span class="premium-plan-name">
-                MONTHLY
-            </span>
-
-            <span class="premium-plan-price">
-                $4
-            </span>
-
-            <span class="premium-plan-period">
-                / month
-            </span>
-
-            <span class="premium-plan-select">
-                SELECTED
-            </span>
-
-        </button>
+                <div class="premium-plan-options">
 
 
-        <!-- YEARLY -->
+                    <!-- MONTHLY -->
 
-        <button
-            type="button"
-            class="premium-plan-option"
-            id="premium-plan-yearly"
-            onclick="selectPremiumPlan('yearly')">
+                    <button
+                        type="button"
+                        class="premium-plan-option selected"
+                        id="premium-plan-monthly"
+                        onclick="selectPremiumPlan('monthly')">
 
-            <span class="premium-plan-icon">
-                🏆
-            </span>
+                        <span class="premium-plan-icon">
+                            ⭐
+                        </span>
 
-            <span class="premium-plan-name">
-                YEARLY
-            </span>
+                        <span class="premium-plan-name">
+                            MONTHLY
+                        </span>
 
-            <span class="premium-plan-price">
-                $20
-            </span>
+                        <span class="premium-plan-price">
+                            $4
+                        </span>
 
-            <span class="premium-plan-period">
-                / year
-            </span>
+                        <span class="premium-plan-period">
+                            / month
+                        </span>
 
-            <span class="premium-plan-select">
-                SELECT
-            </span>
+                        <span class="premium-plan-select">
+                            SELECTED
+                        </span>
 
-        </button>
+                    </button>
+
+
+
+                    <!-- YEARLY -->
+
+                    <button
+                        type="button"
+                        class="premium-plan-option"
+                        id="premium-plan-yearly"
+                        onclick="selectPremiumPlan('yearly')">
+
+                        <span class="premium-plan-icon">
+                            🏆
+                        </span>
+
+                        <span class="premium-plan-name">
+                            YEARLY
+                        </span>
+
+                        <span class="premium-plan-price">
+                            $20
+                        </span>
+
+                        <span class="premium-plan-period">
+                            / year
+                        </span>
+
+                        <span class="premium-plan-select">
+                            SELECT
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =====================================================
+                 SELECTED PLAN SUMMARY
+                 ===================================================== -->
+
+            <div
+                class="premium-selected-plan"
+                id="premium-selected-plan">
+
+                Selected plan:
+
+                <strong id="selected-premium-plan-label">
+                    $4 / month
+                </strong>
+
+            </div>
+
+
+
+            <!-- =====================================================
+                 CONTINUE TO PAYMENT
+                 ===================================================== -->
+
+            <button
+                type="button"
+                class="premium-upgrade-btn"
+                onclick="continueToPayment()">
+
+                <i class="fas fa-credit-card"></i>
+
+                Continue to Payment
+
+            </button>
+
+
+
+            <!-- =====================================================
+                 PAYMENT STATUS
+                 ===================================================== -->
+
+            <div
+                class="premium-coming-soon"
+                id="premium-payment-message">
+
+                <i class="fas fa-credit-card"></i>
+
+                Payment integration will be connected soon.
+
+            </div>
+
+
+
+            <!-- =====================================================
+                 CONTINUE BROWSING
+                 ===================================================== -->
+
+            <button
+                type="button"
+                class="premium-continue-btn"
+                onclick="closePremiumModal()">
+
+                Maybe Later
+
+            </button>
+
+
+        </div>
 
     </div>
-
-</div>
-
-
-<!-- =====================================================
-     SELECTED PLAN SUMMARY
-     ===================================================== -->
-
-<div
-    class="premium-selected-plan"
-    id="premium-selected-plan">
-
-    Selected plan:
-    <strong id="selected-premium-plan-label">
-        $4 / month
-    </strong>
-
-</div>
-
-
-<!-- =====================================================
-     CONTINUE TO PAYMENT
-     ===================================================== -->
-
-<button
-    type="button"
-    class="premium-upgrade-btn"
-    onclick="continueToPayment()">
-
-    Continue to Payment
-
-</button>
-
-
-<!-- =====================================================
-     PAYMENT STATUS
-     ===================================================== -->
-
-<div
-    class="premium-coming-soon"
-    id="premium-payment-message">
-
-    <i class="fas fa-credit-card"></i>
-
-    Payment integration will be connected soon.
-
-</div>
-
-
-<!-- =====================================================
-     CONTINUE BROWSING
-     ===================================================== -->
-
-<button
-    type="button"
-    class="premium-continue-btn"
-    onclick="closePremiumModal()">
-
-    Maybe Later
-
-</button>
 
 
 
