@@ -190,20 +190,147 @@ const games = [
 
 
 /* =========================================================
+   CHECK PREMIUM ACCESS
+   ========================================================= */
+
+function hasPremiumAccess() {
+
+    /*
+     * currentMembership is created
+     * by script.js.
+     */
+
+    if (
+        typeof currentMembership === "undefined" ||
+        !currentMembership
+    ) {
+
+        return false;
+
+    }
+
+
+    if (
+        currentMembership.plan !== "premium"
+    ) {
+
+        return false;
+
+    }
+
+
+    if (
+        currentMembership.status !== "active"
+    ) {
+
+        return false;
+
+    }
+
+
+    /*
+     * If there is an expiration date,
+     * make sure it has not passed.
+     */
+
+    if (
+        currentMembership.expires_at
+    ) {
+
+        const expiration =
+            new Date(
+                currentMembership.expires_at
+            );
+
+
+        if (
+            expiration <= new Date()
+        ) {
+
+            return false;
+
+        }
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =========================================================
    CREATE ONE GAME CARD
    ========================================================= */
 
 function createGameCard(game) {
 
-    const card = document.createElement("a");
+    const card =
+        document.createElement("a");
 
-    card.className = "game-card";
 
-    card.href = game.url;
+    card.className =
+        "game-card";
 
-    card.target = "_blank";
 
-    card.rel = "noopener noreferrer";
+    /*
+     * FREE games can open normally.
+     *
+     * PREMIUM games are initially prevented
+     * from opening unless the user has access.
+     */
+
+    const isPremium =
+        game.access === "premium";
+
+
+    const premiumUnlocked =
+        isPremium &&
+        hasPremiumAccess();
+
+
+    if (
+        !isPremium ||
+        premiumUnlocked
+    ) {
+
+        card.href =
+            game.url;
+
+        card.target =
+            "_blank";
+
+        card.rel =
+            "noopener noreferrer";
+
+    } else {
+
+        /*
+         * No direct game URL for locked
+         * premium users.
+         */
+
+        card.href =
+            "#";
+
+        card.setAttribute(
+            "data-locked",
+            "true"
+        );
+
+    }
+
+
+    card.classList.toggle(
+        "premium-locked",
+        isPremium && !premiumUnlocked
+    );
+
+
+    card.classList.toggle(
+        "premium-unlocked",
+        isPremium && premiumUnlocked
+    );
 
 
     card.setAttribute(
@@ -224,10 +351,29 @@ function createGameCard(game) {
     );
 
 
-    const badge =
-        game.access === "premium"
-            ? '<div class="game-badge premium-badge">⭐ PREMIUM</div>'
-            : '<div class="game-badge free-badge">FREE</div>';
+    let badge = "";
+
+
+    if (game.access === "premium") {
+
+        if (premiumUnlocked) {
+
+            badge =
+                '<div class="game-badge premium-badge">⭐ PREMIUM</div>';
+
+        } else {
+
+            badge =
+                '<div class="game-badge premium-badge">🔒 PREMIUM</div>';
+
+        }
+
+    } else {
+
+        badge =
+            '<div class="game-badge free-badge">FREE</div>';
+
+    }
 
 
     card.innerHTML = `
@@ -251,6 +397,71 @@ function createGameCard(game) {
     `;
 
 
+    /*
+     * Handle locked Premium games.
+     */
+
+    if (
+        isPremium &&
+        !premiumUnlocked
+    ) {
+
+        card.addEventListener(
+            "click",
+            function(event) {
+
+                event.preventDefault();
+
+                event.stopPropagation();
+
+
+                /*
+                 * If the user is not logged in,
+                 * open the login window.
+                 */
+
+                if (
+                    typeof currentUser === "undefined" ||
+                    !currentUser
+                ) {
+
+                    if (
+                        typeof openAuthModal === "function"
+                    ) {
+
+                        openAuthModal();
+
+                    }
+
+                    return;
+
+                }
+
+
+                /*
+                 * Logged-in FREE users receive
+                 * a simple premium message.
+                 */
+
+                if (
+                    typeof showAuthMessage === "function"
+                ) {
+
+                    openAuthModal();
+
+                    showAuthMessage(
+                        "This is a Premium game. Upgrade your account to unlock it.",
+                        "info"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
     return card;
 
 }
@@ -263,7 +474,9 @@ function createGameCard(game) {
 function generateGames() {
 
     const gameGrid =
-        document.getElementById("gameGrid");
+        document.getElementById(
+            "gameGrid"
+        );
 
 
     if (!gameGrid) {
@@ -307,7 +520,9 @@ function generateGames() {
        ===================================================== */
 
     const freeSection =
-        document.createElement("section");
+        document.createElement(
+            "section"
+        );
 
 
     freeSection.className =
@@ -347,7 +562,9 @@ function generateGames() {
         const card =
             createGameCard(game);
 
-        freeGrid.appendChild(card);
+        freeGrid.appendChild(
+            card
+        );
 
     });
 
@@ -357,7 +574,9 @@ function generateGames() {
        ===================================================== */
 
     const premiumSection =
-        document.createElement("section");
+        document.createElement(
+            "section"
+        );
 
 
     premiumSection.className =
@@ -397,7 +616,9 @@ function generateGames() {
         const card =
             createGameCard(game);
 
-        premiumGrid.appendChild(card);
+        premiumGrid.appendChild(
+            card
+        );
 
     });
 
@@ -420,7 +641,9 @@ function generateGames() {
 function filterGames() {
 
     const searchInput =
-        document.getElementById("gameSearch");
+        document.getElementById(
+            "gameSearch"
+        );
 
 
     if (!searchInput) {
