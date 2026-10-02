@@ -21,6 +21,7 @@ const supabaseClient =
         SUPABASE_PUBLISHABLE_KEY
     );
 
+
 /* =========================================================
    PREMIUM PRICING
    Change these values anytime in the future.
@@ -30,15 +31,18 @@ const PREMIUM_PRICING = {
 
     monthly: {
         price: 4,
-        label: "$4 / month"
+        label: "$4 / month",
+        period: "month"
     },
 
     yearly: {
         price: 20,
-        label: "$20 / year"
+        label: "$20 / year",
+        period: "year"
     }
 
 };
+
 
 /* =========================================================
    CURRENT USER / MEMBERSHIP
@@ -46,6 +50,13 @@ const PREMIUM_PRICING = {
 
 let currentUser = null;
 let currentMembership = null;
+
+
+/* =========================================================
+   SELECTED PREMIUM PLAN
+   ========================================================= */
+
+let selectedPremiumPlan = "monthly";
 
 
 /* =========================================================
@@ -1174,7 +1185,6 @@ function updateMembershipUI() {
 
 /* =========================================================
    LOAD MEMBERSHIP
-   DIAGNOSTIC VERSION
    ========================================================= */
 
 async function loadMembership(user) {
@@ -1514,25 +1524,7 @@ document.addEventListener(
 
 
 /* =========================================================
-   INITIALIZE WEBSITE
-   ========================================================= */
-
-window.addEventListener(
-    'DOMContentLoaded',
-    function() {
-
-        generateTitle();
-
-        generateGames();
-
-        checkAuthSession();
-
-    }
-);
-
-
-/* =========================================================
-   PREMIUM UPGRADE MODAL
+   PREMIUM PLAN SELECTION
    ========================================================= */
 
 function openPremiumModal() {
@@ -1544,9 +1536,19 @@ function openPremiumModal() {
 
 
     if (!modal) {
+
+        console.warn(
+            "Premium modal not found."
+        );
+
         return;
+
     }
 
+
+    /* ---------------------------------------------------------
+       PREMIUM USERS ALREADY HAVE ACCESS
+       --------------------------------------------------------- */
 
     if (
         currentMembership &&
@@ -1563,6 +1565,44 @@ function openPremiumModal() {
 
     }
 
+
+    /* ---------------------------------------------------------
+       RESET TO MONTHLY WHEN MODAL OPENS
+       --------------------------------------------------------- */
+
+    selectedPremiumPlan =
+        "monthly";
+
+
+    /* ---------------------------------------------------------
+       UPDATE PLAN UI
+       --------------------------------------------------------- */
+
+    updatePremiumPlanUI();
+
+
+    /* ---------------------------------------------------------
+       RESET PAYMENT MESSAGE
+       --------------------------------------------------------- */
+
+    const paymentMessage =
+        document.getElementById(
+            "premium-payment-message"
+        );
+
+
+    if (paymentMessage) {
+
+        paymentMessage.innerHTML =
+            '<i class="fas fa-credit-card"></i> ' +
+            'Payment integration will be connected soon.';
+
+    }
+
+
+    /* ---------------------------------------------------------
+       SHOW MODAL
+       --------------------------------------------------------- */
 
     modal.classList.add(
         "active"
@@ -1606,62 +1646,276 @@ function closePremiumModal() {
 
 
 /* =========================================================
-   OPEN UPGRADE PAGE
+   SELECT PREMIUM PLAN
    ========================================================= */
 
-function openUpgradePage() {
+function selectPremiumPlan(plan) {
 
-    /*
-     * Payment system will be connected here later.
-     */
+    /* ---------------------------------------------------------
+       CHECK THAT THE PLAN EXISTS
+       --------------------------------------------------------- */
 
-    showPremiumComingSoon();
+    if (
+        typeof PREMIUM_PRICING === "undefined" ||
+        !PREMIUM_PRICING[plan]
+    ) {
+
+        console.warn(
+            "Invalid Premium plan selected:",
+            plan
+        );
+
+
+        return;
+
+    }
+
+
+    /* ---------------------------------------------------------
+       SAVE SELECTED PLAN
+       --------------------------------------------------------- */
+
+    selectedPremiumPlan =
+        plan;
+
+
+    /* ---------------------------------------------------------
+       UPDATE VISUAL INTERFACE
+       --------------------------------------------------------- */
+
+    updatePremiumPlanUI();
+
+
+    console.log(
+        "Premium plan selected:",
+        plan,
+        PREMIUM_PRICING[plan]
+    );
 
 }
 
 
 /* =========================================================
-   PREMIUM COMING SOON
+   UPDATE PREMIUM PLAN UI
    ========================================================= */
 
-function showPremiumComingSoon() {
+function updatePremiumPlanUI() {
 
-    const modal =
+    const monthlyOption =
         document.getElementById(
-            "premium-modal"
+            "premium-plan-monthly"
         );
 
 
-    if (!modal) {
+    const yearlyOption =
+        document.getElementById(
+            "premium-plan-yearly"
+        );
+
+
+    const selectedLabel =
+        document.getElementById(
+            "selected-premium-plan-label"
+        );
+
+
+    /* ---------------------------------------------------------
+       REMOVE PREVIOUS SELECTION
+       --------------------------------------------------------- */
+
+    if (monthlyOption) {
+
+        monthlyOption.classList.remove(
+            "selected"
+        );
+
+    }
+
+
+    if (yearlyOption) {
+
+        yearlyOption.classList.remove(
+            "selected"
+        );
+
+    }
+
+
+    /* ---------------------------------------------------------
+       APPLY CURRENT SELECTION
+       --------------------------------------------------------- */
+
+    if (
+        selectedPremiumPlan === "monthly" &&
+        monthlyOption
+    ) {
+
+        monthlyOption.classList.add(
+            "selected"
+        );
+
+    }
+
+
+    if (
+        selectedPremiumPlan === "yearly" &&
+        yearlyOption
+    ) {
+
+        yearlyOption.classList.add(
+            "selected"
+        );
+
+    }
+
+
+    /* ---------------------------------------------------------
+       UPDATE SELECTED PLAN LABEL
+       --------------------------------------------------------- */
+
+    if (
+        selectedLabel &&
+        typeof PREMIUM_PRICING !== "undefined" &&
+        PREMIUM_PRICING[selectedPremiumPlan]
+    ) {
+
+        selectedLabel.textContent =
+            PREMIUM_PRICING[
+                selectedPremiumPlan
+            ].label;
+
+    }
+
+
+    /* ---------------------------------------------------------
+       UPDATE SELECT / SELECTED TEXT
+       --------------------------------------------------------- */
+
+    const planButtons =
+        document.querySelectorAll(
+            ".premium-plan-option"
+        );
+
+
+    planButtons.forEach(
+        function(button) {
+
+            const selectLabel =
+                button.querySelector(
+                    ".premium-plan-select"
+                );
+
+
+            if (!selectLabel) {
+                return;
+            }
+
+
+            if (
+                button.id ===
+                "premium-plan-" +
+                selectedPremiumPlan
+            ) {
+
+                selectLabel.textContent =
+                    "SELECTED";
+
+            } else {
+
+                selectLabel.textContent =
+                    "SELECT";
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CONTINUE TO PAYMENT
+   ========================================================= */
+
+function continueToPayment() {
+
+    if (
+        typeof PREMIUM_PRICING === "undefined" ||
+        !PREMIUM_PRICING[selectedPremiumPlan]
+    ) {
+
+        console.warn(
+            "Premium pricing information is unavailable."
+        );
+
+
         return;
-    }
-
-
-    const subtitle =
-        modal.querySelector(
-            ".premium-subtitle"
-        );
-
-
-    const comingSoon =
-        modal.querySelector(
-            ".premium-coming-soon"
-        );
-
-
-    if (subtitle) {
-
-        subtitle.textContent =
-            "Premium membership and payment options are currently being prepared. Please check back soon!";
 
     }
 
 
-    if (comingSoon) {
+    const pricing =
+        PREMIUM_PRICING[
+            selectedPremiumPlan
+        ];
 
-        comingSoon.innerHTML =
-            '<i class="fas fa-clock"></i> Premium access will be available soon.';
+
+    console.log(
+        "Premium payment selected:",
+        selectedPremiumPlan,
+        pricing
+    );
+
+
+    const paymentMessage =
+        document.getElementById(
+            "premium-payment-message"
+        );
+
+
+    if (paymentMessage) {
+
+        paymentMessage.innerHTML =
+            '<i class="fas fa-clock"></i> ' +
+            pricing.label +
+            ' selected. ' +
+            'Payment options will be connected soon.';
 
     }
 
 }
+
+
+/* =========================================================
+   INITIALIZE PREMIUM PLAN
+   ========================================================= */
+
+function initializePremiumPlan() {
+
+    selectedPremiumPlan =
+        "monthly";
+
+
+    updatePremiumPlanUI();
+
+}
+
+
+/* =========================================================
+   INITIALIZE WEBSITE
+   ========================================================= */
+
+window.addEventListener(
+    'DOMContentLoaded',
+    function() {
+
+        generateTitle();
+
+        initializePremiumPlan();
+
+        generateGames();
+
+        checkAuthSession();
+
+    }
+);
