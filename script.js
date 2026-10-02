@@ -1250,3 +1250,86 @@ window.addEventListener(
 
     }
 );
+/* =========================================================
+   PREMIUM UPGRADE MODAL
+   ========================================================= */
+
+function openPremiumModal() {
+
+    const modal =
+        document.getElementById("premium-modal");
+
+    if (!modal) {
+        return;
+    }
+
+    modal.classList.add("active");
+
+    document.body.classList.add("modal-open");
+}
+
+
+function closePremiumModal() {
+
+    const modal =
+        document.getElementById("premium-modal");
+
+    if (!modal) {
+        return;
+    }
+
+    modal.classList.remove("active");
+
+    document.body.classList.remove("modal-open");
+}
+
+
+function openUpgradePage() {
+
+    /*
+     * Payment system will be connected here later.
+     */
+
+    showPremiumComingSoon();
+
+}
+
+
+function showPremiumComingSoon() {
+
+    const modal =
+        document.getElementById("premium-modal");
+
+    if (!modal) {
+        return;
+    }
+
+
+    const subtitle =
+        modal.querySelector(
+            ".premium-subtitle"
+        );
+
+
+    const comingSoon =
+        modal.querySelector(
+            ".premium-coming-soon"
+        );
+
+
+    if (subtitle) {
+
+        subtitle.textContent =
+            "Premium membership and payment options are currently being prepared. Please check back soon!";
+
+    }
+
+
+    if (comingSoon) {
+
+        comingSoon.innerHTML =
+            '<i class="fas fa-clock"></i> Premium access will be available soon.';
+
+    }
+
+}
