@@ -64,11 +64,6 @@ function generateTitle() {
     }
 
 
-    /*
-     * Prevent duplicate titles if this
-     * function is ever called again.
-     */
-
     titleContainer.innerHTML = "";
 
 
@@ -809,35 +804,23 @@ async function loginUser() {
     );
 
 
-    updateAuthUI(
-        data.session
-            ? data.session.user
-            : null
-    );
-
-
     if (
         data.session &&
         data.session.user
     ) {
+
+        updateAuthUI(
+            data.session.user
+        );
+
 
         await loadMembership(
             data.session.user
         );
 
 
-        /*
-         * Update the account area again
-         * after membership information loads.
-         */
-
         updateMembershipUI();
 
-
-        /*
-         * Rebuild game cards after membership
-         * has been loaded.
-         */
 
         generateGames();
 
@@ -887,11 +870,6 @@ async function logoutUser() {
 
     updateAuthUI(null);
 
-
-    /*
-     * Rebuild the games so Premium games
-     * become locked again after logout.
-     */
 
     generateGames();
 
@@ -949,12 +927,6 @@ function updateAuthUI(user) {
         }
 
 
-        /*
-         * Membership information will be
-         * filled in separately after the
-         * membership query completes.
-         */
-
         updateMembershipUI();
 
     } else {
@@ -983,7 +955,7 @@ function updateAuthUI(user) {
 
 
 /* =========================================================
-   UPDATE MEMBERSHIP INFORMATION IN ACCOUNT AREA
+   UPDATE MEMBERSHIP UI
    ========================================================= */
 
 function updateMembershipUI() {
@@ -1005,9 +977,22 @@ function updateMembershipUI() {
     }
 
 
-    /*
-     * No logged-in user.
-     */
+    console.log(
+        "Updating membership UI..."
+    );
+
+
+    console.log(
+        "Current user:",
+        currentUser
+    );
+
+
+    console.log(
+        "Current membership:",
+        currentMembership
+    );
+
 
     if (!currentUser) {
 
@@ -1032,14 +1017,6 @@ function updateMembershipUI() {
     }
 
 
-    /*
-     * No membership record.
-     *
-     * New accounts normally receive a
-     * membership automatically through
-     * the Supabase trigger.
-     */
-
     if (!currentMembership) {
 
         userPlan.textContent =
@@ -1062,11 +1039,6 @@ function updateMembershipUI() {
 
     }
 
-
-    /*
-     * Check whether the membership
-     * is currently valid.
-     */
 
     const isPremium =
         currentMembership.plan ===
@@ -1108,15 +1080,29 @@ function updateMembershipUI() {
     }
 
 
-    /*
-     * PREMIUM MEMBER
-     */
+    console.log(
+        "Premium check:",
+        {
+            isPremium: isPremium,
+            isActive: isActive,
+            isExpired: isExpired,
+            plan: currentMembership.plan,
+            status: currentMembership.status,
+            expires_at: currentMembership.expires_at
+        }
+    );
+
 
     if (
         isPremium &&
         isActive &&
         !isExpired
     ) {
+
+        console.log(
+            "⭐ PREMIUM ACCESS CONFIRMED"
+        );
+
 
         userPlan.textContent =
             '⭐ PREMIUM MEMBER';
@@ -1139,10 +1125,6 @@ function updateMembershipUI() {
 
     }
 
-
-    /*
-     * FREE / EXPIRED / INACTIVE
-     */
 
     if (isExpired) {
 
@@ -1174,20 +1156,55 @@ function updateMembershipUI() {
 
 /* =========================================================
    LOAD MEMBERSHIP
+   DIAGNOSTIC VERSION
    ========================================================= */
 
 async function loadMembership(user) {
 
     if (!user) {
 
+        console.log(
+            "No user supplied to loadMembership()."
+        );
+
+
         currentMembership =
             null;
 
+
         updateMembershipUI();
+
 
         return null;
 
     }
+
+
+    console.log(
+        "================================="
+    );
+
+
+    console.log(
+        "LOADING MEMBERSHIP"
+    );
+
+
+    console.log(
+        "User email:",
+        user.email
+    );
+
+
+    console.log(
+        "User ID:",
+        user.id
+    );
+
+
+    console.log(
+        "================================="
+    );
 
 
     const {
@@ -1196,13 +1213,13 @@ async function loadMembership(user) {
     } =
         await supabaseClient
             .from(
-                'learning_hub_memberships'
+                "learning_hub_memberships"
             )
             .select(
-                'id, user_id, plan, status, expires_at, created_at'
+                "id, user_id, plan, status, expires_at, created_at"
             )
             .eq(
-                'user_id',
+                "user_id",
                 user.id
             )
             .maybeSingle();
@@ -1211,7 +1228,7 @@ async function loadMembership(user) {
     if (error) {
 
         console.error(
-            'Membership error:',
+            "❌ MEMBERSHIP ERROR:",
             error
         );
 
@@ -1228,20 +1245,15 @@ async function loadMembership(user) {
     }
 
 
-    currentMembership =
-        data || null;
-
-
     console.log(
-        'Current membership:',
-        currentMembership
+        "✅ MEMBERSHIP DATA:",
+        data
     );
 
 
-    /*
-     * Update the account display after
-     * membership information is available.
-     */
+    currentMembership =
+        data || null;
+
 
     updateMembershipUI();
 
@@ -1256,6 +1268,11 @@ async function loadMembership(user) {
    ========================================================= */
 
 async function checkAuthSession() {
+
+    console.log(
+        "Checking current Supabase session..."
+    );
+
 
     const {
         data,
@@ -1287,28 +1304,30 @@ async function checkAuthSession() {
 
     if (session) {
 
+        console.log(
+            "Existing session found:",
+            session.user.email
+        );
+
+
         updateAuthUI(
             session.user
         );
 
-
-        /*
-         * Wait for membership before
-         * generating the final game cards.
-         */
 
         await loadMembership(
             session.user
         );
 
 
-        /*
-         * Refresh game access.
-         */
-
         generateGames();
 
     } else {
+
+        console.log(
+            "No active session."
+        );
+
 
         updateAuthUI(
             null
@@ -1350,25 +1369,13 @@ supabaseClient.auth.onAuthStateChange(
             setTimeout(
                 async function() {
 
-                    /*
-                     * Load membership first.
-                     */
-
                     await loadMembership(
                         session.user
                     );
 
 
-                    /*
-                     * Update account information.
-                     */
-
                     updateMembershipUI();
 
-
-                    /*
-                     * Then rebuild games.
-                     */
 
                     generateGames();
 
@@ -1377,10 +1384,6 @@ supabaseClient.auth.onAuthStateChange(
             );
 
         } else {
-
-            /*
-             * User logged out.
-             */
 
             currentMembership =
                 null;
@@ -1398,7 +1401,7 @@ supabaseClient.auth.onAuthStateChange(
 
 
 /* =========================================================
-   CLOSE AUTH MODAL WITH ESCAPE
+   CLOSE MODALS WITH ESCAPE
    ========================================================= */
 
 document.addEventListener(
@@ -1502,18 +1505,7 @@ window.addEventListener(
 
         generateTitle();
 
-
-        /*
-         * Generate games immediately.
-         */
-
         generateGames();
-
-
-        /*
-         * Then check the current
-         * authentication session.
-         */
 
         checkAuthSession();
 
@@ -1538,17 +1530,16 @@ function openPremiumModal() {
     }
 
 
-    /*
-     * If the user is already Premium,
-     * there is no reason to show the
-     * upgrade modal.
-     */
-
     if (
         currentMembership &&
         currentMembership.plan === "premium" &&
         currentMembership.status === "active"
     ) {
+
+        console.log(
+            "Premium user already has access."
+        );
+
 
         return;
 
