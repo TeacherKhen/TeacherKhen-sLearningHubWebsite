@@ -1,4 +1,3 @@
-```javascript
 /* =========================================================
    TEACHER KHEN'S LEARNING HUB
    GAME DATABASE + GAME DISPLAY
