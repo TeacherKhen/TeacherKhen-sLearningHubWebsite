@@ -1,6 +1,7 @@
 /* =========================================================
    TEACHER KHEN'S LEARNING HUB
    GENERAL WEBSITE FUNCTIONS + SUPABASE AUTHENTICATION
+   + PAYPAL PREMIUM SUBSCRIPTIONS
    ========================================================= */
 
 
@@ -1595,7 +1596,7 @@ function openPremiumModal() {
 
         paymentMessage.innerHTML =
             '<i class="fas fa-credit-card"></i> ' +
-            'Payment integration will be connected soon.';
+            'Secure payment through PayPal.';
 
     }
 
@@ -1835,9 +1836,14 @@ function updatePremiumPlanUI() {
 
 /* =========================================================
    CONTINUE TO PAYMENT
+   PAYPAL SUBSCRIPTION CONNECTION
    ========================================================= */
 
-function continueToPayment() {
+async function continueToPayment() {
+
+    /* ---------------------------------------------------------
+       CHECK SELECTED PLAN
+       --------------------------------------------------------- */
 
     if (
         typeof PREMIUM_PRICING === "undefined" ||
@@ -1846,6 +1852,63 @@ function continueToPayment() {
 
         console.warn(
             "Premium pricing information is unavailable."
+        );
+
+        return;
+
+    }
+
+
+    /* ---------------------------------------------------------
+       CHECK LOGIN
+       --------------------------------------------------------- */
+
+    if (!currentUser) {
+
+        const paymentMessage =
+            document.getElementById(
+                "premium-payment-message"
+            );
+
+
+        if (paymentMessage) {
+
+            paymentMessage.innerHTML =
+                '<i class="fas fa-user-lock"></i> ' +
+                'Please log in or create an account before subscribing.';
+
+        }
+
+
+        setTimeout(
+            function() {
+
+                closePremiumModal();
+
+                openAuthModal();
+
+            },
+            1200
+        );
+
+
+        return;
+
+    }
+
+
+    /* ---------------------------------------------------------
+       PREVENT EXISTING PREMIUM USERS FROM SUBSCRIBING AGAIN
+       --------------------------------------------------------- */
+
+    if (
+        currentMembership &&
+        currentMembership.plan === "premium" &&
+        currentMembership.status === "active"
+    ) {
+
+        console.log(
+            "User already has an active Premium membership."
         );
 
 
@@ -1861,11 +1924,18 @@ function continueToPayment() {
 
 
     console.log(
-        "Premium payment selected:",
-        selectedPremiumPlan,
-        pricing
+        "Starting PayPal subscription:",
+        {
+            plan: selectedPremiumPlan,
+            price: pricing.label,
+            userId: currentUser.id
+        }
     );
 
+
+    /* ---------------------------------------------------------
+       GET PAYMENT MESSAGE
+       --------------------------------------------------------- */
 
     const paymentMessage =
         document.getElementById(
@@ -1873,13 +1943,266 @@ function continueToPayment() {
         );
 
 
+    /* ---------------------------------------------------------
+       GET PAYMENT BUTTON
+       --------------------------------------------------------- */
+
+    const paymentButton =
+        document.querySelector(
+            ".premium-upgrade-btn"
+        );
+
+
+    /* ---------------------------------------------------------
+       DISABLE BUTTON WHILE PROCESSING
+       --------------------------------------------------------- */
+
+    if (paymentButton) {
+
+        paymentButton.disabled =
+            true;
+
+        paymentButton.style.opacity =
+            "0.65";
+
+        paymentButton.style.pointerEvents =
+            "none";
+
+        paymentButton.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> ' +
+            'Connecting to PayPal...';
+
+    }
+
+
     if (paymentMessage) {
 
         paymentMessage.innerHTML =
-            '<i class="fas fa-clock"></i> ' +
-            pricing.label +
-            ' selected. ' +
-            'Payment options will be connected soon.';
+            '<i class="fas fa-spinner fa-spin"></i> ' +
+            'Preparing your secure PayPal checkout...';
+
+    }
+
+
+    try {
+
+        /* -----------------------------------------------------
+           INVOKE SUPABASE EDGE FUNCTION
+           ----------------------------------------------------- */
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient.functions.invoke(
+                "paypal-create-subscription",
+                {
+                    body: {
+                        plan:
+                            selectedPremiumPlan
+                    }
+                }
+            );
+
+
+        /* -----------------------------------------------------
+           HANDLE FUNCTION ERROR
+           ----------------------------------------------------- */
+
+        if (error) {
+
+            console.error(
+                "PayPal Edge Function error:",
+                error
+            );
+
+
+            let detailedMessage =
+                error.message ||
+                "Unable to connect to PayPal.";
+
+
+            /* ---------------------------------------------
+               TRY TO READ THE FUNCTION'S JSON ERROR
+               --------------------------------------------- */
+
+            if (
+                error.context &&
+                typeof error.context.json === "function"
+            ) {
+
+                try {
+
+                    const errorData =
+                        await error.context.json();
+
+
+                    if (
+                        errorData &&
+                        errorData.error
+                    ) {
+
+                        detailedMessage =
+                            errorData.error;
+
+                    }
+
+                } catch (
+                    contextError
+                ) {
+
+                    console.warn(
+                        "Could not read Edge Function error response:",
+                        contextError
+                    );
+
+                }
+
+            }
+
+
+            throw new Error(
+                detailedMessage
+            );
+
+        }
+
+
+        /* -----------------------------------------------------
+           CHECK FUNCTION RESPONSE
+           ----------------------------------------------------- */
+
+        console.log(
+            "PayPal Edge Function response:",
+            data
+        );
+
+
+        if (
+            !data ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data?.error ||
+                "PayPal could not create the subscription."
+            );
+
+        }
+
+
+        if (
+            !data.approval_url
+        ) {
+
+            throw new Error(
+                "PayPal did not provide a checkout link."
+            );
+
+        }
+
+
+        /* -----------------------------------------------------
+           STORE SUBSCRIPTION ID TEMPORARILY
+           ----------------------------------------------------- */
+
+        try {
+
+            sessionStorage.setItem(
+                "paypal_subscription_id",
+                data.subscription_id || ""
+            );
+
+
+            sessionStorage.setItem(
+                "paypal_subscription_plan",
+                selectedPremiumPlan
+            );
+
+        } catch (
+            storageError
+        ) {
+
+            console.warn(
+                "Could not save PayPal session information:",
+                storageError
+            );
+
+        }
+
+
+        /* -----------------------------------------------------
+           SHOW REDIRECT MESSAGE
+           ----------------------------------------------------- */
+
+        if (paymentMessage) {
+
+            paymentMessage.innerHTML =
+                '<i class="fab fa-paypal"></i> ' +
+                'Redirecting you to PayPal...';
+
+        }
+
+
+        console.log(
+            "PayPal subscription created:",
+            data.subscription_id
+        );
+
+
+        /* -----------------------------------------------------
+           REDIRECT TO PAYPAL
+           ----------------------------------------------------- */
+
+        window.location.href =
+            data.approval_url;
+
+    } catch (error) {
+
+        console.error(
+            "Premium payment error:",
+            error
+        );
+
+
+        /* -----------------------------------------------------
+           RESTORE BUTTON
+           ----------------------------------------------------- */
+
+        if (paymentButton) {
+
+            paymentButton.disabled =
+                false;
+
+            paymentButton.style.opacity =
+                "1";
+
+            paymentButton.style.pointerEvents =
+                "auto";
+
+            paymentButton.innerHTML =
+                '<i class="fas fa-credit-card"></i> ' +
+                'Continue to Payment';
+
+        }
+
+
+        /* -----------------------------------------------------
+           SHOW ERROR
+           ----------------------------------------------------- */
+
+        if (paymentMessage) {
+
+            paymentMessage.innerHTML =
+                '<i class="fas fa-exclamation-circle"></i> ' +
+                (
+                    error &&
+                    error.message
+                        ? error.message
+                        : 'Something went wrong. Please try again.'
+                );
+
+        }
 
     }
 
