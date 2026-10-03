@@ -1,3 +1,4 @@
+```javascript
 /* =========================================================
    TEACHER KHEN'S LEARNING HUB
    GENERAL WEBSITE FUNCTIONS + SUPABASE AUTHENTICATION
@@ -14,7 +15,6 @@ const SUPABASE_URL =
 
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_MMXsHQKzKYn0mAA3MQOlWA_pEdCS-r3";
-
 
 const supabaseClient =
     window.supabase.createClient(
@@ -88,17 +88,13 @@ function generateTitle() {
             'main-title'
         );
 
-
     if (!titleContainer) {
         return;
     }
 
-
     titleContainer.innerHTML = "";
 
-
     let colorIndex = 0;
-
 
     titleText
         .split(' ')
@@ -109,10 +105,8 @@ function generateTitle() {
                     'span'
                 );
 
-
             wordSpan.style.whiteSpace =
                 "nowrap";
-
 
             [...word].forEach(function(char) {
 
@@ -121,14 +115,11 @@ function generateTitle() {
                         'span'
                     );
 
-
                 span.className =
                     'letter';
 
-
                 span.textContent =
                     char;
-
 
                 span.style.color =
                     colors[
@@ -136,21 +127,17 @@ function generateTitle() {
                         colors.length
                     ];
 
-
                 wordSpan.appendChild(
                     span
                 );
-
 
                 colorIndex++;
 
             });
 
-
             titleContainer.appendChild(
                 wordSpan
             );
-
 
             if (
                 wIdx <
@@ -162,10 +149,8 @@ function generateTitle() {
                         'span'
                     );
 
-
                 space.innerHTML =
                     "&nbsp;";
-
 
                 titleContainer.appendChild(
                     space
@@ -189,7 +174,6 @@ function enterSite() {
             'welcome-sound'
         );
 
-
     if (sound) {
 
         sound.play()
@@ -197,12 +181,10 @@ function enterSite() {
 
     }
 
-
     const welcome =
         document.getElementById(
             'welcome-overlay'
         );
-
 
     if (welcome) {
 
@@ -225,11 +207,9 @@ function toggleReminder(show) {
             'reminder-overlay'
         );
 
-
     if (!overlay) {
         return;
     }
-
 
     if (show) {
 
@@ -267,11 +247,9 @@ function toggleDonateModal(show) {
             'donate-modal'
         );
 
-
     if (!overlay) {
         return;
     }
-
 
     if (show) {
 
@@ -307,11 +285,9 @@ function openFooterInfo(id) {
     const overlay =
         document.getElementById(id);
 
-
     if (!overlay) {
         return;
     }
-
 
     document
         .querySelectorAll(
@@ -325,11 +301,9 @@ function openFooterInfo(id) {
 
         });
 
-
     overlay.classList.add(
         'active'
     );
-
 
     document.body.classList.add(
         'modal-open'
@@ -353,7 +327,6 @@ function closeFooterInfo(event) {
 
     }
 
-
     document
         .querySelectorAll(
             '.footer-info-overlay'
@@ -365,7 +338,6 @@ function closeFooterInfo(event) {
             );
 
         });
-
 
     document.body.classList.remove(
         'modal-open'
@@ -385,21 +357,17 @@ function openAuthModal() {
             'auth-modal'
         );
 
-
     if (!modal) {
         return;
     }
-
 
     modal.classList.add(
         'active'
     );
 
-
     document.body.classList.add(
         'modal-open'
     );
-
 
     showLoginForm();
 
@@ -413,21 +381,17 @@ function closeAuthModal() {
             'auth-modal'
         );
 
-
     if (!modal) {
         return;
     }
-
 
     modal.classList.remove(
         'active'
     );
 
-
     document.body.classList.remove(
         'modal-open'
     );
-
 
     clearAuthMessage();
 
@@ -441,12 +405,10 @@ function showLoginForm() {
             'loginForm'
         );
 
-
     const signupForm =
         document.getElementById(
             'signupForm'
         );
-
 
     if (loginForm) {
 
@@ -455,7 +417,6 @@ function showLoginForm() {
 
     }
 
-
     if (signupForm) {
 
         signupForm.style.display =
@@ -463,18 +424,15 @@ function showLoginForm() {
 
     }
 
-
     const title =
         document.getElementById(
             'authTitle'
         );
 
-
     const subtitle =
         document.getElementById(
             'authSubtitle'
         );
-
 
     if (title) {
 
@@ -483,14 +441,12 @@ function showLoginForm() {
 
     }
 
-
     if (subtitle) {
 
         subtitle.textContent =
             'Log in to your Teacher Khen account.';
 
     }
-
 
     clearAuthMessage();
 
@@ -504,12 +460,10 @@ function showSignupForm() {
             'loginForm'
         );
 
-
     const signupForm =
         document.getElementById(
             'signupForm'
         );
-
 
     if (loginForm) {
 
@@ -518,7 +472,6 @@ function showSignupForm() {
 
     }
 
-
     if (signupForm) {
 
         signupForm.style.display =
@@ -526,18 +479,15 @@ function showSignupForm() {
 
     }
 
-
     const title =
         document.getElementById(
             'authTitle'
         );
 
-
     const subtitle =
         document.getElementById(
             'authSubtitle'
         );
-
 
     if (title) {
 
@@ -546,14 +496,12 @@ function showSignupForm() {
 
     }
 
-
     if (subtitle) {
 
         subtitle.textContent =
             'Create an account for Teacher Khen\'s Learning Hub.';
 
     }
-
 
     clearAuthMessage();
 
@@ -574,15 +522,12 @@ function showAuthMessage(
             'authMessage'
         );
 
-
     if (!messageBox) {
         return;
     }
 
-
     messageBox.textContent =
         message;
-
 
     messageBox.className =
         'auth-message ' + type;
@@ -597,15 +542,12 @@ function clearAuthMessage() {
             'authMessage'
         );
 
-
     if (!messageBox) {
         return;
     }
 
-
     messageBox.textContent =
         '';
-
 
     messageBox.className =
         'auth-message';
@@ -627,7 +569,6 @@ async function signupUser() {
             .value
             .trim();
 
-
     const password =
         document
             .getElementById(
@@ -635,14 +576,12 @@ async function signupUser() {
             )
             .value;
 
-
     const confirmPassword =
         document
             .getElementById(
                 'signupPasswordConfirm'
             )
             .value;
-
 
     if (!email || !password) {
 
@@ -655,7 +594,6 @@ async function signupUser() {
 
     }
 
-
     if (password.length < 6) {
 
         showAuthMessage(
@@ -666,7 +604,6 @@ async function signupUser() {
         return;
 
     }
-
 
     if (
         password !==
@@ -682,12 +619,10 @@ async function signupUser() {
 
     }
 
-
     showAuthMessage(
         'Creating your account...',
         'info'
     );
-
 
     const {
         data,
@@ -701,7 +636,6 @@ async function signupUser() {
 
         });
 
-
     if (error) {
 
         console.error(
@@ -709,23 +643,19 @@ async function signupUser() {
             error
         );
 
-
         showAuthMessage(
             error.message,
             'error'
         );
 
-
         return;
 
     }
-
 
     console.log(
         'Signup successful:',
         data
     );
-
 
     if (
         data.user &&
@@ -763,14 +693,12 @@ async function loginUser() {
             .value
             .trim();
 
-
     const password =
         document
             .getElementById(
                 'loginPassword'
             )
             .value;
-
 
     if (!email || !password) {
 
@@ -783,12 +711,10 @@ async function loginUser() {
 
     }
 
-
     showAuthMessage(
         'Logging in...',
         'info'
     );
-
 
     const {
         data,
@@ -802,7 +728,6 @@ async function loginUser() {
 
         });
 
-
     if (error) {
 
         console.error(
@@ -810,29 +735,24 @@ async function loginUser() {
             error
         );
 
-
         showAuthMessage(
             error.message,
             'error'
         );
 
-
         return;
 
     }
-
 
     console.log(
         'Login successful:',
         data
     );
 
-
     showAuthMessage(
         'Login successful!',
         'success'
     );
-
 
     if (
         data.session &&
@@ -843,19 +763,15 @@ async function loginUser() {
             data.session.user
         );
 
-
         await loadMembership(
             data.session.user
         );
 
-
         updateMembershipUI();
-
 
         generateGames();
 
     }
-
 
     setTimeout(
         function() {
@@ -880,7 +796,6 @@ async function logoutUser() {
     } =
         await supabaseClient.auth.signOut();
 
-
     if (error) {
 
         console.error(
@@ -892,14 +807,11 @@ async function logoutUser() {
 
     }
 
-
     currentUser = null;
 
     currentMembership = null;
 
-
     updateAuthUI(null);
-
 
     generateGames();
 
@@ -917,37 +829,30 @@ function updateAuthUI(user) {
             'loginBtn'
         );
 
-
     const userAccount =
         document.getElementById(
             'userAccount'
         );
-
 
     const userEmail =
         document.getElementById(
             'userEmail'
         );
 
-
     if (!loginBtn || !userAccount) {
         return;
     }
-
 
     if (user) {
 
         currentUser =
             user;
 
-
         loginBtn.style.display =
             'none';
 
-
         userAccount.style.display =
             'flex';
-
 
         if (userEmail) {
 
@@ -956,7 +861,6 @@ function updateAuthUI(user) {
 
         }
 
-
         updateMembershipUI();
 
     } else {
@@ -964,22 +868,131 @@ function updateAuthUI(user) {
         currentUser =
             null;
 
-
         currentMembership =
             null;
-
 
         loginBtn.style.display =
             'flex';
 
-
         userAccount.style.display =
             'none';
-
 
         updateMembershipUI();
 
     }
+
+}
+
+
+/* =========================================================
+   PREMIUM MEMBERSHIP CHECK
+   ========================================================= */
+
+function isPremiumMember() {
+
+    if (
+        !currentUser ||
+        !currentMembership
+    ) {
+
+        return false;
+
+    }
+
+    /*
+       Supported Premium plan values:
+
+       monthly
+       yearly
+       premium
+
+       "premium" is kept for your
+       existing manually-created Premium account.
+    */
+
+    const validPremiumPlans = [
+        "monthly",
+        "yearly",
+        "premium"
+    ];
+
+    const membershipPlan =
+        String(
+            currentMembership.plan || ""
+        )
+            .trim()
+            .toLowerCase();
+
+    const membershipStatus =
+        String(
+            currentMembership.status || ""
+        )
+            .trim()
+            .toLowerCase();
+
+    const hasPremiumPlan =
+        validPremiumPlans.includes(
+            membershipPlan
+        );
+
+    const isActive =
+        membershipStatus ===
+        "active";
+
+    if (
+        !hasPremiumPlan ||
+        !isActive
+    ) {
+
+        return false;
+
+    }
+
+    /*
+       Check expiration date.
+
+       If expires_at exists and is already
+       past, Premium access is removed.
+    */
+
+    if (
+        currentMembership.expires_at
+    ) {
+
+        const expiration =
+            new Date(
+                currentMembership.expires_at
+            );
+
+        const now =
+            new Date();
+
+        if (
+            Number.isNaN(
+                expiration.getTime()
+            )
+        ) {
+
+            console.warn(
+                "Invalid membership expiration date:",
+                currentMembership.expires_at
+            );
+
+            return false;
+
+        }
+
+        if (
+            expiration <= now
+        ) {
+
+            return false;
+
+        }
+
+    }
+
+    return true;
 
 }
 
@@ -995,45 +1008,49 @@ function updateMembershipUI() {
             'userPlan'
         );
 
-
     const upgradeButton =
         document.getElementById(
             'upgradeAccountBtn'
         );
 
-
     if (!userPlan) {
         return;
     }
 
-
     console.log(
-        "Updating membership UI..."
+        "================================="
     );
 
+    console.log(
+        "UPDATING MEMBERSHIP UI"
+    );
 
     console.log(
         "Current user:",
         currentUser
     );
 
-
     console.log(
         "Current membership:",
         currentMembership
     );
 
+    const premiumAccess =
+        isPremiumMember();
+
+    console.log(
+        "⭐ Premium access:",
+        premiumAccess
+    );
 
     if (!currentUser) {
 
         userPlan.textContent =
             'FREE MEMBER';
 
-
         userPlan.classList.remove(
             'premium-member'
         );
-
 
         if (upgradeButton) {
 
@@ -1046,22 +1063,23 @@ function updateMembershipUI() {
 
     }
 
+    if (premiumAccess) {
 
-    if (!currentMembership) {
-
-        userPlan.textContent =
-            'FREE MEMBER';
-
-
-        userPlan.classList.remove(
-            'premium-member'
+        console.log(
+            "⭐ PREMIUM ACCESS CONFIRMED"
         );
 
+        userPlan.textContent =
+            '⭐ PREMIUM MEMBER';
+
+        userPlan.classList.add(
+            'premium-member'
+        );
 
         if (upgradeButton) {
 
             upgradeButton.style.display =
-                'flex';
+                'none';
 
         }
 
@@ -1069,22 +1087,11 @@ function updateMembershipUI() {
 
     }
 
-
-    const isPremium =
-        currentMembership.plan ===
-        'premium';
-
-
-    const isActive =
-        currentMembership.status ===
-        'active';
-
-
     let isExpired =
         false;
 
-
     if (
+        currentMembership &&
         currentMembership.expires_at
     ) {
 
@@ -1093,12 +1100,13 @@ function updateMembershipUI() {
                 currentMembership.expires_at
             );
 
-
         const now =
             new Date();
 
-
         if (
+            !Number.isNaN(
+                expiration.getTime()
+            ) &&
             expiration <= now
         ) {
 
@@ -1108,53 +1116,6 @@ function updateMembershipUI() {
         }
 
     }
-
-
-    console.log(
-        "Premium check:",
-        {
-            isPremium: isPremium,
-            isActive: isActive,
-            isExpired: isExpired,
-            plan: currentMembership.plan,
-            status: currentMembership.status,
-            expires_at: currentMembership.expires_at
-        }
-    );
-
-
-    if (
-        isPremium &&
-        isActive &&
-        !isExpired
-    ) {
-
-        console.log(
-            "⭐ PREMIUM ACCESS CONFIRMED"
-        );
-
-
-        userPlan.textContent =
-            '⭐ PREMIUM MEMBER';
-
-
-        userPlan.classList.add(
-            'premium-member'
-        );
-
-
-        if (upgradeButton) {
-
-            upgradeButton.style.display =
-                'none';
-
-        }
-
-
-        return;
-
-    }
-
 
     if (isExpired) {
 
@@ -1168,11 +1129,9 @@ function updateMembershipUI() {
 
     }
 
-
     userPlan.classList.remove(
         'premium-member'
     );
-
 
     if (upgradeButton) {
 
@@ -1196,45 +1155,36 @@ async function loadMembership(user) {
             "No user supplied to loadMembership()."
         );
 
-
         currentMembership =
             null;
 
-
         updateMembershipUI();
-
 
         return null;
 
     }
 
-
     console.log(
         "================================="
     );
 
-
     console.log(
         "LOADING MEMBERSHIP"
     );
-
 
     console.log(
         "User email:",
         user.email
     );
 
-
     console.log(
         "User ID:",
         user.id
     );
 
-
     console.log(
         "================================="
     );
-
 
     const {
         data,
@@ -1245,14 +1195,13 @@ async function loadMembership(user) {
                 "learning_hub_memberships"
             )
             .select(
-                "id, user_id, plan, status, expires_at, created_at"
+                "id, user_id, plan, status, expires_at, created_at, email"
             )
             .eq(
                 "user_id",
                 user.id
             )
             .maybeSingle();
-
 
     if (error) {
 
@@ -1261,31 +1210,24 @@ async function loadMembership(user) {
             error
         );
 
-
         currentMembership =
             null;
 
-
         updateMembershipUI();
-
 
         return null;
 
     }
-
 
     console.log(
         "✅ MEMBERSHIP DATA:",
         data
     );
 
-
     currentMembership =
         data || null;
 
-
     updateMembershipUI();
-
 
     return currentMembership;
 
@@ -1302,13 +1244,11 @@ async function checkAuthSession() {
         "Checking current Supabase session..."
     );
 
-
     const {
         data,
         error
     } =
         await supabaseClient.auth.getSession();
-
 
     if (error) {
 
@@ -1316,7 +1256,6 @@ async function checkAuthSession() {
             'Session error:',
             error
         );
-
 
         updateAuthUI(null);
 
@@ -1326,10 +1265,8 @@ async function checkAuthSession() {
 
     }
 
-
     const session =
         data.session;
-
 
     if (session) {
 
@@ -1338,16 +1275,13 @@ async function checkAuthSession() {
             session.user.email
         );
 
-
         updateAuthUI(
             session.user
         );
 
-
         await loadMembership(
             session.user
         );
-
 
         generateGames();
 
@@ -1357,11 +1291,9 @@ async function checkAuthSession() {
             "No active session."
         );
 
-
         updateAuthUI(
             null
         );
-
 
         generateGames();
 
@@ -1382,13 +1314,11 @@ supabaseClient.auth.onAuthStateChange(
             event
         );
 
-
         updateAuthUI(
             session
                 ? session.user
                 : null
         );
-
 
         if (
             session &&
@@ -1402,9 +1332,7 @@ supabaseClient.auth.onAuthStateChange(
                         session.user
                     );
 
-
                     updateMembershipUI();
-
 
                     generateGames();
 
@@ -1417,9 +1345,7 @@ supabaseClient.auth.onAuthStateChange(
             currentMembership =
                 null;
 
-
             updateMembershipUI();
-
 
             generateGames();
 
@@ -1449,7 +1375,6 @@ document.addEventListener(
 
             closePremiumModal();
 
-
             document
                 .querySelectorAll(
                     '.footer-info-overlay'
@@ -1461,7 +1386,6 @@ document.addEventListener(
                     );
 
                 });
-
 
             document.body.classList.remove(
                 'modal-open'
@@ -1490,7 +1414,6 @@ document.addEventListener(
 
         }
 
-
         if (
             event.target.id ===
             'donate-modal'
@@ -1500,7 +1423,6 @@ document.addEventListener(
 
         }
 
-
         if (
             event.target.id ===
             'auth-modal'
@@ -1509,7 +1431,6 @@ document.addEventListener(
             closeAuthModal();
 
         }
-
 
         if (
             event.target.id ===
@@ -1535,7 +1456,6 @@ function openPremiumModal() {
             "premium-modal"
         );
 
-
     if (!modal) {
 
         console.warn(
@@ -1546,51 +1466,32 @@ function openPremiumModal() {
 
     }
 
-
-    /* ---------------------------------------------------------
-       PREMIUM USERS ALREADY HAVE ACCESS
-       --------------------------------------------------------- */
+    /*
+       If the user has ANY active Premium
+       plan, do not show the upgrade modal.
+    */
 
     if (
-        currentMembership &&
-        currentMembership.plan === "premium" &&
-        currentMembership.status === "active"
+        isPremiumMember()
     ) {
 
         console.log(
             "Premium user already has access."
         );
 
-
         return;
 
     }
 
-
-    /* ---------------------------------------------------------
-       RESET TO MONTHLY WHEN MODAL OPENS
-       --------------------------------------------------------- */
-
     selectedPremiumPlan =
         "monthly";
 
-
-    /* ---------------------------------------------------------
-       UPDATE PLAN UI
-       --------------------------------------------------------- */
-
     updatePremiumPlanUI();
-
-
-    /* ---------------------------------------------------------
-       RESET PAYMENT MESSAGE
-       --------------------------------------------------------- */
 
     const paymentMessage =
         document.getElementById(
             "premium-payment-message"
         );
-
 
     if (paymentMessage) {
 
@@ -1600,15 +1501,9 @@ function openPremiumModal() {
 
     }
 
-
-    /* ---------------------------------------------------------
-       SHOW MODAL
-       --------------------------------------------------------- */
-
     modal.classList.add(
         "active"
     );
-
 
     document.body.classList.add(
         "modal-open"
@@ -1628,16 +1523,13 @@ function closePremiumModal() {
             "premium-modal"
         );
 
-
     if (!modal) {
         return;
     }
 
-
     modal.classList.remove(
         "active"
     );
-
 
     document.body.classList.remove(
         "modal-open"
@@ -1652,10 +1544,6 @@ function closePremiumModal() {
 
 function selectPremiumPlan(plan) {
 
-    /* ---------------------------------------------------------
-       CHECK THAT THE PLAN EXISTS
-       --------------------------------------------------------- */
-
     if (
         typeof PREMIUM_PRICING === "undefined" ||
         !PREMIUM_PRICING[plan]
@@ -1666,26 +1554,14 @@ function selectPremiumPlan(plan) {
             plan
         );
 
-
         return;
 
     }
 
-
-    /* ---------------------------------------------------------
-       SAVE SELECTED PLAN
-       --------------------------------------------------------- */
-
     selectedPremiumPlan =
         plan;
 
-
-    /* ---------------------------------------------------------
-       UPDATE VISUAL INTERFACE
-       --------------------------------------------------------- */
-
     updatePremiumPlanUI();
-
 
     console.log(
         "Premium plan selected:",
@@ -1707,22 +1583,15 @@ function updatePremiumPlanUI() {
             "premium-plan-monthly"
         );
 
-
     const yearlyOption =
         document.getElementById(
             "premium-plan-yearly"
         );
 
-
     const selectedLabel =
         document.getElementById(
             "selected-premium-plan-label"
         );
-
-
-    /* ---------------------------------------------------------
-       REMOVE PREVIOUS SELECTION
-       --------------------------------------------------------- */
 
     if (monthlyOption) {
 
@@ -1732,7 +1601,6 @@ function updatePremiumPlanUI() {
 
     }
 
-
     if (yearlyOption) {
 
         yearlyOption.classList.remove(
@@ -1740,11 +1608,6 @@ function updatePremiumPlanUI() {
         );
 
     }
-
-
-    /* ---------------------------------------------------------
-       APPLY CURRENT SELECTION
-       --------------------------------------------------------- */
 
     if (
         selectedPremiumPlan === "monthly" &&
@@ -1757,7 +1620,6 @@ function updatePremiumPlanUI() {
 
     }
 
-
     if (
         selectedPremiumPlan === "yearly" &&
         yearlyOption
@@ -1768,11 +1630,6 @@ function updatePremiumPlanUI() {
         );
 
     }
-
-
-    /* ---------------------------------------------------------
-       UPDATE SELECTED PLAN LABEL
-       --------------------------------------------------------- */
 
     if (
         selectedLabel &&
@@ -1787,16 +1644,10 @@ function updatePremiumPlanUI() {
 
     }
 
-
-    /* ---------------------------------------------------------
-       UPDATE SELECT / SELECTED TEXT
-       --------------------------------------------------------- */
-
     const planButtons =
         document.querySelectorAll(
             ".premium-plan-option"
         );
-
 
     planButtons.forEach(
         function(button) {
@@ -1806,11 +1657,9 @@ function updatePremiumPlanUI() {
                     ".premium-plan-select"
                 );
 
-
             if (!selectLabel) {
                 return;
             }
-
 
             if (
                 button.id ===
@@ -1841,10 +1690,6 @@ function updatePremiumPlanUI() {
 
 async function continueToPayment() {
 
-    /* ---------------------------------------------------------
-       CHECK SELECTED PLAN
-       --------------------------------------------------------- */
-
     if (
         typeof PREMIUM_PRICING === "undefined" ||
         !PREMIUM_PRICING[selectedPremiumPlan]
@@ -1858,18 +1703,12 @@ async function continueToPayment() {
 
     }
 
-
-    /* ---------------------------------------------------------
-       CHECK LOGIN
-       --------------------------------------------------------- */
-
     if (!currentUser) {
 
         const paymentMessage =
             document.getElementById(
                 "premium-payment-message"
             );
-
 
         if (paymentMessage) {
 
@@ -1878,7 +1717,6 @@ async function continueToPayment() {
                 'Please log in or create an account before subscribing.';
 
         }
-
 
         setTimeout(
             function() {
@@ -1891,37 +1729,32 @@ async function continueToPayment() {
             1200
         );
 
-
         return;
 
     }
 
-
-    /* ---------------------------------------------------------
-       PREVENT EXISTING PREMIUM USERS FROM SUBSCRIBING AGAIN
-       --------------------------------------------------------- */
+    /*
+       Do not allow an already active Premium
+       member to purchase another subscription
+       from this button.
+    */
 
     if (
-        currentMembership &&
-        currentMembership.plan === "premium" &&
-        currentMembership.status === "active"
+        isPremiumMember()
     ) {
 
         console.log(
             "User already has an active Premium membership."
         );
 
-
         return;
 
     }
-
 
     const pricing =
         PREMIUM_PRICING[
             selectedPremiumPlan
         ];
-
 
     console.log(
         "Starting PayPal subscription:",
@@ -1932,30 +1765,15 @@ async function continueToPayment() {
         }
     );
 
-
-    /* ---------------------------------------------------------
-       GET PAYMENT MESSAGE
-       --------------------------------------------------------- */
-
     const paymentMessage =
         document.getElementById(
             "premium-payment-message"
         );
 
-
-    /* ---------------------------------------------------------
-       GET PAYMENT BUTTON
-       --------------------------------------------------------- */
-
     const paymentButton =
         document.querySelector(
             ".premium-upgrade-btn"
         );
-
-
-    /* ---------------------------------------------------------
-       DISABLE BUTTON WHILE PROCESSING
-       --------------------------------------------------------- */
 
     if (paymentButton) {
 
@@ -1974,7 +1792,6 @@ async function continueToPayment() {
 
     }
 
-
     if (paymentMessage) {
 
         paymentMessage.innerHTML =
@@ -1983,12 +1800,7 @@ async function continueToPayment() {
 
     }
 
-
     try {
-
-        /* -----------------------------------------------------
-           INVOKE SUPABASE EDGE FUNCTION
-           ----------------------------------------------------- */
 
         const {
             data,
@@ -2004,11 +1816,6 @@ async function continueToPayment() {
                 }
             );
 
-
-        /* -----------------------------------------------------
-           HANDLE FUNCTION ERROR
-           ----------------------------------------------------- */
-
         if (error) {
 
             console.error(
@@ -2016,15 +1823,9 @@ async function continueToPayment() {
                 error
             );
 
-
             let detailedMessage =
                 error.message ||
                 "Unable to connect to PayPal.";
-
-
-            /* ---------------------------------------------
-               TRY TO READ THE FUNCTION'S JSON ERROR
-               --------------------------------------------- */
 
             if (
                 error.context &&
@@ -2035,7 +1836,6 @@ async function continueToPayment() {
 
                     const errorData =
                         await error.context.json();
-
 
                     if (
                         errorData &&
@@ -2060,23 +1860,16 @@ async function continueToPayment() {
 
             }
 
-
             throw new Error(
                 detailedMessage
             );
 
         }
 
-
-        /* -----------------------------------------------------
-           CHECK FUNCTION RESPONSE
-           ----------------------------------------------------- */
-
         console.log(
             "PayPal Edge Function response:",
             data
         );
-
 
         if (
             !data ||
@@ -2090,7 +1883,6 @@ async function continueToPayment() {
 
         }
 
-
         if (
             !data.approval_url
         ) {
@@ -2101,18 +1893,12 @@ async function continueToPayment() {
 
         }
 
-
-        /* -----------------------------------------------------
-           STORE SUBSCRIPTION ID TEMPORARILY
-           ----------------------------------------------------- */
-
         try {
 
             sessionStorage.setItem(
                 "paypal_subscription_id",
                 data.subscription_id || ""
             );
-
 
             sessionStorage.setItem(
                 "paypal_subscription_plan",
@@ -2130,11 +1916,6 @@ async function continueToPayment() {
 
         }
 
-
-        /* -----------------------------------------------------
-           SHOW REDIRECT MESSAGE
-           ----------------------------------------------------- */
-
         if (paymentMessage) {
 
             paymentMessage.innerHTML =
@@ -2143,16 +1924,10 @@ async function continueToPayment() {
 
         }
 
-
         console.log(
             "PayPal subscription created:",
             data.subscription_id
         );
-
-
-        /* -----------------------------------------------------
-           REDIRECT TO PAYPAL
-           ----------------------------------------------------- */
 
         window.location.href =
             data.approval_url;
@@ -2163,11 +1938,6 @@ async function continueToPayment() {
             "Premium payment error:",
             error
         );
-
-
-        /* -----------------------------------------------------
-           RESTORE BUTTON
-           ----------------------------------------------------- */
 
         if (paymentButton) {
 
@@ -2185,11 +1955,6 @@ async function continueToPayment() {
                 'Continue to Payment';
 
         }
-
-
-        /* -----------------------------------------------------
-           SHOW ERROR
-           ----------------------------------------------------- */
 
         if (paymentMessage) {
 
@@ -2218,7 +1983,6 @@ function initializePremiumPlan() {
     selectedPremiumPlan =
         "monthly";
 
-
     updatePremiumPlanUI();
 
 }
@@ -2242,3 +2006,4 @@ window.addEventListener(
 
     }
 );
+```
