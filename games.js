@@ -881,4 +881,3 @@ function filterGames() {
    This prevents the game grid from being
    generated twice.
    ========================================================= */
-```
