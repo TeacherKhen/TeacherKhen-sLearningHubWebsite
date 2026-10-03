@@ -1,3 +1,4 @@
+```javascript
 /* =========================================================
    TEACHER KHEN'S LEARNING HUB
    GAME DATABASE + GAME DISPLAY
@@ -163,35 +164,119 @@ const games = [
 
 function hasPremiumAccess() {
 
-    if (!currentMembership) {
-        return false;
+    /*
+     * Use the main Premium membership checker
+     * from script.js when it is available.
+     *
+     * This keeps the membership rules in one place.
+     */
+
+    if (
+        typeof isPremiumMember === "function"
+    ) {
+
+        return isPremiumMember();
+
     }
 
-    if (currentMembership.plan !== "premium") {
+
+    /*
+     * Fallback check.
+     *
+     * Supports:
+     * - monthly
+     * - yearly
+     * - premium
+     */
+
+    if (!currentUser || !currentMembership) {
+
         return false;
+
     }
 
-    if (currentMembership.status !== "active") {
+
+    const validPremiumPlans = [
+        "monthly",
+        "yearly",
+        "premium"
+    ];
+
+
+    const membershipPlan =
+        String(
+            currentMembership.plan || ""
+        )
+            .trim()
+            .toLowerCase();
+
+
+    const membershipStatus =
+        String(
+            currentMembership.status || ""
+        )
+            .trim()
+            .toLowerCase();
+
+
+    if (
+        !validPremiumPlans.includes(
+            membershipPlan
+        )
+    ) {
+
         return false;
+
     }
 
-    if (currentMembership.expires_at) {
+
+    if (
+        membershipStatus !== "active"
+    ) {
+
+        return false;
+
+    }
+
+
+    if (
+        currentMembership.expires_at
+    ) {
 
         const expiration =
             new Date(
                 currentMembership.expires_at
             );
 
+
+        if (
+            Number.isNaN(
+                expiration.getTime()
+            )
+        ) {
+
+            return false;
+
+        }
+
+
         const now =
             new Date();
 
-        if (expiration <= now) {
+
+        if (
+            expiration <= now
+        ) {
+
             return false;
+
         }
 
     }
 
+
     return true;
+
 }
 
 
@@ -200,19 +285,6 @@ function hasPremiumAccess() {
    ========================================================= */
 
 function createGameCard(game) {
-
-    /*
-     * IMPORTANT:
-     *
-     * The original website CSS expects:
-     *
-     * .game-card
-     * .game-img-container
-     * .game-img-container img
-     * .game-title
-     *
-     * We are restoring that exact structure.
-     */
 
     const card =
         document.createElement("a");
@@ -246,12 +318,15 @@ function createGameCard(game) {
 
     } else {
 
-        card.href = game.url;
+        card.href =
+            game.url;
 
     }
 
 
-    card.target = "_blank";
+    card.target =
+        "_blank";
+
 
     card.rel =
         "noopener noreferrer";
@@ -291,7 +366,9 @@ function createGameCard(game) {
        ===================================================== */
 
     const imageContainer =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
     imageContainer.className =
@@ -303,7 +380,9 @@ function createGameCard(game) {
        ===================================================== */
 
     const image =
-        document.createElement("img");
+        document.createElement(
+            "img"
+        );
 
 
     image.src =
@@ -313,11 +392,6 @@ function createGameCard(game) {
     image.alt =
         game.title;
 
-
-    /*
-     * This class is useful for the
-     * existing CSS.
-     */
 
     image.className =
         "game-image";
@@ -337,7 +411,9 @@ function createGameCard(game) {
        ===================================================== */
 
     const badge =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
     badge.className =
@@ -396,7 +472,9 @@ function createGameCard(game) {
        ===================================================== */
 
     const title =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
     title.className =
@@ -414,6 +492,7 @@ function createGameCard(game) {
     card.appendChild(
         imageContainer
     );
+
 
     card.appendChild(
         title
@@ -447,7 +526,14 @@ function createGameCard(game) {
 
                 if (!currentUser) {
 
-                    openAuthModal();
+                    if (
+                        typeof openAuthModal ===
+                        "function"
+                    ) {
+
+                        openAuthModal();
+
+                    }
 
                     return;
 
@@ -500,7 +586,9 @@ function generateGames(
 
 
     if (!gameGrid) {
+
         return;
+
     }
 
 
@@ -508,7 +596,8 @@ function generateGames(
      * Clear existing games.
      */
 
-    gameGrid.innerHTML = "";
+    gameGrid.innerHTML =
+        "";
 
 
     /*
@@ -533,10 +622,14 @@ function generateGames(
        FREE GAMES
        ===================================================== */
 
-    if (freeGames.length > 0) {
+    if (
+        freeGames.length > 0
+    ) {
 
         const freeSection =
-            document.createElement("section");
+            document.createElement(
+                "section"
+            );
 
 
         freeSection.className =
@@ -544,7 +637,9 @@ function generateGames(
 
 
         const freeHeading =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
 
         freeHeading.className =
@@ -556,7 +651,9 @@ function generateGames(
 
 
         const freeGrid =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
 
         freeGrid.className =
@@ -564,7 +661,7 @@ function generateGames(
 
 
         freeGames.forEach(
-            game => {
+            function(game) {
 
                 freeGrid.appendChild(
                     createGameCard(game)
@@ -595,10 +692,14 @@ function generateGames(
        PREMIUM GAMES
        ===================================================== */
 
-    if (premiumGames.length > 0) {
+    if (
+        premiumGames.length > 0
+    ) {
 
         const premiumSection =
-            document.createElement("section");
+            document.createElement(
+                "section"
+            );
 
 
         premiumSection.className =
@@ -606,7 +707,9 @@ function generateGames(
 
 
         const premiumHeading =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
 
         premiumHeading.className =
@@ -618,7 +721,9 @@ function generateGames(
 
 
         const premiumGrid =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
 
         premiumGrid.className =
@@ -626,7 +731,7 @@ function generateGames(
 
 
         premiumGames.forEach(
-            game => {
+            function(game) {
 
                 premiumGrid.appendChild(
                     createGameCard(game)
@@ -665,7 +770,9 @@ function generateGames(
 
     if (noResults) {
 
-        if (gameList.length === 0) {
+        if (
+            gameList.length === 0
+        ) {
 
             noResults.style.display =
                 "block";
@@ -695,7 +802,9 @@ function filterGames() {
 
 
     if (!searchInput) {
+
         return;
+
     }
 
 
@@ -718,7 +827,7 @@ function filterGames() {
 
     const filteredGames =
         games.filter(
-            game => {
+            function(game) {
 
                 const title =
                     game.title
@@ -761,14 +870,16 @@ function filterGames() {
 
 
 /* =========================================================
-   INITIAL GAME DISPLAY
+   NOTE
+   =========================================================
+
+   We intentionally do NOT add another
+   DOMContentLoaded listener here.
+
+   script.js already initializes the website
+   and calls generateGames().
+
+   This prevents the game grid from being
+   generated twice.
    ========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
-
-        generateGames();
-
-    }
-);
+```
