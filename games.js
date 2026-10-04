@@ -142,7 +142,7 @@ const games = [
         image: "clickit.png",
         category: "Review",
         grades: "Grades 1–6",
-        access: "premium"
+        access: "free"
     },
 
     {
