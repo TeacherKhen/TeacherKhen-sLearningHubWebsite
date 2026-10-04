@@ -152,6 +152,15 @@ const games = [
         category: "Phonics",
         grades: "Grades 1–6",
         access: "free"
+    },
+
+    {
+        title: "Halloween Monster Egg",
+        url: "https://monsteregg.teacherkhen.com/",
+        image: "logo.gif",
+        category: "Review",
+        grades: "Grades 1–6",
+        access: "premium"
     }
 
 ];
