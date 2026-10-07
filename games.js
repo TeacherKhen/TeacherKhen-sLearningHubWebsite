@@ -74,6 +74,15 @@ const games = [
     },
 
     {
+        title: "Randomizer",
+        url: "https://randomizer.teacherkhen.com/",
+        image: "randomizer.gif",
+        category: "Teaching Tool",
+        grades: "Grades 1–6",
+        access: "free"
+    },
+
+    {
         title: "Whiteboard & Quiz Master",
         url: "https://teacherkhen.github.io/whiteboard-quiz/",
         image: "whiteboard+quiz.jpg",
@@ -469,6 +478,7 @@ function createGameCard(game) {
     imageContainer.appendChild(
         image
     );
+
 
     imageContainer.appendChild(
         badge
