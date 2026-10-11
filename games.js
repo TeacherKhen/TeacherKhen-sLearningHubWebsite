@@ -175,7 +175,7 @@ const games = [
     {
         title: "Spider Web Reading + Presets",
         url: "https://spiderwebreadingpremium.teacherkhen.com/",
-        image: "spiderwebpremium.gif",
+        image: "spider web reading premium.gif",
         category: "Phonics",
         grades: "Grades 1–6",
         access: "premium"
