@@ -170,7 +170,17 @@ const games = [
         category: "Review",
         grades: "Grades 1–6",
         access: "premium"
+    },
+   
+    {
+        title: "Spider Web Reading + Presets",
+        url: "https://spiderwebreadingpremium.teacherkhen.com/",
+        image: "spiderwebpremium.gif",
+        category: "Phonics",
+        grades: "Grades 1–6",
+        access: "premium"
     }
+
 
 ];
 
