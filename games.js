@@ -179,8 +179,16 @@ const games = [
         category: "Phonics",
         grades: "Grades 1–6",
         access: "premium"
+    }, 
+   
+    {
+        title: "Phonics (Super Starter + Wonder World + Games)",
+        url: "https://phonics-learning.teacherkhen.com/",
+        image: "Phonics.gif",
+        category: "Phonics",
+        grades: "Grades 1–6",
+        access: "premium"
     }
-
 
 ];
 
