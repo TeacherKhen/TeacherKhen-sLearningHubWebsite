@@ -729,6 +729,20 @@
 
 
 
+            <!-- Payment method selection: scoped inline styling; style.css unchanged -->
+            <fieldset id="tk-payment-methods" style="border:1px solid #d9e3ef;border-radius:14px;padding:16px;margin:18px 0;min-width:0;">
+                <legend style="padding:0 6px;font-weight:800;">Choose your payment method</legend>
+                <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 4px;">
+                    <input type="radio" name="tk-payment-provider" value="paypal" checked onchange="updatePaymentProviderUI()" style="width:20px;height:20px;accent-color:#2563eb;">
+                    <span><strong>PayPal</strong><small style="display:block;">$4 monthly / $20 yearly · subscription</small></span>
+                </label>
+                <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 4px;">
+                    <input type="radio" name="tk-payment-provider" value="paymongo" onchange="updatePaymentProviderUI()" style="width:20px;height:20px;accent-color:#2563eb;">
+                    <span><strong>PayMongo QR Ph</strong><small style="display:block;">₱250 monthly / ₱1,260 yearly · one-time payment</small></span>
+                </label>
+                <div id="tk-payment-price" aria-live="polite" style="font-weight:700;margin-top:8px;">PayPal: $4 / month</div>
+            </fieldset>
+
             <!-- =====================================================
                  CONTINUE TO PAYMENT
                  ===================================================== -->

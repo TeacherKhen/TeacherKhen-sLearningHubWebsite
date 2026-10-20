@@ -1642,6 +1642,7 @@ function updatePremiumPlanUI() {
             PREMIUM_PRICING[
                 selectedPremiumPlan
             ].label;
+        if (typeof updatePaymentProviderUI === "function") updatePaymentProviderUI();
 
     }
 
