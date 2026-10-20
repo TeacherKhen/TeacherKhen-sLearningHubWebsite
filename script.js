@@ -1486,6 +1486,7 @@ function openPremiumModal() {
         "monthly";
 
     updatePremiumPlanUI();
+    updatePaymentProviderUI();
 
     const paymentMessage =
         document.getElementById(
@@ -1496,7 +1497,7 @@ function openPremiumModal() {
 
         paymentMessage.innerHTML =
             '<i class="fas fa-credit-card"></i> ' +
-            'Secure payment through PayPal.';
+            'Choose PayPal or PayMongo QR Ph to pay securely.';
 
     }
 
@@ -1561,6 +1562,7 @@ function selectPremiumPlan(plan) {
         plan;
 
     updatePremiumPlanUI();
+    updatePaymentProviderUI();
 
     console.log(
         "Premium plan selected:",
@@ -1682,12 +1684,54 @@ function updatePremiumPlanUI() {
 }
 
 
+/* Payment provider UI (existing PayPal flow preserved) */
+function selectedPaymentProvider() {
+    return document.querySelector('input[name="tk-payment-provider"]:checked')?.value || 'paypal';
+}
+function updatePaymentProviderUI() {
+    const label = document.getElementById('tk-payment-price');
+    if (!label) return;
+    const yearly = selectedPremiumPlan === 'yearly';
+    label.textContent = selectedPaymentProvider() === 'paymongo'
+      ? `PayMongo QR Ph: ${yearly ? '₱1,260 / year' : '₱250 / month'} (one-time)`
+      : `PayPal: ${yearly ? '$20 / year' : '$4 / month'}`;
+}
+async function startPayMongoCheckout() {
+    const message = document.getElementById('premium-payment-message');
+    const button = document.querySelector('.premium-upgrade-btn');
+    if (!currentUser) {
+        if (message) message.textContent = 'Please log in before paying.';
+        closePremiumModal(); openAuthModal(); return;
+    }
+    if (isPremiumMember()) return;
+    if (button) { button.disabled = true; button.textContent = 'Preparing QR Ph checkout...'; }
+    try {
+        const { data: sessionData } = await supabaseClient.auth.getSession();
+        if (!sessionData?.session?.access_token) throw new Error('Please log in again.');
+        const { data, error } = await supabaseClient.functions.invoke('paymongo-create-checkout', {
+            body: { plan: selectedPremiumPlan }
+        });
+        if (error) {
+            let detail = error.message;
+            try { detail = (await error.context?.json())?.error || detail; } catch (_) {}
+            throw new Error(detail);
+        }
+        if (!data?.checkout_url || !/^https:\/\/checkout\.paymongo\.com\//.test(data.checkout_url))
+            throw new Error('PayMongo did not return a valid checkout URL.');
+        window.location.assign(data.checkout_url);
+    } catch (err) {
+        if (message) message.textContent = err.message || 'Unable to create checkout.';
+        if (button) { button.disabled = false; button.innerHTML = '<i class="fas fa-credit-card"></i> Continue to Payment'; }
+    }
+}
+
 /* =========================================================
    CONTINUE TO PAYMENT
    PAYPAL SUBSCRIPTION CONNECTION
    ========================================================= */
 
 async function continueToPayment() {
+    if (selectedPaymentProvider() === 'paymongo') return startPayMongoCheckout();
 
     if (
         typeof PREMIUM_PRICING === "undefined" ||
