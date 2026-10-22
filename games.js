@@ -162,6 +162,15 @@ const games = [
         grades: "Grades 1–6",
         access: "free"
     },
+    
+    {
+        title: "Balloon Pop",
+        url: "https://balloon-pop-free.teacherkhen.com/",
+        image: "balloon pop free.png",
+        category: "Review",
+        grades: "Grades 1–6",
+        access: "free"
+    },
 
     {
         title: "Halloween Monster Egg",
@@ -188,7 +197,16 @@ const games = [
         category: "Phonics",
         grades: "Grades 1–6",
         access: "premium"
-    }
+    },
+
+    {
+        title: "Balloon + Bubble + Star Popping Game + Presets + Editable",
+        url: "http://balloon-bubble-star-pop.teacherkhen.com/",
+        image: "balloon pop.png",
+        category: "Review",
+        grades: "Grades 1–6",
+        access: "premium"
+   }
 
 ];
 
