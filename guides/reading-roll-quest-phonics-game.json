@@ -1,0 +1,79 @@
+{
+  "title": "Reading Roll Quest [Phonics Game]",
+  "description": "A phonics activity for grades 1–4. Follow these simple steps to use it with your class.",
+  "steps": [
+    "Open the game and choose Board Style 1 (Connect 3) or Board Style 2 (Trophy Race).",
+    "Select ⚙️ Settings before starting.",
+    "In Custom Classroom Words, enter ONE word per line.",
+    "Press ✓ Update & Populate Grid to place your words on the board.",
+    "Choose Background Music and Master Volume if desired.",
+    "Close Settings, set ⏱️ Timer, and start the game.",
+    "Students take turns rolling/playing, reading words, and competing for points."
+  ],
+  "buttons": [
+    {
+      "name": "⚙️ Settings",
+      "meaning": "Choose board style, enter custom words, set audio, and access data files."
+    },
+    {
+      "name": "✓ Update & Populate Grid",
+      "meaning": "Place the edited word list on the board."
+    },
+    {
+      "name": "📤 Export Data",
+      "meaning": "Download your game data for later use."
+    },
+    {
+      "name": "📥 Load Data",
+      "meaning": "Restore a saved game-data file."
+    },
+    {
+      "name": "🔀 Shuffle Words",
+      "meaning": "Change the order of words on the board."
+    },
+    {
+      "name": "🔄 Reset Game",
+      "meaning": "Restart the current game."
+    },
+    {
+      "name": "⏱️ Timer",
+      "meaning": "Open the timer controls: -10, -1, +1, +10, Start, Pause, Resume, and Reset."
+    },
+    {
+      "name": "⛶ Fullscreen",
+      "meaning": "Fill the screen with the game."
+    }
+  ],
+  "jsonHelp": false,
+  "video": "https://www.youtube.com/shorts/E_FZe0Ni_ys",
+  "videoChannel": "",
+  "sections": [
+    {
+      "heading": "🎲 Set up Reading Roll Quest",
+      "steps": [
+        "Open the game and choose Board Style 1 (Connect 3) or Board Style 2 (Trophy Race).",
+        "Select ⚙️ Settings before starting.",
+        "In Custom Classroom Words, enter ONE word per line.",
+        "Press ✓ Update & Populate Grid to place your words on the board.",
+        "Choose Background Music and Master Volume if desired.",
+        "Close Settings, set ⏱️ Timer, and start the game.",
+        "Students take turns rolling/playing, reading words, and competing for points."
+      ]
+    },
+    {
+      "heading": "💾 How to export, import, or load your game data",
+      "steps": [
+        "Open ⚙️ Settings, enter one classroom word per line, then press ✓ Update & Populate Grid.",
+        "In Game Data Preservation File System, press 📤 Export Data to download the saved game data.",
+        "Keep the downloaded file in a safe folder.",
+        "Next time, open ⚙️ Settings and press 📥 Load Data.",
+        "Select your exported file, check the grid and words, and start playing."
+      ]
+    }
+  ],
+  "tips": [
+    "The instruction JSON file in the website guides folder is NOT the same as the game-data JSON file you export.",
+    "A browser may remember changes on one device, but do not rely on that as your only backup. Export after editing whenever the game offers it.",
+    "Button labels and available editing features can differ between games. If your game does not show an export/import button, that feature has not been confirmed for that game."
+  ]
+}

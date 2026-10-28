@@ -1,0 +1,63 @@
+{
+  "title": "Halloween Monster Egg",
+  "description": "A review activity for grades 1–6. Follow these simple steps to use it with your class.",
+  "steps": [
+    "Sign in to your premium account and open Halloween Monster Egg.",
+    "Choose your teams, then open Question Editor.",
+    "Add or edit each question; enter answer options and mark the correct option.",
+    "Add a picture only if needed and supported by that question type.",
+    "Review all questions and close the editor.",
+    "Set the timer and other options, then press START GAME.",
+    "Play both rounds and check the final combined scores."
+  ],
+  "buttons": [
+    {
+      "name": "Question Editor",
+      "meaning": "Open the question and answer editor."
+    },
+    {
+      "name": "Export JSON",
+      "meaning": "Download a backup of the edited questions."
+    },
+    {
+      "name": "Load JSON",
+      "meaning": "Restore a previously saved question set."
+    },
+    {
+      "name": "END ROUND",
+      "meaning": "Finish the current round."
+    }
+  ],
+  "jsonHelp": false,
+  "video": "https://www.youtube.com/shorts/Ui_mwRzRd5U",
+  "videoChannel": "",
+  "sections": [
+    {
+      "heading": "🎃 Edit your Halloween questions",
+      "steps": [
+        "Sign in to your premium account and open Halloween Monster Egg.",
+        "Choose your teams, then open Question Editor.",
+        "Add or edit each question; enter answer options and mark the correct option.",
+        "Add a picture only if needed and supported by that question type.",
+        "Review all questions and close the editor.",
+        "Set the timer and other options, then press START GAME.",
+        "Play both rounds and check the final combined scores."
+      ]
+    },
+    {
+      "heading": "💾 How to export, import, or load your game data",
+      "steps": [
+        "Finish editing questions in Question Editor.",
+        "Press Export JSON and save the downloaded .json file in a safe folder.",
+        "Next time, open Monster Egg and press Load JSON.",
+        "Choose the exported file and check your questions before starting.",
+        "Export again after editing so your backup contains the latest changes."
+      ]
+    }
+  ],
+  "tips": [
+    "The instruction JSON file in the website guides folder is NOT the same as the game-data JSON file you export.",
+    "A browser may remember changes on one device, but do not rely on that as your only backup. Export after editing whenever the game offers it.",
+    "Button labels and available editing features can differ between games. If your game does not show an export/import button, that feature has not been confirmed for that game."
+  ]
+}

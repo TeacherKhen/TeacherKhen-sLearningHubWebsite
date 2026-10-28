@@ -4957,3 +4957,27 @@ body.modal-open {
     }
 
 }
+
+/* =========================================================
+   MAGIC GAME OPTIONS + GUIDE POPUP (ADDITIVE STYLES ONLY)
+   ========================================================= */
+.tk-modal{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:16px;box-sizing:border-box}
+.tk-modal.tk-visible{display:flex}
+.tk-modal-backdrop{position:absolute;inset:0;background:rgba(14,10,40,.76);backdrop-filter:blur(7px)}
+.tk-modal-panel{position:relative;width:min(640px,100%);max-height:min(88vh,850px);overflow-y:auto;box-sizing:border-box;padding:30px 24px 24px;background:linear-gradient(150deg,#fff 0%,#f6efff 100%);border:4px solid #b481f1;border-radius:28px;box-shadow:0 22px 80px rgba(25,12,69,.5),0 0 35px rgba(255,210,91,.3);animation:tkMagicOpen .48s cubic-bezier(.2,1.5,.3,1) both;color:#1a1a4b}
+@keyframes tkMagicOpen{from{opacity:0;transform:scale(.7) translateY(32px) rotate(-3deg);filter:brightness(1.5)}to{opacity:1;transform:scale(1) translateY(0) rotate(0);filter:brightness(1)}}
+.tk-modal-panel:before{content:'✦ ✨ ✦';position:absolute;top:8px;left:16px;color:#fbb03b;letter-spacing:10px;pointer-events:none;animation:tkTwinkle 1.5s ease-in-out infinite alternate}
+@keyframes tkTwinkle{to{opacity:.35;transform:translateY(-3px)}}
+.tk-modal-close{position:sticky;top:0;float:right;z-index:2;width:36px;height:36px;border:0;border-radius:50%;background:#f06eaa;color:white;font-size:26px;cursor:pointer}
+.tk-modal-title{font-family:'Luckiest Guy',cursive;font-size:clamp(23px,4vw,34px);line-height:1.2;text-align:center;margin:16px 30px 8px;color:#7140b4}
+.tk-modal-subtitle{text-align:center;line-height:1.5;margin:12px 0 22px;color:#38406a}
+.tk-choice-actions,.tk-guide-footer{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:20px 0}
+.tk-choice-button{flex:1 1 180px;border:0;border-radius:18px;padding:15px 18px;background:linear-gradient(130deg,#29abe2,#6756c7);box-shadow:0 5px 0 #27215d;color:white;font-family:'Luckiest Guy',cursive;font-size:18px;cursor:pointer;transition:transform .2s}
+.tk-choice-button:hover{transform:translateY(-3px)}.tk-choice-button.tk-secondary{background:linear-gradient(130deg,#f06eaa,#b481f1);box-shadow:0 5px 0 #75418d}
+.tk-modal-note{text-align:center;color:#5b5c78;font-size:13px;line-height:1.5}
+.tk-guide-section{margin:18px 0;padding:15px 18px;background:#fff;border:2px solid #e8d9ff;border-radius:17px;line-height:1.6}
+.tk-guide-section h3{margin:0 0 10px;color:#7140b4;font-size:19px}.tk-guide-steps{margin:0;padding-left:25px}.tk-guide-steps li{margin:0 0 9px}.tk-button-explanation{margin:7px 0}
+.tk-guide-video{display:block;width:100%;aspect-ratio:9/16;max-height:450px;border:0;border-radius:14px;background:#151515}
+.tk-video-link{display:inline-block;margin-top:10px;color:#2452a6;font-weight:bold}
+@media(max-width:500px){.tk-modal-panel{padding:22px 14px 18px;border-radius:20px}.tk-choice-button{flex-basis:130px;font-size:15px;padding:12px 10px}.tk-guide-section{padding:12px}.tk-guide-video{max-height:380px}}
+@media(prefers-reduced-motion:reduce){.tk-modal-panel,.tk-modal-panel:before{animation:none}}

@@ -1,0 +1,68 @@
+{
+  "title": "Balloon + Bubble + Star Popping Game + Presets + Editable",
+  "description": "A review activity for grades 1–6. Follow these simple steps to use it with your class.",
+  "steps": [
+    "Sign in and open the premium popping game.",
+    "Choose Balloon, Bubble, or Star mode.",
+    "Select a built-in preset OR enter your own words and add pictures if needed.",
+    "Check the word/picture set before play.",
+    "Choose one or two players, the time limit, and Slow / Average / Fast speed.",
+    "Set music and sound-effects options, then start.",
+    "Students pop the matching words or pictures to score points."
+  ],
+  "buttons": [
+    {
+      "name": "Presets",
+      "meaning": "Load a prepared set."
+    },
+    {
+      "name": "Export JSON",
+      "meaning": "Download your custom set."
+    },
+    {
+      "name": "Import JSON",
+      "meaning": "Restore your custom set."
+    },
+    {
+      "name": "Speed",
+      "meaning": "Adjust how quickly objects move."
+    },
+    {
+      "name": "Sound Effects / Volume",
+      "meaning": "Turn effects on or off and change their volume."
+    }
+  ],
+  "jsonHelp": false,
+  "video": "",
+  "videoChannel": "",
+  "sections": [
+    {
+      "heading": "🎈 Prepare your popping game",
+      "steps": [
+        "Sign in and open the premium popping game.",
+        "Choose Balloon, Bubble, or Star mode.",
+        "Select a built-in preset OR enter your own words and add pictures if needed.",
+        "Check the word/picture set before play.",
+        "Choose one or two players, the time limit, and Slow / Average / Fast speed.",
+        "Set music and sound-effects options, then start.",
+        "Students pop the matching words or pictures to score points."
+      ]
+    },
+    {
+      "heading": "💾 How to export, import, or load your game data",
+      "steps": [
+        "Finish editing the words, questions, answers, or pictures first.",
+        "Look in the game’s setup, editor, or settings for Export JSON / Export Data / Save File. If you see one, click it to download your work as a .json file.",
+        "Keep the downloaded file in a safe place, such as a folder named after the class. Export again after making new changes.",
+        "To use the same content later, open this SAME game and choose Import JSON / Load JSON / Load Data (whichever appears).",
+        "Select the .json file you exported from this game. Check the imported words, question order, and pictures before pressing Start.",
+        "Do not use a guide JSON file from the website’s guides folder as a game-data file. They serve different purposes."
+      ]
+    }
+  ],
+  "tips": [
+    "The instruction JSON file in the website guides folder is NOT the same as the game-data JSON file you export.",
+    "A browser may remember changes on one device, but do not rely on that as your only backup. Export after editing whenever the game offers it.",
+    "Button labels and available editing features can differ between games. If your game does not show an export/import button, that feature has not been confirmed for that game."
+  ]
+}

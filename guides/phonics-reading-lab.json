@@ -1,0 +1,80 @@
+{
+  "title": "Phonics Reading Lab",
+  "description": "A phonics activity for grades 1–4. Follow these simple steps to use it with your class.",
+  "steps": [
+    "Open Phonics Reading Lab and look at the start or setup screen.",
+    "Find the edit, settings, word-entry, or question-entry controls, if offered, and prepare your letters, sounds, and phonics words.",
+    "If there are answer choices, select or check the correct answer. If there are pictures, make sure they match the words.",
+    "Use any Update, Apply, or Save Changes button shown to place your edits into the game.",
+    "Check the word order, placement, and readability BEFORE pressing Start.",
+    "Choose the available mode, team, timer, and audio settings.",
+    "Start the activity and follow the on-screen prompts."
+  ],
+  "buttons": [
+    {
+      "name": "Edit / Settings / Customize",
+      "meaning": "Open the setup area to change words, questions, choices, or game options, if shown."
+    },
+    {
+      "name": "Add / +",
+      "meaning": "Add another word or question in games that provide this control."
+    },
+    {
+      "name": "Update / Apply / Save Changes",
+      "meaning": "Apply your edits to the current game board before starting, if this button appears."
+    },
+    {
+      "name": "Start / Play",
+      "meaning": "Begin the activity after checking your setup."
+    },
+    {
+      "name": "Reset / Restart",
+      "meaning": "Restart the current activity; check whether it also clears scores or changes."
+    },
+    {
+      "name": "Fullscreen / ⛶",
+      "meaning": "Expand the game to fill the screen."
+    },
+    {
+      "name": "Export JSON / Export Data",
+      "meaning": "Download your edited content as a .json backup, when this option is provided."
+    },
+    {
+      "name": "Load JSON / Import JSON / Load Data",
+      "meaning": "Choose a previously exported .json file to restore game content, when supported."
+    }
+  ],
+  "jsonHelp": false,
+  "video": "https://www.youtube.com/shorts/l72-l1akiJI",
+  "videoChannel": "",
+  "sections": [
+    {
+      "heading": "✏️ Prepare and edit the lesson content",
+      "steps": [
+        "Open Phonics Reading Lab and look at the start or setup screen.",
+        "Find the edit, settings, word-entry, or question-entry controls, if offered, and prepare your letters, sounds, and phonics words.",
+        "If there are answer choices, select or check the correct answer. If there are pictures, make sure they match the words.",
+        "Use any Update, Apply, or Save Changes button shown to place your edits into the game.",
+        "Check the word order, placement, and readability BEFORE pressing Start.",
+        "Choose the available mode, team, timer, and audio settings.",
+        "Start the activity and follow the on-screen prompts."
+      ]
+    },
+    {
+      "heading": "💾 How to export, import, or load your game data",
+      "steps": [
+        "Finish editing the words, questions, answers, or pictures first.",
+        "Look in the game’s setup, editor, or settings for Export JSON / Export Data / Save File. If you see one, click it to download your work as a .json file.",
+        "Keep the downloaded file in a safe place, such as a folder named after the class. Export again after making new changes.",
+        "To use the same content later, open this SAME game and choose Import JSON / Load JSON / Load Data (whichever appears).",
+        "Select the .json file you exported from this game. Check the imported words, question order, and pictures before pressing Start.",
+        "Do not use a guide JSON file from the website’s guides folder as a game-data file. They serve different purposes."
+      ]
+    }
+  ],
+  "tips": [
+    "The instruction JSON file in the website guides folder is NOT the same as the game-data JSON file you export.",
+    "A browser may remember changes on one device, but do not rely on that as your only backup. Export after editing whenever the game offers it.",
+    "Button labels and available editing features can differ between games. If your game does not show an export/import button, that feature has not been confirmed for that game."
+  ]
+}

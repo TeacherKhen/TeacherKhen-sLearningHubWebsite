@@ -1,0 +1,56 @@
+{
+  "title": "Balloon Pop",
+  "description": "A review activity for grades 1–6. Follow these simple steps to use it with your class.",
+  "steps": [
+    "Open the free Balloon Pop game.",
+    "Enter your own words in the available word-entry area. The free version does not include built-in presets or picture questions.",
+    "Choose one or two players and a time limit of up to two minutes.",
+    "Choose the available music setting and start.",
+    "Tap balloons to practice reading and collect points."
+  ],
+  "buttons": [
+    {
+      "name": "Add words / Edit",
+      "meaning": "Enter your own words for the balloons."
+    },
+    {
+      "name": "Start",
+      "meaning": "Begin the popping round."
+    },
+    {
+      "name": "Timer",
+      "meaning": "Choose the round length, up to two minutes in the free version."
+    }
+  ],
+  "jsonHelp": false,
+  "video": "",
+  "videoChannel": "",
+  "sections": [
+    {
+      "heading": "🎈 Add your own balloon words",
+      "steps": [
+        "Open the free Balloon Pop game.",
+        "Enter your own words in the available word-entry area. The free version does not include built-in presets or picture questions.",
+        "Choose one or two players and a time limit of up to two minutes.",
+        "Choose the available music setting and start.",
+        "Tap balloons to practice reading and collect points."
+      ]
+    },
+    {
+      "heading": "💾 How to export, import, or load your game data",
+      "steps": [
+        "Finish editing the words, questions, answers, or pictures first.",
+        "Look in the game’s setup, editor, or settings for Export JSON / Export Data / Save File. If you see one, click it to download your work as a .json file.",
+        "Keep the downloaded file in a safe place, such as a folder named after the class. Export again after making new changes.",
+        "To use the same content later, open this SAME game and choose Import JSON / Load JSON / Load Data (whichever appears).",
+        "Select the .json file you exported from this game. Check the imported words, question order, and pictures before pressing Start.",
+        "Do not use a guide JSON file from the website’s guides folder as a game-data file. They serve different purposes."
+      ]
+    }
+  ],
+  "tips": [
+    "The instruction JSON file in the website guides folder is NOT the same as the game-data JSON file you export.",
+    "A browser may remember changes on one device, but do not rely on that as your only backup. Export after editing whenever the game offers it.",
+    "Button labels and available editing features can differ between games. If your game does not show an export/import button, that feature has not been confirmed for that game."
+  ]
+}

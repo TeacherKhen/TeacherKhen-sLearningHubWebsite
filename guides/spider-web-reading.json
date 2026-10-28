@@ -1,0 +1,43 @@
+{
+  "title": "Spider Web Reading",
+  "description": "A phonics activity for grades 1–6. Follow these simple steps to use it with your class.",
+  "steps": [
+    "Open Spider Web Reading (free version).",
+    "Find the word-entry or set-selection area, if available, and prepare the words students will read.",
+    "Check the words before starting.",
+    "Choose the available reading or sound options.",
+    "Start and let students read the words as they interact with the spider web."
+  ],
+  "buttons": [],
+  "jsonHelp": false,
+  "video": "https://www.youtube.com/shorts/i862XADOSSQ",
+  "videoChannel": "",
+  "sections": [
+    {
+      "heading": "🕷️ Prepare a reading activity",
+      "steps": [
+        "Open Spider Web Reading (free version).",
+        "Find the word-entry or set-selection area, if available, and prepare the words students will read.",
+        "Check the words before starting.",
+        "Choose the available reading or sound options.",
+        "Start and let students read the words as they interact with the spider web."
+      ]
+    },
+    {
+      "heading": "💾 How to export, import, or load your game data",
+      "steps": [
+        "Finish editing the words, questions, answers, or pictures first.",
+        "Look in the game’s setup, editor, or settings for Export JSON / Export Data / Save File. If you see one, click it to download your work as a .json file.",
+        "Keep the downloaded file in a safe place, such as a folder named after the class. Export again after making new changes.",
+        "To use the same content later, open this SAME game and choose Import JSON / Load JSON / Load Data (whichever appears).",
+        "Select the .json file you exported from this game. Check the imported words, question order, and pictures before pressing Start.",
+        "Do not use a guide JSON file from the website’s guides folder as a game-data file. They serve different purposes."
+      ]
+    }
+  ],
+  "tips": [
+    "The instruction JSON file in the website guides folder is NOT the same as the game-data JSON file you export.",
+    "A browser may remember changes on one device, but do not rely on that as your only backup. Export after editing whenever the game offers it.",
+    "Button labels and available editing features can differ between games. If your game does not show an export/import button, that feature has not been confirmed for that game."
+  ]
+}
