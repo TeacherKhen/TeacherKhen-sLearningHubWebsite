@@ -232,6 +232,7 @@ const games = [
    
    {
         title: "Food Express (Wonder World 7.3)",
+        guide: "guides/food-express-instructions.json",
         url: "http://food-express.teacherkhen.com/",
         image: "food express.png",
         category: "Vocabulary",
