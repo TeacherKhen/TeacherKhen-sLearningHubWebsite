@@ -1,0 +1,120 @@
+{
+  "title": "Food Express (Wonder World 7.3)",
+  "description": "A three-level Premium interactive food and restaurant English game for elementary EFL learners. Designed for Wonder World 7, Unit 3: From Farm to Table (Grade 6), and adaptable to other food lessons. Students find food with a flashlight, practice ordering, and collect correct food orders from a moving conveyor belt.",
+  "steps": [
+    "Before playing: Open the Premium game, log in with an active Teacher Khen Learning Hub Premium account, and choose Full Screen for classroom display. Check that your browser allows sound after clicking Start.",
+    "Level 1 — Food Hunt: Move the mouse, finger, or stylus around the dark scene to direct the flashlight. Find and tap each hidden food. A Food Discovered card appears; ask students to read the food aloud before continuing.",
+    "Level 1 — Review: After all foods are found, the game displays vocabulary picture cards. Review the names together, then use the bottom-right Next button.",
+    "Level 2 — Restaurant Ordering: Use the food menu and sentence prompts to practice customer and waitress conversations. Have students say the complete food-ordering sentence aloud. Follow the on-screen prompts to proceed.",
+    "Level 3 — Conveyor Belt: Read the current food order. Choose Slow, Average, or Fast. Watch the plates travel and press Take when the requested food reaches the pickup area. Correct choices trigger a magical disappearance; incorrect choices show the Oh no chef feedback. Continue until all ordered foods are collected.",
+    "To customize: Open Settings. Add or remove foods, change their names or upload pictures, and use Edit Positions to drag foods to new locations in the Level 1 hunt. Finish position editing before normal gameplay.",
+    "To save for another device: In Settings choose Export JSON and keep the downloaded file. On another device open the same game, choose Import JSON, and select your saved file. Pictures uploaded through Settings are embedded in exported JSON; default pictures stored in photos/ must still be present on the published website.",
+    "For classroom use: Turn music or sound effects on or off independently and adjust their volumes. Use Full Screen on a smart board or tablet. On phones, rotate to landscape for more room if needed."
+  ],
+  "buttons": [
+    {
+      "name": "Start / Play",
+      "meaning": "Begin the game after Premium login."
+    },
+    {
+      "name": "Full Screen",
+      "meaning": "Expand the game for classroom display; tap again or press Escape to exit."
+    },
+    {
+      "name": "Settings",
+      "meaning": "Edit food names, pictures and hunt positions; import or export settings."
+    },
+    {
+      "name": "Edit Positions",
+      "meaning": "Enable dragging food locations in the flashlight scene."
+    },
+    {
+      "name": "Add Food",
+      "meaning": "Create an additional food vocabulary item."
+    },
+    {
+      "name": "Change Image",
+      "meaning": "Upload a picture for a food item."
+    },
+    {
+      "name": "Remove",
+      "meaning": "Remove a food item from the custom set."
+    },
+    {
+      "name": "Export JSON",
+      "meaning": "Download food names, positions and uploaded pictures for backup or another device."
+    },
+    {
+      "name": "Import JSON",
+      "meaning": "Load a previously exported Food Express JSON file."
+    },
+    {
+      "name": "Next",
+      "meaning": "Continue to the next level when it is available; use the bottom-right button."
+    },
+    {
+      "name": "Slow / Average / Fast",
+      "meaning": "Control conveyor movement speed in Level 3."
+    },
+    {
+      "name": "Take",
+      "meaning": "Collect the food currently at the pickup area in Level 3."
+    },
+    {
+      "name": "Music On/Off and +/-",
+      "meaning": "Turn background music on/off and adjust its volume."
+    },
+    {
+      "name": "Effects On/Off and +/-",
+      "meaning": "Turn sound effects on/off and adjust their volume."
+    },
+    {
+      "name": "Log Out",
+      "meaning": "Sign out of the Premium account."
+    }
+  ],
+  "jsonHelp": "The Food Express exports a food-express-settings.json file. Open Settings > Export JSON to download your custom foods and Level 1 positions. On a different device open The Food Express > Settings > Import JSON and select that file. Newly uploaded pictures are included in the JSON; standard photos/ image assets must remain hosted with the game. Export again after making changes. This is a game-data JSON, not the website instructions JSON.",
+  "video": "",
+  "videoChannel": "",
+  "lesson": {
+    "book": "Wonder World 7",
+    "unit": "Unit 3 — From Farm to Table",
+    "grade": "Grade 6",
+    "topic": "Food / Restaurant ordering",
+    "targetVocabulary": [
+      "pizza",
+      "rice",
+      "soup",
+      "steak",
+      "dumplings",
+      "noodles",
+      "sandwiches",
+      "French fries"
+    ],
+    "additionalGameVocabulary": [
+      "curry",
+      "fish and chips",
+      "hot pot",
+      "sushi",
+      "taco",
+      "fried chicken"
+    ],
+    "targetSentences": [
+      "What would you like to eat?",
+      "I’d like some pizza, please.",
+      "Would you like some pizza?",
+      "Yes, please.",
+      "No, thank you."
+    ],
+    "phonicsExtension": "oi / oy (optional separate phonics activity; not a built-in game level)",
+    "learningGoals": [
+      "Identify and read food vocabulary from pictures.",
+      "Ask and answer questions about food preferences and orders.",
+      "Practice polite restaurant expressions.",
+      "Match spoken or written food orders to pictures."
+    ],
+    "suggestedClassroomUse": "Warm up by reviewing food pictures; play Level 1 as a whole-class reading activity; use Level 2 for pair dialogue; use Level 3 as an order-listening and reading challenge."
+  },
+  "url": "http://food-express.teacherkhen.com/",
+  "image": "food express.png"
+}
