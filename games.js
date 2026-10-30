@@ -229,6 +229,16 @@ const games = [
         grades: "Grades 1–6",
         access: "premium"
    }
+   
+   {
+        title: "Food Express (Wonder World 7.3)",
+        url: "http://food-express.teacherkhen.com/",
+        image: "food express.png",
+        category: "Vocabulary",
+        grades: "Grade 6",
+        access: "premium",
+        guide: "instructions/food-express-instructions.json"
+   },
 
 ];
 
