@@ -238,7 +238,6 @@ const games = [
         category: "Vocabulary",
         grades: "Grade 6",
         access: "premium",
-        guide: "instructions/food-express-instructions.json"
    },
 
 ];
