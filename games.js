@@ -228,7 +228,7 @@ const games = [
         category: "Review",
         grades: "Grades 1–6",
         access: "premium"
-   }
+   },
    
    {
         title: "Food Express (Wonder World 7.3)",
