@@ -12,6 +12,7 @@ const games = [
 
     {
         title: "Classroom Cafe",
+        categories: ["vocabulary", "classroom"],
         guide: "guides/classroom-cafe.json",
         url: "https://class-cafe-khen.base44.app",
         image: "cafe.gif",
@@ -22,6 +23,7 @@ const games = [
 
     {
         title: "Give or Keep Review Game",
+        categories: ["classroom"],
         guide: "guides/give-or-keep-review-game.json",
         url: "https://teacherkhen.github.io/giveorkeepreviewgame/",
         image: "titlepage.gif",
@@ -32,6 +34,7 @@ const games = [
 
     {
         title: "Spelling Jungle",
+        categories: ["phonics", "vocabulary", "classroom", "action"],
         guide: "guides/spelling-jungle.json",
         url: "https://teacherkhen.github.io/connect-the-dots-spelling-sentencethesentence/",
         image: "Intro picture.gif",
@@ -42,6 +45,7 @@ const games = [
 
     {
         title: "The Great Fishing Challenge",
+        categories: ["phonics", "vocabulary", "classroom", "action"],
         guide: "guides/the-great-fishing-challenge.json",
         url: "https://teacherkhen.github.io/fishing/",
         image: "catch it.gif",
@@ -52,6 +56,7 @@ const games = [
 
     {
         title: "Spelling Warriors",
+        categories: ["phonics", "action"],
         guide: "guides/spelling-warriors.json",
         url: "https://teacherkhen.github.io/spelling/",
         image: "spelling.gif",
@@ -62,6 +67,7 @@ const games = [
 
     {
         title: "Pacman Vocabulary Quest",
+        categories: ["vocabulary", "action"],
         guide: "guides/pacman-vocabulary-quest.json",
         url: "https://teacherkhen.github.io/pacman/",
         image: "pacman.gif",
@@ -72,6 +78,7 @@ const games = [
 
     {
         title: "Interactive Whiteboard [S & D]",
+        categories: ["classroom"],
         guide: "guides/interactive-whiteboard-s-d.json",
         url: "https://teacherkhen.github.io/whiteboard/",
         image: "whiteboard.jpg",
@@ -82,6 +89,7 @@ const games = [
 
     {
         title: "Randomizer",
+        categories: ["classroom"],
         guide: "guides/randomizer.json",
         url: "https://randomizer.teacherkhen.com/",
         image: "randomizer.gif",
@@ -92,6 +100,7 @@ const games = [
 
     {
         title: "Whiteboard & Quiz Master",
+        categories: ["classroom"],
         guide: "guides/whiteboard-quiz-master.json",
         url: "https://teacherkhen.github.io/whiteboard-quiz/",
         image: "whiteboard+quiz.jpg",
@@ -102,6 +111,7 @@ const games = [
 
     {
         title: "Phonics Reading Lab",
+        categories: ["phonics"],
         guide: "guides/phonics-reading-lab.json",
         url: "https://teacherkhen.github.io/phonics-reading-board/",
         image: "phonics reading.jpg",
@@ -112,6 +122,7 @@ const games = [
 
     {
         title: "Fashion Mall: Clothing Lesson",
+        categories: ["vocabulary"],
         guide: "guides/fashion-mall-clothing-lesson.json",
         url: "https://teacherkhen.github.io/clothinglesson/",
         image: "clothing.png",
@@ -122,6 +133,7 @@ const games = [
 
     {
         title: "Time Traveler: Past Expressions",
+        categories: ["vocabulary"],
         guide: "guides/time-traveler-past-expressions.json",
         url: "https://teacherkhen.github.io/past-time/",
         image: "calendar.gif",
@@ -132,6 +144,7 @@ const games = [
 
     {
         title: "Monster Card Flip Game",
+        categories: ["phonics", "vocabulary", "classroom", "action"],
         guide: "guides/monster-card-flip-game.json",
         url: "https://teacherkhen.github.io/monster-card-flip-game/",
         image: "monster flip game.png",
@@ -142,6 +155,7 @@ const games = [
 
     {
         title: "Reading Roll Quest [Phonics Game]",
+        categories: ["phonics", "classroom"],
         guide: "guides/reading-roll-quest-phonics-game.json",
         url: "https://teacherkhen.github.io/phonicsreading/",
         image: "reading.png",
@@ -152,6 +166,7 @@ const games = [
 
     {
         title: "Phonics Race",
+        categories: ["phonics", "action"],
         guide: "guides/phonics-race.json",
         url: "https://teacherkhen.github.io/Phonicsrace1/",
         image: "Phonics Race.png",
@@ -162,6 +177,7 @@ const games = [
 
     {
         title: "Click It!",
+        categories: ["phonics", "vocabulary", "classroom", "action"],
         guide: "guides/click-it.json",
         url: "https://teacherkhen.github.io/Clickit/",
         image: "clickit.png",
@@ -172,6 +188,7 @@ const games = [
 
     {
         title: "Spider Web Reading",
+        categories: ["phonics", "action"],
         guide: "guides/spider-web-reading.json",
         url: "https://spiderwebreading.teacherkhen.com",
         image: "background.gif",
@@ -182,6 +199,7 @@ const games = [
     
     {
         title: "Balloon Pop",
+        categories: ["phonics", "vocabulary", "classroom", "action"],
         guide: "guides/balloon-pop.json",
         url: "https://balloon-pop-free.teacherkhen.com/",
         image: "balloon pop free.png",
@@ -192,6 +210,7 @@ const games = [
 
     {
         title: "Halloween Monster Egg",
+        categories: ["classroom", "action", "vocabulary"],
         guide: "guides/monster-egg.json",
         url: "https://monsteregg.teacherkhen.com/",
         image: "logo.gif",
@@ -202,6 +221,7 @@ const games = [
    
     {
         title: "Spider Web Reading + Presets",
+        categories: ["phonics", "action"],
         guide: "guides/spider-web-reading-premium.json",
         url: "https://spiderwebreadingpremium.teacherkhen.com/",
         image: "spider web reading premium.gif",
@@ -212,6 +232,7 @@ const games = [
    
     {
         title: "Phonics (Super Starter + Wonder World + Games)",
+        categories: ["phonics", "classroom"],
         guide: "guides/phonics-super-starter-wonder-world-games.json",
         url: "https://phonics-learning.teacherkhen.com/",
         image: "Phonics.gif",
@@ -222,6 +243,7 @@ const games = [
 
     {
         title: "Balloon + Bubble + Star Popping Game + Presets + Editable",
+        categories: ["phonics", "vocabulary", "classroom", "action"],
         guide: "guides/balloon-bubble-star-popping-game-presets-editable.json",
         url: "http://balloon-bubble-star-pop.teacherkhen.com/",
         image: "balloon pop.png",
@@ -232,6 +254,7 @@ const games = [
    
    {
         title: "Food Express (Wonder World 7.3)",
+        categories: ["vocabulary", "action"],
         guide: "guides/food-express-instructions.json",
         url: "http://food-express.teacherkhen.com/",
         image: "food express.png",
@@ -601,299 +624,75 @@ function createGameCard(game) {
    GENERATE GAMES
    ========================================================= */
 
-function generateGames(
-    gameList = games
-) {
-
-    const gameGrid =
-        document.getElementById(
-            "gameGrid"
-        );
-
-
-    if (!gameGrid) {
-
-        return;
-
-    }
-
-
-    /*
-     * Clear existing games.
-     */
-
-    gameGrid.innerHTML =
-        "";
-
-
-    /*
-     * Separate Free and Premium games.
-     */
-
-    const freeGames =
-        gameList.filter(
-            game =>
-                game.access !== "premium"
-        );
-
-
-    const premiumGames =
-        gameList.filter(
-            game =>
-                game.access === "premium"
-        );
-
-
-    /* =====================================================
-       FREE GAMES
-       ===================================================== */
-
-    if (
-        freeGames.length > 0
-    ) {
-
-        const freeSection =
-            document.createElement(
-                "section"
-            );
-
-
-        freeSection.className =
-            "game-section";
-
-
-        const freeHeading =
-            document.createElement(
-                "div"
-            );
-
-
-        freeHeading.className =
-            "section-heading free-heading";
-
-
-        freeHeading.innerHTML =
-            "<span>🎮</span><h2>FREE GAMES</h2>";
-
-
-        const freeGrid =
-            document.createElement(
-                "div"
-            );
-
-
-        freeGrid.className =
-            "game-section-grid";
-
-
-        freeGames.forEach(
-            function(game) {
-
-                freeGrid.appendChild(
-                    createGameCard(game)
-                );
-
-            }
-        );
-
-
-        freeSection.appendChild(
-            freeHeading
-        );
-
-
-        freeSection.appendChild(
-            freeGrid
-        );
-
-
-        gameGrid.appendChild(
-            freeSection
-        );
-
-    }
-
-
-    /* =====================================================
-       PREMIUM GAMES
-       ===================================================== */
-
-    if (
-        premiumGames.length > 0
-    ) {
-
-        const premiumSection =
-            document.createElement(
-                "section"
-            );
-
-
-        premiumSection.className =
-            "game-section premium-section";
-
-
-        const premiumHeading =
-            document.createElement(
-                "div"
-            );
-
-
-        premiumHeading.className =
-            "section-heading premium-heading";
-
-
-        premiumHeading.innerHTML =
-            "<span>⭐</span><h2>PREMIUM GAMES</h2>";
-
-
-        const premiumGrid =
-            document.createElement(
-                "div"
-            );
-
-
-        premiumGrid.className =
-            "game-section-grid";
-
-
-        premiumGames.forEach(
-            function(game) {
-
-                premiumGrid.appendChild(
-                    createGameCard(game)
-                );
-
-            }
-        );
-
-
-        premiumSection.appendChild(
-            premiumHeading
-        );
-
-
-        premiumSection.appendChild(
-            premiumGrid
-        );
-
-
-        gameGrid.appendChild(
-            premiumSection
-        );
-
-    }
-
-
-    /* =====================================================
-       NO RESULTS
-       ===================================================== */
-
-    const noResults =
-        document.getElementById(
-            "noResults"
-        );
-
-
-    if (noResults) {
-
-        if (
-            gameList.length === 0
-        ) {
-
-            noResults.style.display =
-                "block";
-
-        } else {
-
-            noResults.style.display =
-                "none";
-
-        }
-
-    }
-
+const TK_CATEGORIES = [
+ {id:'phonics',icon:'📚',name:'Phonics & Reading',description:'Sounds, spelling and reading'},
+ {id:'vocabulary',icon:'🗣️',name:'Vocabulary & English',description:'Words, sentences and topics'},
+ {id:'classroom',icon:'🏆',name:'Classroom & Team Games',description:'Quizzes, teaching tools and teamwork'},
+ {id:'action',icon:'🎈',name:'Action & Arcade Games',description:'Race, pop, discover and play'}
+];
+const tkFilters={category:'all',access:'all',grade:'all'};
+function tkMatchesGrade(game,grade){
+ if(grade==='all')return true;
+ const text=String(game.grades||'');
+ const range=text.match(/Grades?\s*(\d+)\s*[–-]\s*(\d+)/i);
+ if(range)return +grade>=+range[1]&&+grade<=+range[2];
+ const single=text.match(/Grade\s*(\d+)/i);
+ return single?+grade===+single[1]:false;
 }
-
-
-/* =========================================================
-   SEARCH / FILTER GAMES
-   ========================================================= */
-
-function filterGames() {
-
-    const searchInput =
-        document.getElementById(
-            "gameSearch"
-        );
-
-
-    if (!searchInput) {
-
-        return;
-
-    }
-
-
-    const searchTerm =
-        searchInput.value
-            .toLowerCase()
-            .trim();
-
-
-    if (!searchTerm) {
-
-        generateGames(
-            games
-        );
-
-        return;
-
-    }
-
-
-    const filteredGames =
-        games.filter(
-            function(game) {
-
-                const title =
-                    game.title
-                        .toLowerCase();
-
-
-                const category =
-                    game.category
-                        .toLowerCase();
-
-
-                const grades =
-                    game.grades
-                        .toLowerCase();
-
-
-                return (
-                    title.includes(
-                        searchTerm
-                    ) ||
-
-                    category.includes(
-                        searchTerm
-                    ) ||
-
-                    grades.includes(
-                        searchTerm
-                    )
-                );
-
-            }
-        );
-
-
-    generateGames(
-        filteredGames
-    );
-
+function tkFilteredGames(){
+ const search=(document.getElementById('gameSearch')?.value||'').trim().toLowerCase();
+ return games.filter(game=>{
+  const cats=game.categories||[];
+  const searchable=[game.title,game.category,game.grades,...cats.map(id=>TK_CATEGORIES.find(c=>c.id===id)?.name||'')].join(' ').toLowerCase();
+  return (tkFilters.category==='all'||cats.includes(tkFilters.category)) &&
+   (tkFilters.access==='all'||game.access===tkFilters.access) &&
+   tkMatchesGrade(game,tkFilters.grade)&&(!search||searchable.includes(search));
+ });
 }
-
+function tkRenderCategories(){
+ const host=document.getElementById('tkCategoryGrid');if(!host)return;
+ host.replaceChildren();
+ TK_CATEGORIES.forEach(cat=>{
+  const btn=document.createElement('button');btn.type='button';btn.className='tk-category'+(tkFilters.category===cat.id?' active':'');
+  btn.setAttribute('aria-pressed',String(tkFilters.category===cat.id));
+  const count=games.filter(g=>(g.categories||[]).includes(cat.id)).length;
+  btn.innerHTML='<span class="tk-cat-icon"></span><strong></strong><small></small><em></em>';
+  btn.querySelector('.tk-cat-icon').textContent=cat.icon;
+  btn.querySelector('strong').textContent=cat.name;
+  btn.querySelector('small').textContent=cat.description;
+  btn.querySelector('em').textContent=count+' games';
+  btn.addEventListener('click',()=>{tkFilters.category=tkFilters.category===cat.id?'all':cat.id;generateGames();});
+  host.appendChild(btn);
+ });
+}
+function setGameAccess(access){
+ tkFilters.access=access;generateGames();
+ document.getElementById('game-explorer')?.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function generateGames(){
+ const host=document.getElementById('gameGrid');if(!host)return;
+ const selected=tkFilteredGames();host.replaceChildren();
+ const grid=document.createElement('div');grid.className='game-section-grid tk-results-grid';
+ selected.forEach(game=>grid.appendChild(createGameCard(game)));
+ host.appendChild(grid);
+ const empty=document.getElementById('noResults');if(empty)empty.style.display=selected.length?'none':'block';
+ const count=document.getElementById('tkGameCount');if(count)count.textContent=`Showing ${selected.length} of ${games.length} games`;
+ document.querySelectorAll('[data-access]').forEach(btn=>{
+  const active=btn.dataset.access===tkFilters.access;btn.classList.toggle('active',active);btn.setAttribute('aria-pressed',String(active));
+ });
+ tkRenderCategories();
+}
+function filterGames(){generateGames();}
+document.addEventListener('DOMContentLoaded',()=>{
+ document.querySelectorAll('[data-access]').forEach(btn=>btn.addEventListener('click',()=>setGameAccess(btn.dataset.access)));
+ document.getElementById('tkGrade')?.addEventListener('change',event=>{tkFilters.grade=event.target.value;generateGames();});
+ document.getElementById('tkReset')?.addEventListener('click',()=>{
+  tkFilters.category='all';tkFilters.grade='all';tkFilters.access='all';
+  const search=document.getElementById('gameSearch');if(search)search.value='';
+  const grade=document.getElementById('tkGrade');if(grade)grade.value='all';generateGames();
+ });
+ generateGames();
+});
 
 /* =========================================================
    NOTE

@@ -25,7 +25,7 @@
          ========================================================= -->
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Chalkboard+SE&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Fredoka:wght@400;500;600;700&display=swap"
         rel="stylesheet">
 
 
@@ -865,7 +865,7 @@
                 <input
                     type="text"
                     id="gameSearch"
-                    placeholder="🔍 Type game name here..."
+                    placeholder="🔍 Search games, skills, or grade levels..."
                     oninput="filterGames()"
                     aria-label="Search games">
 
@@ -1014,10 +1014,12 @@
 
             </div>
 
+<nav class="tk-nav" aria-label="Main navigation"><a href="#game-explorer">🎮 Explore Games</a><button type="button" onclick="setGameAccess('free')">🟢 Free Games</button><button type="button" onclick="setGameAccess('premium')">⭐ Premium Games</button><button type="button" onclick="toggleReminder(true)">❓ How to Use</button></nav>
         </header>
 
 
 
+<section class="tk-explorer" id="game-explorer" aria-label="Browse learning games"><div class="tk-intro"><h2>🎮 Explore Learning Games!</h2><p>Find the perfect activity for your classroom. Choose a category, grade, or membership type.</p></div><div class="tk-category-grid" id="tkCategoryGrid"></div><div class="tk-filter-panel"><div class="tk-access-tabs" role="group" aria-label="Game access"><button type="button" data-access="all" class="active">🎲 All Games</button><button type="button" data-access="free">🟢 Free</button><button type="button" data-access="premium">⭐ Premium</button></div><div class="tk-filter-row"><label for="tkGrade">Grade <select id="tkGrade"><option value="all">All Grades</option><option value="1">Grade 1</option><option value="2">Grade 2</option><option value="3">Grade 3</option><option value="4">Grade 4</option><option value="5">Grade 5</option><option value="6">Grade 6</option></select></label><button type="button" id="tkReset">↻ Clear Filters</button></div><p id="tkGameCount" class="tk-count" aria-live="polite"></p></div></section>
         <!-- =====================================================
              GAME GRID
              ===================================================== -->
@@ -1669,7 +1671,7 @@
          JAVASCRIPT FILES
          ========================================================= -->
 
-    <script src="games.js"></script>
+    <script src="games.js?v=20261101-categories"></script>
 
     <script src="script.js"></script>
 
