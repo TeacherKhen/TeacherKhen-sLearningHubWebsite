@@ -207,6 +207,17 @@ const games = [
         grades: "Grades 1–6",
         access: "free"
     },
+   
+   {
+       title: "Spot It! Free!",
+       categories: ["classroom", "english", "action"],
+       guide: "guides/spot-it-free.json",
+       url: "https://spot-it-free.teacherkhen.com/",
+       image: "spot it free.png",
+       category: "Classroom",
+       grades: "Grades 1–6",
+       access: "free"
+   },
 
     {
         title: "Halloween Monster Egg",
