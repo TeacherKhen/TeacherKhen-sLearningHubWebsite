@@ -265,7 +265,7 @@ const games = [
    
    {
        title: "Spot It, Detectives!",
-       categories: ["vocabulary", "action", "team", "classroom"],
+       categories: ["vocabulary", "action", "classroom"],
        guide: "guides/spot-it-detectives-instructions.json",
        url: "https://spot-it.teacherkhen.com/",
        image: "spot it.gif",
