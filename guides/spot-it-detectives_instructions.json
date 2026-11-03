@@ -1,0 +1,55 @@
+{
+  "title": "Spot It, Detectives!",
+  "description": "A Premium detective flashlight-search game for vocabulary, word and letter recognition, and team competition. Teachers can choose pictures or words/letters, edit clue positions, resize and rotate clues, select backgrounds, and save activities as JSON.",
+  "url": "https://spot-it.teacherkhen.com/",
+  "image": "spot it.gif",
+  "video": "",
+  "steps": [
+    "Open Spot It, Detectives! and sign in using your Teacher Khen Premium account. On the title screen, choose Go to Settings before starting.",
+    "In Settings, choose the Food Preset or create a new clue set. Use Pictures Only or Words / Letters Only; these are separate display modes, not a mixed mode.",
+    "To create clues, add a word or letter, or upload a picture for a picture clue. Give each picture a clear name so it can appear on the discovery flashcard and final review.",
+    "Choose Solo Challenge or Team Mode. In Team Mode, Detective A and Detective B have independent boards, with the same clues and equal totals. Choose any available time-limit and spotlight options.",
+    "Select one of the five preset backgrounds or upload your own image. Adjust music and sound-effects volumes, then select Save Changes.",
+    "Use Edit Object Positions to arrange clues on the scene. Drag an item to move it, use its resize handle to make the picture or word larger or smaller, and use the rotation handle to turn it. Words automatically resize to stay visible on one line.",
+    "Select Start Game. Watch the 3, 2, 1, GO! countdown, then move your flashlight across the dark scene with a mouse, finger, or stylus.",
+    "When you find a clue, tap it. A large discovery flashcard appears and the built-in bling sound plays. Invite students to say or read the clue aloud.",
+    "In Team Mode, both detectives can search on their own boards at the same time. When one team finishes, its time and score are recorded while the other team can keep playing.",
+    "After all clues are found, review the large picture-and-name or word flashcards shown on the completion screen. Use Restart to play again or End Game to leave the round.",
+    "To reuse your work, select Export JSON in Settings and keep the downloaded file. Later, select Import JSON to load the saved activity. Keep the game's built-in photos and backgrounds folders on the published site for preset images.",
+    "For tablets and phones, use landscape orientation for more game space. Full Screen is especially helpful on classroom smart boards."
+  ],
+  "buttons": [
+    {"name":"Go to Settings","meaning":"Open the full-screen teacher setup area."},
+    {"name":"How to Play","meaning":"Read the instructions before beginning."},
+    {"name":"Food Preset / Create New Set","meaning":"Load editable food clues or begin a custom activity."},
+    {"name":"Pictures Only / Words or Letters Only","meaning":"Choose whether students search for images or text; no mixed display."},
+    {"name":"Add Clue / Edit / Delete","meaning":"Create, update or remove clues and their names or pictures."},
+    {"name":"Background Presets / Upload Background","meaning":"Select a built-in scene or use your own background picture."},
+    {"name":"Save Changes","meaning":"Apply the current teacher settings to the game."},
+    {"name":"Edit Object Positions","meaning":"Move, resize and rotate clues directly on the scene."},
+    {"name":"Start Game","meaning":"Begin the selected solo or team challenge after the countdown."},
+    {"name":"Full Screen","meaning":"Expand the game to use more of the device screen."},
+    {"name":"Music − / +","meaning":"Decrease or increase background music volume."},
+    {"name":"Effects − / +","meaning":"Decrease or increase sound-effects volume."},
+    {"name":"Restart","meaning":"Restart the current round with a fresh countdown."},
+    {"name":"End Game","meaning":"End the current round and return to the title screen."},
+    {"name":"Export JSON","meaning":"Download your customized activity as a JSON file."},
+    {"name":"Import JSON","meaning":"Load a previously exported Spot It activity."}
+  ],
+  "jsonHelp": [
+    "Open Go to Settings and customize the clues, display mode, backgrounds, and game options.",
+    "Choose Save Changes, then Export JSON. Your browser downloads a .json file; keep it in a safe folder.",
+    "To reopen the activity, return to Settings, select Import JSON, and choose the saved .json file.",
+    "Review the imported clues and positions, then choose Save Changes and Start Game.",
+    "If an activity refers to built-in photos or background files, keep those files in their expected website folders. Uploaded pictures may be included in exported data depending on the game version."
+  ],
+  "sections": [
+    {"title":"Classroom ideas","steps":["Picture recognition: Load the Food Preset and ask students to name each food when its flashcard appears.","Phonics: Create a Words / Letters Only set using target letters, CVC words, blends, or digraphs.","Team challenge: Divide the class into Detective A and Detective B and compare completion times after both teams finish."]}
+  ],
+  "tips": [
+    "Use landscape mode on phones and tablets, and test simultaneous touches on your particular smart board before class.",
+    "Place clues away from the screen edges so students can reach them easily.",
+    "The food photos use exact filenames in the photos folder, including spaces and capitalization such as French fries.png and fish and chips.png.",
+    "Preset background filenames are background.png, background 2.png, background 3.png, background 4.png, and background 5.png in the backgrounds folder."
+  ]
+}
