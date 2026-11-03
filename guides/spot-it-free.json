@@ -1,0 +1,127 @@
+{
+  "title": "Spot It! Free! — How to Play",
+  "description": "A free picture-only detective flashlight game for classroom vocabulary practice. Use the 8-food starter set or upload your own pictures, arrange and resize clues, and save activities using JSON.",
+  "url": "https://spot-it-free.teacherkhen.com/",
+  "image": "spot it free.png",
+  "video": "",
+  "steps": [
+    "Open Spot It! Free! and select Go to Settings. No Premium account is required.",
+    "Choose the editable 8-food preset to play immediately, or select Create New Set to build your own activity.",
+    "To add a clue, enter its name and upload or paste a picture. The Free game uses picture clues only; words and letters cannot be used as standalone hidden clues. Names appear on discovery flashcards.",
+    "Review the clue list. Use Edit to change a clue name or replace its picture, or Delete to remove it.",
+    "Choose the single built-in background or upload your own background picture. Adjust the spotlight size and music or sound-effects controls as needed.",
+    "Select Edit Object Positions. Drag each picture to its hiding place. Drag the resize handle to make it larger or smaller. Rotation is not available in Free.",
+    "Select Save Positions & Settings to return to the workshop, then choose Start Game.",
+    "After the 3, 2, 1, GO! countdown, move the flashlight around the dark scene with your mouse, finger, or smart-board touch.",
+    "A picture can be collected only when the flashlight is shining on it. Move the spotlight first, then tap the illuminated picture. Touching a hidden picture outside the beam should not collect it.",
+    "Each correctly found picture triggers a discovery flashcard showing the image and its name. Ask students to say the vocabulary word aloud.",
+    "Find every picture to complete the mission. Review the collected picture flashcards, score, and elapsed time.",
+    "Select Restart to replay or End Game to return to the title screen. Use Full Screen when your browser supports it.",
+    "To save a customized activity, select Export JSON. Later, use Import JSON to reopen the activity, check its pictures and positions, and start again."
+  ],
+  "buttons": [
+    {
+      "name": "Go to Settings",
+      "meaning": "Open the teacher setup and clue editor."
+    },
+    {
+      "name": "How to Play",
+      "meaning": "Read the in-game instructions."
+    },
+    {
+      "name": "Food Preset",
+      "meaning": "Load eight starter food pictures."
+    },
+    {
+      "name": "Create New Set",
+      "meaning": "Start a new empty picture-clue activity."
+    },
+    {
+      "name": "Add Clue",
+      "meaning": "Add a named picture from a file, pasted image, or supported image URL."
+    },
+    {
+      "name": "Edit / Delete",
+      "meaning": "Rename or replace a picture clue, or remove it."
+    },
+    {
+      "name": "Upload Your Own Background",
+      "meaning": "Use your own scene image instead of the single built-in background."
+    },
+    {
+      "name": "Edit Object Positions",
+      "meaning": "Move and resize hidden pictures before playing."
+    },
+    {
+      "name": "Reset Positions",
+      "meaning": "Restore the default clue arrangement in the position editor."
+    },
+    {
+      "name": "Save Positions & Settings",
+      "meaning": "Save the clue arrangement and return to the settings workshop."
+    },
+    {
+      "name": "Save Changes",
+      "meaning": "Save the current activity settings in the browser."
+    },
+    {
+      "name": "Start Game",
+      "meaning": "Begin the solo flashlight mission."
+    },
+    {
+      "name": "Full Screen",
+      "meaning": "Request fullscreen where supported by the device and browser."
+    },
+    {
+      "name": "Restart",
+      "meaning": "Restart the current mission."
+    },
+    {
+      "name": "End Game",
+      "meaning": "Return to the game title screen."
+    },
+    {
+      "name": "Export JSON",
+      "meaning": "Download your current clue set and settings as a JSON file."
+    },
+    {
+      "name": "Import JSON",
+      "meaning": "Load a previously saved activity JSON file."
+    }
+  ],
+  "jsonHelp": [
+    "Open Go to Settings and prepare your picture clues, background, and positions.",
+    "Select Save Changes, then Export JSON to download the activity file.",
+    "Keep the .json file on your computer or drive so you can reuse it in another class.",
+    "To restore it, choose Import JSON in Settings and select the file.",
+    "Check that all images display correctly. Uploaded pictures may be embedded in JSON, while built-in preset photos require the matching photos/ files on the website.",
+    "The Free game is picture-only. If you import a Premium activity, review it before playing; Premium-only settings such as team mode and rotation are not available."
+  ],
+  "sections": [
+    {
+      "title": "Classroom activity ideas",
+      "steps": [
+        "Food vocabulary: Use the eight food pictures. After each discovery, ask: What is it? Students answer: It is pizza.",
+        "Custom vocabulary: Upload pictures of animals, classroom objects, transportation, or places in the community.",
+        "Speaking practice: Let a student move the flashlight while classmates describe the discovered picture in a complete sentence."
+      ]
+    },
+    {
+      "title": "Free version limits",
+      "steps": [
+        "Solo play only; Detective A versus Detective B team mode is reserved for Premium.",
+        "Picture clues only; hidden standalone words and letters are not available.",
+        "You may move and resize clues, but cannot rotate them.",
+        "One built-in background is included; you may upload your own.",
+        "JSON import and export are available."
+      ]
+    }
+  ],
+  "tips": [
+    "For the starter foods, keep the matching PNG files in the photos/ folder.",
+    "The built-in background is expected at backgrounds/background.png. Upload that file to the backgrounds folder; the HTML alone does not contain it.",
+    "Use landscape orientation on phones for a wider play area. On iPhones, Safari generally cannot force landscape orientation or true fullscreen; rotate the device manually.",
+    "Keep clues away from the edges and test spotlight movement and tapping on your classroom smart board before the lesson.",
+    "A clue should be tapped only after it is illuminated by the flashlight."
+  ]
+}
