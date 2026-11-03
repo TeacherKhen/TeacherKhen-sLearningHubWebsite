@@ -262,6 +262,17 @@ const games = [
         grades: "Grade 6",
         access: "premium",
    },
+   
+   {
+       title: "Spot It, Detectives!",
+       categories: ["vocabulary", "action", "team"],
+       guide: "guides/spot-it-detectives-instructions.json",
+       url: "https://spot-it.teacherkhen.com/",
+       image: "spot it.gif",
+       category: "Vocabulary",
+       grades: "Grades 1–6",
+       access: "premium",
+   },
 
 ];
 
