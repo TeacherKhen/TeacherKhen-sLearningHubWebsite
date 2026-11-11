@@ -5131,3 +5131,90 @@ body.modal-open {
 .tk-wall-card .tk-play-button { font-weight:800; background:#7548d5; color:white; border:0; }
 .tk-wall-card:hover { box-shadow:0 7px 18px rgba(24,37,80,.18); transform:translateY(-2px); transition:transform .15s,box-shadow .15s; }
 @media(max-width:580px){.tk-wall-choices{max-height:145px}.tk-wall-game-heading{font-size:16px}.tk-wall-tile{font-size:clamp(13px,4vw,21px)}}
+
+/* =============================================================
+   TEACHER KHEN COMMUNITY
+   EQUAL-HEIGHT WORDWALL-STYLE LESSON CARDS
+
+   Fixes:
+   - Equal card heights
+   - Consistent 16:9 thumbnails
+   - Two-line titles and descriptions
+   - Play buttons aligned at the bottom
+   - Responsive card layout
+
+   Does not affect other website sections.
+   ============================================================= */
+
+.tk-lessons-grid {
+    align-items: stretch;
+}
+
+.tk-lessons-grid > .tk-wall-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* Same thumbnail size for every game */
+
+.tk-wall-card .tk-wall-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    flex: 0 0 auto;
+}
+
+/* Titles: maximum two lines */
+
+.tk-wall-card h4 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    line-height: 1.25;
+    min-height: 2.5em;
+    max-height: 2.5em;
+}
+
+/* Game name and grade level */
+
+.tk-wall-card .tk-lesson-meta {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    line-height: 1.35;
+    min-height: 2.7em;
+    max-height: 2.7em;
+}
+
+/* Descriptions: maximum two lines */
+
+.tk-wall-card .tk-wall-description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    line-height: 1.4;
+    min-height: 2.8em;
+    max-height: 2.8em;
+}
+
+/* Keep Play Lesson buttons at the bottom */
+
+.tk-wall-card .tk-lesson-actions {
+    margin-top: auto;
+    padding-top: 0;
+}
+
+.tk-wall-card .tk-lesson-actions .tk-play-button {
+    width: 100%;
+}
