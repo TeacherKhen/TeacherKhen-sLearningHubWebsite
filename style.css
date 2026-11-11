@@ -5061,3 +5061,46 @@ body.modal-open {
 @media (prefers-reduced-motion: reduce) {
   .tk-results-grid .game-card { transition: none; }
 }
+
+
+/* Teacher Khen Community add-on (kept separate from existing game styling) */
+[hidden] { display:none !important; }
+.tk-community-nav { flex-wrap:wrap; }
+.tk-community-nav button { cursor:pointer; }
+.tk-community-nav button.tk-active { background:#7b4dd9; color:white; }
+.tk-community-shell { width:min(1300px,calc(100% - 32px)); margin:16px auto 54px; color:#23244c; font-family:'Fredoka',sans-serif; }
+.tk-community-header { padding:22px 26px; border-radius:20px; background:linear-gradient(110deg,#e8dcff,#dcefff); margin-bottom:20px; }
+.tk-community-header h2 { margin:0 0 6px; font-size:clamp(1.5rem,4vw,2.3rem); }
+.tk-community-header p { margin:0; }
+.tk-community-filters { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:20px; }
+.tk-community-filters button, .tk-community-primary { background:white; border:2px solid #d4c5ff; border-radius:14px; padding:10px 16px; font:inherit; cursor:pointer; }
+.tk-community-filters button.active, .tk-community-primary { background:#7548d5; color:white; border-color:#7548d5; }
+.tk-community-filters input { margin-left:auto; min-width:min(100%,250px); padding:12px; border-radius:14px; border:2px solid #ddd; font:inherit; }
+.tk-lessons-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+.tk-lesson-card { min-width:0; padding:12px; background:#fff; border-radius:20px; box-shadow:0 6px 19px #30286922; }
+.tk-lesson-preview { border-radius:14px; aspect-ratio:16/9; background:linear-gradient(135deg,#cef5ff,#e3d8ff); padding:12px; overflow:hidden; position:relative; }
+.tk-lesson-preview h3 { margin:0 40px 8px 0; font-size:1.25rem; }
+.tk-preview-chips { display:flex; flex-wrap:wrap; justify-content:center; gap:7px; align-content:center; min-height:55%; }
+.tk-preview-chips span { background:#fff; color:#263a76; border:2px solid #95b3ff; border-radius:9px; padding:6px 10px; font-weight:700; }
+.tk-lesson-card h4 { margin:12px 0 3px; font-size:1.12rem; }
+.tk-lesson-meta { font-size:.86rem; margin:0 0 10px; color:#637095; }
+.tk-lesson-badge { display:inline-block; padding:5px 9px; border-radius:12px; background:#d4fae5; font-size:.77rem; font-weight:800; }
+.tk-lesson-badge.premium { background:#fff0b7; }
+.tk-heart { position:absolute; right:9px; top:9px; background:white; border:0; border-radius:50%; width:40px; height:40px; font-size:24px; cursor:pointer; color:#ca2865; }
+.tk-lesson-actions { display:flex; gap:8px; }
+.tk-lesson-actions button { flex:1; min-height:41px; border-radius:12px; border:1px solid #d9d9ef; font:inherit; cursor:pointer; background:#f3f0ff; }
+.tk-lesson-actions button:last-child { background:#7749d6; color:white; }
+.tk-community-empty { text-align:center; background:white; border-radius:16px; padding:30px; grid-column:1/-1; }
+.tk-community-upload { background:#fff; border-radius:20px; padding:20px; max-width:700px; display:grid; gap:12px; }
+.tk-community-upload label { display:grid; gap:5px; font-weight:650; }
+.tk-community-upload input:not([type=checkbox]),.tk-community-upload select,.tk-community-upload textarea { width:100%; box-sizing:border-box; padding:11px; border:2px solid #d5d4e8; border-radius:10px; font:inherit; }
+.tk-community-upload .tk-admin-checkbox { display:flex; align-items:center; }
+.tk-admin-records { margin-top:20px; display:grid; gap:10px; }
+.tk-admin-record { padding:12px; background:white; border-radius:12px; display:flex; align-items:center; flex-wrap:wrap; gap:10px; }
+.tk-admin-record button { padding:8px; cursor:pointer; }
+.tk-preview-overlay { position:fixed; inset:0; background:#1b1e3caa; z-index:9000; display:grid; place-items:center; padding:18px; }
+.tk-preview-dialog { background:white; color:#2b315d; border-radius:20px; padding:25px; position:relative; width:min(600px,100%); max-height:85vh; overflow:auto; }
+#tk-preview-close { position:absolute; right:12px; top:8px; border:0; background:transparent; font-size:30px; cursor:pointer; }
+.tk-preview-dialog .tk-preview-chips { margin:20px 0; min-height:unset; }
+@media(max-width:900px){.tk-lessons-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:580px){.tk-lessons-grid{grid-template-columns:1fr}.tk-community-filters input{width:100%;margin-left:0}.tk-community-shell{width:calc(100% - 24px)}}

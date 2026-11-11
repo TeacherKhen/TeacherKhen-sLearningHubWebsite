@@ -1014,7 +1014,14 @@
 
             </div>
 
-<nav class="tk-nav" aria-label="Main navigation"><a href="#game-explorer">🎮 Explore Games</a><button type="button" onclick="setGameAccess('free')">🟢 Free Games</button><button type="button" onclick="setGameAccess('premium')">⭐ Premium Games</button><button type="button" onclick="toggleReminder(true)">❓ How to Use</button></nav>
+<nav class="tk-nav tk-community-nav" aria-label="Main navigation">
+  <button type="button" data-tk-page="home" onclick="TKCommunity.navigate('home')">🏠 Home</button>
+  <button type="button" data-tk-page="games" onclick="TKCommunity.navigate('games')">🎮 Games</button>
+  <button type="button" data-tk-page="community" onclick="TKCommunity.navigate('community')">👥 Community</button>
+  <button type="button" data-tk-page="library" onclick="TKCommunity.navigate('library')">♡ My Library</button>
+  <button type="button" data-tk-page="premium" onclick="TKCommunity.navigate('premium')">👑 Premium</button>
+  <button type="button" id="tk-admin-nav" hidden onclick="TKCommunity.navigate('admin')">⚙ Manage Community</button>
+</nav>
         </header>
 
 
@@ -1067,6 +1074,45 @@
     </main>
 
 
+
+
+<!-- Community / My Library / Admin: existing games, login and payments remain intact -->
+<section class="tk-community-shell" id="tk-community-shell" hidden>
+  <div class="tk-community-header">
+    <h2 id="tk-community-heading">Teacher Khen Community</h2>
+    <p id="tk-community-subheading">Discover prepared classroom lessons. Preview, save and play.</p>
+  </div>
+  <div id="tk-community-content">
+    <div class="tk-community-filters" id="tk-community-filters">
+      <button type="button" data-filter="all" class="active">All Lessons</button>
+      <button type="button" data-filter="free">Free</button>
+      <button type="button" data-filter="premium">Premium</button>
+      <input id="tk-community-search" type="search" placeholder="Search lessons or games..." aria-label="Search community lessons">
+    </div>
+    <div class="tk-lessons-grid" id="tk-lessons-grid" aria-live="polite"></div>
+  </div>
+  <section id="tk-community-admin" hidden>
+    <form id="tk-upload-form" class="tk-community-upload">
+      <h3>Publish a JSON lesson</h3>
+      <label>Title <input required name="title" maxlength="120" placeholder="Grade 1 — Alphabet Aa–Ii"></label>
+      <label>Game <select required name="game_slug"><option value="click-it">Click It!</option></select></label>
+      <label>Grade <select name="grade_level"><option value="Grade 1">Grade 1</option><option value="Grade 2">Grade 2</option><option value="Grade 3">Grade 3</option><option value="Grade 4">Grade 4</option><option value="Grade 5">Grade 5</option><option value="Grade 6">Grade 6</option><option value="All Grades">All Grades</option></select></label>
+      <label>Access <select name="access_level"><option value="free">Free</option><option value="premium">Premium</option></select></label>
+      <label>Description <textarea name="description" maxlength="500" rows="3" placeholder="What students will practice..."></textarea></label>
+      <label>JSON file <input required name="lesson_file" type="file" accept=".json,application/json"></label>
+      <label class="tk-admin-checkbox"><input type="checkbox" name="is_published" checked> Publish immediately</label>
+      <button type="submit" class="tk-community-primary">Upload lesson</button>
+      <p id="tk-upload-status" role="status"></p>
+    </form>
+    <div class="tk-admin-records" id="tk-admin-records"></div>
+  </section>
+</section>
+<div id="tk-preview-overlay" class="tk-preview-overlay" hidden>
+  <div class="tk-preview-dialog" role="dialog" aria-modal="true" aria-label="Lesson preview">
+    <button type="button" id="tk-preview-close" aria-label="Close preview">×</button>
+    <div id="tk-preview-body"></div>
+  </div>
+</div>
 
     <!-- =========================================================
          COMPACT FOOTER
@@ -1674,6 +1720,7 @@
     <script src="games.js?v=20261101-categories"></script>
 
     <script src="script.js"></script>
+    <script src="community.js"></script>
 
 
 </body>
