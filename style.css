@@ -5218,3 +5218,94 @@ body.modal-open {
 .tk-wall-card .tk-lesson-actions .tk-play-button {
     width: 100%;
 }
+
+/* =========================================================
+   TEACHER KHEN COMMUNITY
+   FINAL LESSON CARD LAYOUT
+   ========================================================= */
+
+/* Equal-height lesson cards */
+.tk-lessons-grid {
+    align-items: stretch;
+    gap: 18px;
+}
+
+.tk-lessons-grid > .tk-wall-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* Consistent thumbnail dimensions */
+.tk-wall-card .tk-wall-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    flex: 0 0 auto;
+    box-sizing: border-box;
+}
+
+/* Automatically generated image thumbnails */
+.tk-wall-card .tk-spotit-auto-preview {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+/* Titles: maximum two lines */
+.tk-wall-card h4 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    line-height: 1.3;
+    min-height: 2.6em;
+    max-height: 2.6em;
+}
+
+/* Consistent game and grade labels */
+.tk-wall-card .tk-lesson-meta {
+    line-height: 1.35;
+    min-height: 2.7em;
+    max-height: 2.7em;
+    overflow: hidden;
+}
+
+/* Consistent descriptions */
+.tk-wall-card .tk-wall-description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    line-height: 1.4;
+    min-height: 2.8em;
+    max-height: 2.8em;
+}
+
+/* Keep Play Lesson buttons aligned */
+.tk-wall-card .tk-lesson-actions {
+    margin-top: auto;
+    padding-top: 8px;
+}
+
+.tk-wall-card .tk-play-button {
+    width: 100%;
+    min-height: 44px;
+}
+
+/* Preserve responsive Community layout */
+@media (max-width: 900px) {
+    .tk-lessons-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 580px) {
+    .tk-lessons-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
