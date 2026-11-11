@@ -1,7 +1,9 @@
+
 /* TeacherKhen Community extension. Does not replace payment or auth logic. */
 const TKCommunity = (() => {
   const TABLE='community_lessons', FAV='community_favorites';
-  const URLS={'click-it':'https://teacherkhen.github.io/Clickit/'};
+  const URLS={'click-it':'https://clickit.teacherkhen.com/'};
+  const GAME_ORIGINS={'click-it':new Set(['https://clickit.teacherkhen.com','https://teacherkhen.github.io'])};
   let page='games', filter='all', lessons=[], favorites=new Set(), isAdmin=false, lastUserId=null;
   const $=id=>document.getElementById(id);
   const client=()=>window.supabaseClient || (typeof supabaseClient!=='undefined'?supabaseClient:null);
@@ -42,16 +44,30 @@ const TKCommunity = (() => {
   }
   function card(l){
     const card=el('article','tk-lesson-card');
-    const panel=el('div','tk-lesson-preview');
+    const panel=el('div','tk-lesson-preview tk-game-snapshot');
     const badge=el('span','tk-lesson-badge'+(l.access_level==='premium'?' premium':''),l.access_level==='premium'?'👑 Premium':'Free');
     panel.append(badge);
-    const heart=el('button','tk-heart',favorites.has(l.id)?'♥':'♡');heart.type='button';heart.title='Save to My Library';heart.setAttribute('aria-label','Save to My Library');heart.onclick=()=>toggleFavorite(l.id);panel.append(heart);
-    panel.append(el('h3','',gamesLabel(l.game_slug)));
-    const chips=el('div','tk-preview-chips');(l.preview_items||[]).slice(0,6).forEach(v=>chips.append(el('span','',String(v).slice(0,40))));panel.append(chips);card.append(panel);
-    card.append(el('h4','',l.title));card.append(el('p','tk-lesson-meta',`${gamesLabel(l.game_slug)} • ${l.grade_level||'All Grades'} • ${(l.preview_items||[]).length} preview items`));
-    const buttons=el('div','tk-lesson-actions');const preview=el('button','', '◉ Preview');preview.onclick=()=>showPreview(l);buttons.append(preview);
+    const heart=el('button','tk-heart',favorites.has(l.id)?'♥':'♡');
+    heart.type='button';heart.title='Save to My Library';heart.setAttribute('aria-label','Save to My Library');
+    heart.onclick=()=>toggleFavorite(l.id);panel.append(heart);
+    const header=el('div','tk-snapshot-header');
+    header.append(el('strong','tk-snapshot-name',gamesLabel(l.game_slug)));
+    header.append(el('span','tk-snapshot-score','★ 0'));
+    panel.append(header);
+    const stage=el('div','tk-snapshot-stage');
+    const items=(l.preview_items||[]).slice(0,6);
+    items.forEach(item=>stage.append(el('span','tk-snapshot-choice',String(item).slice(0,30))));
+    if(!items.length)stage.append(el('span','tk-snapshot-choice','Lesson'));
+    panel.append(stage);
+    panel.append(el('div','tk-snapshot-footer',`${l.grade_level||'All Grades'} • ${(l.preview_items||[]).length} sample items`));
+    card.append(panel);
+    card.append(el('h4','',l.title));
+    card.append(el('p','tk-lesson-meta',`${gamesLabel(l.game_slug)} • ${l.grade_level||'All Grades'}`));
+    const buttons=el('div','tk-lesson-actions');
     const locked=l.access_level==='premium'&&!prem()&&!isAdmin;
-    const play=el('button','',locked?'🔒 Unlock':'▶ Play');play.onclick=()=>locked?openPremiumModal():playLesson(l);buttons.append(play);card.append(buttons);return card;
+    const play=el('button','tk-play-button',locked?'🔒 Unlock Premium':'▶ Play Lesson');
+    play.onclick=()=>locked?openPremiumModal():playLesson(l);
+    buttons.append(play);card.append(buttons);return card;
   }
   function gamesLabel(slug){return {'click-it':'Click It!'}[slug]||slug;}
   function render(){
@@ -83,9 +99,18 @@ const TKCommunity = (() => {
       const {data,error}=await client().functions.invoke('community-lesson',{body:{lesson_id:l.id}});
       if(error)throw error;
       if(!data||!Array.isArray(data.words))throw new Error('Lesson data was invalid or not a Click It! JSON file.');
-      const gameOrigin=new URL(url).origin;
-      const onReady=e=>{if(e.source!==popup||e.origin!==gameOrigin||e.data?.type!=='TK_CLICKIT_READY')return;
-        popup.postMessage({type:'TK_CLICKIT_LESSON',lesson:data},gameOrigin);window.removeEventListener('message',onReady);};
+      // Opening a lesson also saves it to My Library for signed-in users.
+      if(user() && !favorites.has(l.id)){
+        const saved=await client().from(FAV).insert({user_id:user().id,lesson_id:l.id});
+        if(!saved.error){favorites.add(l.id);render();}
+        else console.warn('Could not auto-save Community favorite:',saved.error.message);
+      }
+      const trustedOrigins=GAME_ORIGINS[l.game_slug] || new Set([new URL(url).origin]);
+      const onReady=e=>{
+        if(e.source!==popup || !trustedOrigins.has(e.origin) || e.data?.type!=='TK_CLICKIT_READY')return;
+        popup.postMessage({type:'TK_CLICKIT_LESSON',lesson:data},e.origin);
+        window.removeEventListener('message',onReady);
+      };
       window.addEventListener('message',onReady);
       popup.location.href=url+'#tk-community';
       setTimeout(()=>window.removeEventListener('message',onReady),60000);
