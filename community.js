@@ -48,38 +48,52 @@ const TKCommunity = (() => {
       thumbnail: 'spot-it'
     },
 
-    'phonics-race': {
-      name: 'Phonics Race',
-      url: 'https://teacherkhen.github.io/Phonicsrace1/',
-      access_level: 'free',
-      protocol: {
-        ready: 'TK_PHONICSRACE_READY',
-        load: 'TK_PHONICSRACE_LESSON',
-        loaded: 'TK_PHONICSRACE_LOADED',
-        error: 'TK_PHONICSRACE_ERROR'
-      },
-      origins: [
-        'https://teacherkhen.github.io'
-      ],
-      valid: data =>
-        Array.isArray(data?.rounds) &&
-        data.rounds.length > 0 &&
-        data.rounds.every(r =>
-          Array.isArray(r.circles) &&
-          r.circles.length >= 2 &&
-          r.circles.every(c =>
-            typeof c.text === 'string' &&
-            Number.isFinite(c.x) &&
-            Number.isFinite(c.y) &&
-            Number.isFinite(c.id)
-          )
-        ),
-      preview: data =>
-        data.rounds
-          .flatMap(r => r.circles.map(c => c.text.trim()))
-          .filter(Boolean),
-      thumbnail: 'phonics-race'
-    }
+'phonics-race': {
+  name: 'Phonics Race',
+  url: 'https://phonicsrace.teacherkhen.com/',
+  access_level: 'free',
+
+  protocol: {
+    ready: 'TK_PHONICSRACE_READY',
+    load: 'TK_PHONICSRACE_LESSON',
+    loaded: 'TK_PHONICSRACE_LOADED',
+    error: 'TK_PHONICSRACE_ERROR'
+  },
+
+  origins: [
+    'https://phonicsrace.teacherkhen.com',
+    'https://teacherkhen.github.io'
+  ],
+
+  valid: data =>
+    Array.isArray(data?.rounds) &&
+    data.rounds.length > 0 &&
+    data.rounds.every(round =>
+      round &&
+      typeof round.title === 'string' &&
+      Array.isArray(round.circles) &&
+      round.circles.length >= 2 &&
+      round.circles.every(item =>
+        item &&
+        typeof item.text === 'string' &&
+        Number.isFinite(item.id) &&
+        Number.isFinite(item.x) &&
+        Number.isFinite(item.y)
+      )
+    ),
+
+  preview: data =>
+    data.rounds
+      .flatMap(round =>
+        round.circles.map(item =>
+          item.text.trim()
+        )
+      )
+      .filter(Boolean),
+
+  thumbnail: 'phonics-race'
+}
+
   };
 
   const gameFor = slug => GAMES[slug] || null;
