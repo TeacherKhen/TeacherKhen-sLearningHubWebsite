@@ -3,7 +3,7 @@
   "description": "A Premium detective flashlight-search game for vocabulary, word and letter recognition, and team competition. Teachers can choose pictures or words/letters, edit clue positions, resize and rotate clues, select backgrounds, and save activities as JSON.",
   "url": "https://spot-it.teacherkhen.com/",
   "image": "spot it.gif",
-  "video": "",
+  "video": "https://www.youtube.com/shorts/6YTdG2oE91U",
   "steps": [
     "Open Spot It, Detectives! and sign in using your Teacher Khen Premium account. On the title screen, choose Go to Settings before starting.",
     "In Settings, choose the Food Preset or create a new clue set. Use Pictures Only or Words / Letters Only; these are separate display modes, not a mixed mode.",
