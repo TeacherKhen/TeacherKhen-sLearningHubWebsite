@@ -4,99 +4,259 @@ const TKCommunity = (() => {
   const TABLE = 'community_lessons';
   const FAV = 'community_favorites';
 
-  // Registered games with automatic Community connections.
-  const GAMES = {
-    'click-it': {
-      name: 'Click It!',
-      url: 'https://clickit.teacherkhen.com/',
-      access_level: 'free',
-      protocol: {
-        ready: 'TK_CLICKIT_READY',
-        load: 'TK_CLICKIT_LESSON',
-        loaded: 'TK_CLICKIT_LOADED',
-        error: 'TK_CLICKIT_ERROR'
-      },
-      origins: [
-        'https://clickit.teacherkhen.com',
-        'https://teacherkhen.github.io'
-      ],
-      valid: data =>
-        Array.isArray(data?.words) &&
-        data.words.length > 0,
-      preview: data => data.words
+  // TeacherKhen game-specific Community connectors.
+  // URLs preserve the existing game catalog and
+  // three user-confirmed live links.
+  // A custom Cloudflare domain does NOT need a
+  // matching GitHub URL.
+  const base = (
+    name, url, access, prefix, valid, preview,
+    thumbnail = null
+  ) => ({
+    name,
+    url,
+    access_level: access,
+    protocol: {
+      ready: `TK_${prefix}_READY`,
+      load: `TK_${prefix}_LESSON`,
+      loaded: `TK_${prefix}_LOADED`,
+      error: `TK_${prefix}_ERROR`
     },
+    origins: url ? [new URL(url).origin] : [],
+    valid,
+    preview,
+    thumbnail
+  });
 
-    'spot-it': {
-      name: 'Spot It! Detectives Premium',
-      url: 'https://spot-it.teacherkhen.com/',
-      access_level: 'premium',
-      protocol: {
-        ready: 'TK_SPOTIT_READY',
-        load: 'TK_SPOTIT_LESSON',
-        loaded: 'TK_SPOTIT_LOADED',
-        error: 'TK_SPOTIT_ERROR'
-      },
-      origins: [
-        'https://spot-it.teacherkhen.com',
-        'https://teacherkhen.github.io'
-      ],
-      valid: data =>
-        Array.isArray(data?.objects) &&
-        data.objects.length > 0,
-      preview: data =>
-        data.objects.map(x => String(x.name || 'Clue')),
-      thumbnail: 'spot-it'
-    },
+  const anyWords = d =>
+    Array.isArray(d?.words) &&
+    d.words.length > 0;
 
-'phonics-race': {
-  name: 'Phonics Race',
-  url: 'https://phonicsrace.teacherkhen.com/',
-  access_level: 'free',
+  const textWords = d =>
+    d.words.map(x =>
+      typeof x === 'string' ? x : x?.text || ''
+    );
 
-  protocol: {
-    ready: 'TK_PHONICSRACE_READY',
-    load: 'TK_PHONICSRACE_LESSON',
-    loaded: 'TK_PHONICSRACE_LOADED',
-    error: 'TK_PHONICSRACE_ERROR'
-  },
+  const hasObjects = d =>
+    Array.isArray(d?.objects) &&
+    d.objects.length > 0;
 
-  origins: [
-    'https://phonicsrace.teacherkhen.com',
-    'https://teacherkhen.github.io'
-  ],
+  const objectNames = d =>
+    d.objects.map(x => x?.name || 'Clue');
 
-  valid: data =>
-    Array.isArray(data?.rounds) &&
-    data.rounds.length > 0 &&
-    data.rounds.every(round =>
-      round &&
-      typeof round.title === 'string' &&
-      Array.isArray(round.circles) &&
-      round.circles.length >= 2 &&
-      round.circles.every(item =>
-        item &&
-        typeof item.text === 'string' &&
-        Number.isFinite(item.id) &&
-        Number.isFinite(item.x) &&
-        Number.isFinite(item.y)
+  const hasSets = d =>
+    Array.isArray(d?.sets) &&
+    d.sets.length > 0 &&
+    d.sets.every(s =>
+      Array.isArray(s?.items) &&
+      s.items.length > 0 &&
+      s.items.every(i =>
+        typeof i?.word === 'string' &&
+        i.word.trim()
       )
+    );
+
+  const setWords = d =>
+    d.sets.flatMap(s =>
+      s.items.map(i => i.word)
+    );
+
+  const hasSpiderweb = d => {
+    const state = d?.activityState || d;
+
+    return (
+      Array.isArray(state?.columns) &&
+      state.columns.length >= 2 &&
+      state.columns.length <= 6 &&
+      state.columns.every(c =>
+        Array.isArray(c) &&
+        c.length > 0 &&
+        c.every(v => typeof v === 'string')
+      )
+    );
+  };
+
+  const spiderwebWords = d =>
+    (d?.activityState || d).columns.flat();
+
+  const hasFlipBoard = d =>
+    Array.isArray(d?.words) &&
+    d.words.length > 0 &&
+    d.words.every(w =>
+      typeof w === 'string'
+    );
+
+  const hasPremiumBoard = d =>
+    Array.isArray(d?.presets) &&
+    d.presets.length > 0 &&
+    d.presets.every(p =>
+      typeof p?.name === 'string' &&
+      Array.isArray(p?.words) &&
+      p.words.length > 0 &&
+      p.words.every(w =>
+        typeof w?.text === 'string' &&
+        w.text.trim()
+      )
+    );
+
+  const premiumBoardWords = d =>
+    d.presets.flatMap(p =>
+      p.words.map(w => w.text)
+    );
+
+  const hasGiveKeep = d =>
+    Array.isArray(d) &&
+    d.length === 26 &&
+    d.every(q =>
+      q &&
+      typeof q.text === 'string' &&
+      ['id', 'multiple'].includes(q.type) &&
+      Array.isArray(q.options) &&
+      q.options.length === 4
+    );
+
+  const hasMonsterBingo = d =>
+    Array.isArray(d?.cards) &&
+    d.cards.length >= 1 &&
+    d.cards.length <= 12 &&
+    d.cards.every(c =>
+      typeof c?.text === 'string' &&
+      typeof c?.img === 'string'
+    ) &&
+    Number.isInteger(Number(d.winScore)) &&
+    Number(d.winScore) >= 1;
+
+  // =========================================================
+  // GAME REGISTRY — ALL 11 GAMES
+  // =========================================================
+
+  const GAMES = {
+
+    'click-it': base(
+      'Click It!',
+      'https://clickit.teacherkhen.com/',
+      'free',
+      'CLICKIT',
+      anyWords,
+      textWords
     ),
 
-  preview: data =>
-    data.rounds
-      .flatMap(round =>
-        round.circles.map(item =>
-          item.text.trim()
-        )
-      )
-      .filter(Boolean),
+    'spot-it': base(
+      'Spot It! Detectives Premium',
+      'https://spot-it.teacherkhen.com/',
+      'premium',
+      'SPOTIT',
+      hasObjects,
+      objectNames,
+      'spot-it'
+    ),
 
-  thumbnail: 'phonics-race'
-}
+    'spot-it-free': base(
+      'Spot It! Detectives FREE',
+      'https://spot-it-free.teacherkhen.com/',
+      'free',
+      'SPOTITFREE',
+      hasObjects,
+      objectNames
+    ),
+
+    'phonics-race': base(
+      'Phonics Race',
+      'https://phonicsrace.teacherkhen.com/',
+      'free',
+      'PHONICSRACE',
+      d =>
+        Array.isArray(d?.rounds) &&
+        d.rounds.length > 0 &&
+        d.rounds.every(r =>
+          typeof r?.title === 'string' &&
+          Array.isArray(r.circles) &&
+          r.circles.length >= 2 &&
+          r.circles.every(i =>
+            typeof i?.text === 'string' &&
+            Number.isFinite(i.id) &&
+            Number.isFinite(i.x) &&
+            Number.isFinite(i.y)
+          )
+        ),
+      d =>
+        d.rounds.flatMap(r =>
+          r.circles.map(c => c.text)
+        ),
+      'phonics-race'
+    ),
+
+    'balloon-pop-free': base(
+      'Balloon Pop FREE',
+      'https://balloon-pop-free.teacherkhen.com/',
+      'free',
+      'BALLOONFREE',
+      hasSets,
+      setWords
+    ),
+
+    'balloon-pop-premium': base(
+      'Balloon, Bubble & Star Pop Premium',
+
+      // Original website catalog address.
+      // Must use HTTPS before live Premium delivery.
+      'http://balloon-bubble-star-pop.teacherkhen.com/',
+
+      'premium',
+      'BALLOON',
+      hasSets,
+      setWords
+    ),
+
+    'spiderweb-free': base(
+      'Spiderweb Reading FREE',
+      'https://spiderwebreading.teacherkhen.com/',
+      'free',
+      'SPIDERWEBFREE',
+      hasSpiderweb,
+      spiderwebWords
+    ),
+
+    'give-or-keep': base(
+      'Give or Keep – Classroom Edition',
+      'https://teacherkhen.github.io/giveorkeepreviewgame/',
+      'free',
+      'GIVEKEEP',
+      hasGiveKeep,
+      d => d.map(q => q.text)
+    ),
+
+    'phonics-board': base(
+      'Phonics Board FREE',
+      'https://phonicsreading.teacherkhen.com/',
+      'free',
+      'PHONICSBOARD',
+      hasFlipBoard,
+      d => d.words
+    ),
+
+    'phonics-board-premium': base(
+      'Phonics Board Premium',
+      'https://phonics-learning.teacherkhen.com/',
+      'premium',
+      'PHONICSPREMIUM',
+      hasPremiumBoard,
+      premiumBoardWords
+    ),
+
+    'monster-bingo': base(
+      'Monster Bingo – Pixel UNO',
+      'https://teacherkhen.github.io/monster-card-flip-game/',
+      'free',
+      'MONSTERBINGO',
+      hasMonsterBingo,
+      d => d.cards.map(c => c.text)
+    )
 
   };
 
-  const gameFor = slug => GAMES[slug] || null;
+  const gameFor = slug =>
+    GAMES[slug] || null;
 
   const gameProtocol = slug =>
     gameFor(slug)?.thumbnail || slug;
@@ -106,6 +266,7 @@ const TKCommunity = (() => {
 
   const getPreview = (slug, data) => {
     const game = gameFor(slug);
+
     return game
       ? game.preview(data)
           .slice(0, 18)
@@ -113,7 +274,10 @@ const TKCommunity = (() => {
       : [];
   };
 
-  // Public thumbnail metadata.
+  // =========================================================
+  // PUBLIC THUMBNAIL METADATA
+  // =========================================================
+
   const THUMB_PREFIX = 'TK_THUMB_V1:';
 
   const thumbFrom = items =>
@@ -134,7 +298,10 @@ const TKCommunity = (() => {
         )
       : [];
 
-  // Spot It! thumbnail generation.
+  // =========================================================
+  // SPOT IT! THUMBNAIL GENERATION
+  // =========================================================
+
   async function createSpotItThumbnail(data) {
     if (
       !Array.isArray(data?.objects) ||
@@ -143,14 +310,19 @@ const TKCommunity = (() => {
 
     const W = 480;
     const H = 270;
-    const canvas = document.createElement('canvas');
+
+    const canvas =
+      document.createElement('canvas');
+
     canvas.width = W;
     canvas.height = H;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return null;
 
-    const bg = ctx.createLinearGradient(0, 0, W, H);
+    const bg =
+      ctx.createLinearGradient(0, 0, W, H);
+
     bg.addColorStop(0, '#264a45');
     bg.addColorStop(.55, '#1a3338');
     bg.addColorStop(1, '#0b1b22');
@@ -158,11 +330,14 @@ const TKCommunity = (() => {
     ctx.fillStyle = bg;
     ctx.fillRect(0, 0, W, H);
 
-    ctx.strokeStyle = 'rgba(197,221,189,.09)';
+    ctx.strokeStyle =
+      'rgba(197,221,189,.09)';
+
     ctx.lineWidth = 2;
 
     for (let i = 0; i < 10; i++) {
       const x = (i * 83 + 19) % W;
+
       ctx.beginPath();
       ctx.moveTo(x, 0);
       ctx.lineTo(x - 22, H);
@@ -174,87 +349,138 @@ const TKCommunity = (() => {
       W * .48, H * .51, 235
     );
 
-    glow.addColorStop(0, 'rgba(250,240,187,.24)');
-    glow.addColorStop(.52, 'rgba(231,239,182,.08)');
-    glow.addColorStop(1, 'rgba(0,0,0,.43)');
+    glow.addColorStop(
+      0,
+      'rgba(250,240,187,.24)'
+    );
+
+    glow.addColorStop(
+      .52,
+      'rgba(231,239,182,.08)'
+    );
+
+    glow.addColorStop(
+      1,
+      'rgba(0,0,0,.43)'
+    );
 
     ctx.fillStyle = glow;
     ctx.fillRect(0, 0, W, H);
 
     const items = data.objects.slice(0, 12);
 
-    const imageLoad = value => new Promise(resolve => {
-      if (
-        typeof value !== 'string' ||
-        !/^data:image\/(png|jpe?g|webp|gif);base64,/i.test(value)
-      ) return resolve(null);
+    const imageLoad = value =>
+      new Promise(resolve => {
+        if (
+          typeof value !== 'string' ||
+          !/^data:image\/(png|jpe?g|webp|gif);base64,/i
+            .test(value)
+        ) {
+          return resolve(null);
+        }
 
-      const img = new Image();
-      let ended = false;
+        const img = new Image();
+        let ended = false;
 
-      const finish = v => {
-        if (ended) return;
-        ended = true;
-        clearTimeout(timer);
-        resolve(v);
-      };
+        const finish = v => {
+          if (ended) return;
 
-      const timer = setTimeout(
-        () => finish(null), 6000
-      );
+          ended = true;
+          clearTimeout(timer);
+          resolve(v);
+        };
 
-      img.onload = () => finish(img);
-      img.onerror = () => finish(null);
-      img.src = value;
-    });
+        const timer = setTimeout(
+          () => finish(null),
+          6000
+        );
+
+        img.onload = () => finish(img);
+        img.onerror = () => finish(null);
+        img.src = value;
+      });
 
     const pics = await Promise.all(
       items.map(o => imageLoad(o.image))
     );
 
     const positions = [
-      [.14, .27], [.34, .32], [.55, .27],
-      [.76, .34], [.21, .61], [.43, .65],
-      [.66, .61], [.87, .69], [.14, .84],
-      [.35, .82], [.57, .83], [.79, .85]
+      [.14, .27],
+      [.34, .32],
+      [.55, .27],
+      [.76, .34],
+      [.21, .61],
+      [.43, .65],
+      [.66, .61],
+      [.87, .69],
+      [.14, .84],
+      [.35, .82],
+      [.57, .83],
+      [.79, .85]
     ];
 
     items.forEach((o, i) => {
       const saved = o.pos?.[0];
+
       const px = Number(saved?.x);
       const py = Number(saved?.y);
 
       const x = (
         Number.isFinite(px)
-          ? Math.max(.12, Math.min(.88, px / 100))
+          ? Math.max(
+              .12,
+              Math.min(.88, px / 100)
+            )
           : positions[i][0]
       ) * W;
 
       const y = (
         Number.isFinite(py)
-          ? Math.max(.22, Math.min(.82, py / 100))
+          ? Math.max(
+              .22,
+              Math.min(.82, py / 100)
+            )
           : positions[i][1]
       ) * H;
 
       const img = pics[i];
 
-      if (img && img.naturalWidth && img.naturalHeight) {
-        const max = items.length > 8 ? 66 : 83;
+      if (
+        img &&
+        img.naturalWidth &&
+        img.naturalHeight
+      ) {
+        const max =
+          items.length > 8 ? 66 : 83;
+
         const ratio = Math.min(
           max / img.naturalWidth,
           max / img.naturalHeight
         );
 
-        const iw = img.naturalWidth * ratio;
-        const ih = img.naturalHeight * ratio;
+        const iw =
+          img.naturalWidth * ratio;
+
+        const ih =
+          img.naturalHeight * ratio;
 
         ctx.save();
-        ctx.shadowColor = 'rgba(0,0,0,.6)';
+
+        ctx.shadowColor =
+          'rgba(0,0,0,.6)';
+
         ctx.shadowBlur = 9;
+
         ctx.drawImage(
-          img, x - iw / 2, y - ih / 2, iw, ih
+          img,
+          x - iw / 2,
+          y - ih / 2,
+          iw,
+          ih
         );
+
         ctx.restore();
+
       } else {
         const label = String(
           o.name || 'Clue'
@@ -262,7 +488,12 @@ const TKCommunity = (() => {
 
         const font = Math.min(
           22,
-          Math.max(12, 145 / (label.length * .75 + 1))
+          Math.max(
+            12,
+            145 / (
+              label.length * .75 + 1
+            )
+          )
         );
 
         ctx.font =
@@ -271,23 +502,39 @@ const TKCommunity = (() => {
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.lineWidth = 3;
+
         ctx.strokeStyle = '#0a2025';
-        ctx.strokeText(label, x, y, 110);
+        ctx.strokeText(
+          label,
+          x,
+          y,
+          110
+        );
+
         ctx.fillStyle = '#f9e6a6';
-        ctx.fillText(label, x, y, 110);
+        ctx.fillText(
+          label,
+          x,
+          y,
+          110
+        );
       }
     });
 
-    const vignette = ctx.createRadialGradient(
-      W * .49, H * .50, 80,
-      W * .49, H * .50, 285
+    const vignette =
+      ctx.createRadialGradient(
+        W * .49, H * .50, 80,
+        W * .49, H * .50, 285
+      );
+
+    vignette.addColorStop(
+      0,
+      'rgba(0,0,0,0)'
     );
 
     vignette.addColorStop(
-      0, 'rgba(0,0,0,0)'
-    );
-    vignette.addColorStop(
-      1, 'rgba(0,0,0,.65)'
+      1,
+      'rgba(0,0,0,.65)'
     );
 
     ctx.fillStyle = vignette;
@@ -295,41 +542,57 @@ const TKCommunity = (() => {
 
     ctx.font =
       "bold 18px 'Comic Neue',sans-serif";
+
     ctx.textAlign = 'left';
     ctx.fillStyle = '#ffe0a0';
     ctx.shadowColor = '#000';
     ctx.shadowBlur = 5;
+
     ctx.fillText(
-      '🔎 SPOT IT! DETECTIVES', 16, 25
+      '🔎 SPOT IT! DETECTIVES',
+      16,
+      25
     );
+
     ctx.shadowBlur = 0;
 
     try {
       let image = canvas.toDataURL(
-        'image/jpeg', .69
+        'image/jpeg',
+        .69
       );
 
       if (image.length > 145000) {
         image = canvas.toDataURL(
-          'image/jpeg', .48
+          'image/jpeg',
+          .48
         );
       }
 
       return image.length < 180000
         ? image
         : null;
+
     } catch (err) {
       console.warn(
-        'Thumbnail creation failed:', err
+        'Thumbnail creation failed:',
+        err
       );
+
       return null;
     }
   }
 
+  // =========================================================
+  // PREVIEW METADATA
+  // =========================================================
+
   async function previewMetadata(slug, json) {
     const names = getPreview(slug, json);
 
-    if (gameProtocol(slug) !== 'spot-it') {
+    if (
+      gameProtocol(slug) !== 'spot-it'
+    ) {
       return names;
     }
 
@@ -341,6 +604,10 @@ const TKCommunity = (() => {
       : names;
   }
 
+  // =========================================================
+  // COMMUNITY STATE
+  // =========================================================
+
   let page = 'games';
   let filter = 'all';
   let lessons = [];
@@ -348,20 +615,26 @@ const TKCommunity = (() => {
   let isAdmin = false;
   let lastUserId = null;
 
-  const $ = id => document.getElementById(id);
+  const $ = id =>
+    document.getElementById(id);
 
   const client = () =>
     window.supabaseClient ||
-    (typeof supabaseClient !== 'undefined'
-      ? supabaseClient
-      : null);
+    (
+      typeof supabaseClient !== 'undefined'
+        ? supabaseClient
+        : null
+    );
 
   function el(tag, cls, txt) {
     const e = document.createElement(tag);
+
     if (cls) e.className = cls;
+
     if (txt !== undefined) {
       e.textContent = txt;
     }
+
     return e;
   }
 
@@ -372,17 +645,26 @@ const TKCommunity = (() => {
   }
 
   function prem() {
-    return typeof isPremiumMember === 'function' &&
-      isPremiumMember();
+    return (
+      typeof isPremiumMember === 'function' &&
+      isPremiumMember()
+    );
   }
 
   function visibleLessons() {
     return lessons.filter(
       l =>
         isAdmin ||
-        (l.is_published && !!gameFor(l.game_slug))
+        (
+          l.is_published &&
+          !!gameFor(l.game_slug)
+        )
     );
   }
+
+  // =========================================================
+  // PAGE NAVIGATION
+  // =========================================================
 
   function navigate(next) {
     if (next === 'premium') {
@@ -390,15 +672,22 @@ const TKCommunity = (() => {
       return;
     }
 
-    if (next === 'admin' && !isAdmin) return;
+    if (
+      next === 'admin' &&
+      !isAdmin
+    ) return;
 
     page = next;
 
     const show = [
-      'community', 'library', 'admin'
+      'community',
+      'library',
+      'admin'
     ].includes(next);
 
-    const shell = $('tk-community-shell');
+    const shell =
+      $('tk-community-shell');
+
     shell.hidden = !show;
 
     $('tk-community-content').hidden =
@@ -413,14 +702,19 @@ const TKCommunity = (() => {
       'noResults'
     ].forEach(id => {
       const node = $(id);
-      if (node) node.hidden = show;
+
+      if (node) {
+        node.hidden = show;
+      }
     });
 
     const donate = document.querySelector(
       '.bottom-donate-container'
     );
 
-    if (donate) donate.hidden = show;
+    if (donate) {
+      donate.hidden = show;
+    }
 
     document.querySelectorAll(
       '[data-tk-page]'
@@ -437,6 +731,7 @@ const TKCommunity = (() => {
 
       $('tk-community-subheading').textContent =
         'Your saved lessons — free and premium.';
+
     } else if (next === 'admin') {
       $('tk-community-heading').textContent =
         'Manage Community';
@@ -445,6 +740,7 @@ const TKCommunity = (() => {
         'Upload, publish, unpublish or delete lessons.';
 
       renderAdmin();
+
     } else {
       $('tk-community-heading').textContent =
         'Teacher Khen Community';
@@ -465,12 +761,18 @@ const TKCommunity = (() => {
         top: 0,
         behavior: 'smooth'
       });
+
       render();
     }
   }
 
+  // =========================================================
+  // LOAD COMMUNITY LESSONS
+  // =========================================================
+
   async function refresh() {
     const sb = client();
+
     if (!sb) return;
 
     const id = user()?.id || null;
@@ -482,26 +784,33 @@ const TKCommunity = (() => {
 
     const [all, admins, favs] =
       await Promise.all([
+
         sb.from(TABLE)
           .select(
             'id,title,game_slug,description,grade_level,access_level,preview_items,json_path,is_published,created_at'
           )
-          .order('created_at', {
-            ascending: false
-          }),
+          .order(
+            'created_at',
+            { ascending: false }
+          ),
 
         id
           ? sb.from('community_admins')
               .select('user_id')
               .eq('user_id', id)
               .maybeSingle()
-          : Promise.resolve({ data: null }),
+          : Promise.resolve({
+              data: null
+            }),
 
         id
           ? sb.from(FAV)
               .select('lesson_id')
               .eq('user_id', id)
-          : Promise.resolve({ data: [] })
+          : Promise.resolve({
+              data: []
+            })
+
       ]);
 
     if (all.error) {
@@ -516,21 +825,31 @@ const TKCommunity = (() => {
     isAdmin = !!admins.data;
 
     favorites = new Set(
-      (favs.data || []).map(x => x.lesson_id)
+      (favs.data || [])
+        .map(x => x.lesson_id)
     );
 
     renderGameSelector();
 
     $('tk-admin-nav').hidden = !isAdmin;
 
-    if (page === 'admin' && !isAdmin) {
+    if (
+      page === 'admin' &&
+      !isAdmin
+    ) {
       navigate('community');
     }
 
     render();
 
-    if (page === 'admin') renderAdmin();
+    if (page === 'admin') {
+      renderAdmin();
+    }
   }
+
+  // =========================================================
+  // LESSON CARDS
+  // =========================================================
 
   function card(l) {
     const card = el(
@@ -554,8 +873,16 @@ const TKCommunity = (() => {
     );
 
     heading.append(
-      el('span', 'tk-wall-game-icon', '✦'),
-      el('strong', '', gamesLabel(l.game_slug))
+      el(
+        'span',
+        'tk-wall-game-icon',
+        '✦'
+      ),
+      el(
+        'strong',
+        '',
+        gamesLabel(l.game_slug)
+      )
     );
 
     screenshot.append(heading);
@@ -566,10 +893,12 @@ const TKCommunity = (() => {
     );
 
     const isSpotIt =
-      gameProtocol(l.game_slug) === 'spot-it';
+      gameProtocol(l.game_slug) ===
+      'spot-it';
 
     const isRace =
-      gameProtocol(l.game_slug) === 'phonics-race';
+      gameProtocol(l.game_slug) ===
+      'phonics-race';
 
     const thumbnail = isSpotIt
       ? thumbFrom(l.preview_items)
@@ -588,7 +917,10 @@ const TKCommunity = (() => {
       );
 
       picture.src = thumbnail;
-      picture.alt = 'Preview of ' + l.title;
+
+      picture.alt =
+        'Preview of ' + l.title;
+
       picture.loading = 'lazy';
       picture.decoding = 'async';
 
@@ -636,9 +968,13 @@ const TKCommunity = (() => {
         .slice(0, 7)
         .forEach((word, i) => {
           const positions = [
-            [12, 18], [40, 25], [67, 18],
-            [24, 60], [58, 63],
-            [78, 55], [41, 82]
+            [12, 18],
+            [40, 25],
+            [67, 18],
+            [24, 60],
+            [58, 63],
+            [78, 55],
+            [41, 82]
           ];
 
           const clue = el(
@@ -651,7 +987,8 @@ const TKCommunity = (() => {
             position: 'absolute',
             left: positions[i][0] + '%',
             top: positions[i][1] + '%',
-            transform: 'translate(-20%,-20%)',
+            transform:
+              'translate(-20%,-20%)',
             font:
               'bold clamp(10px,1.5vw,20px) Comic Neue,sans-serif',
             color: '#ffecb5',
@@ -680,7 +1017,8 @@ const TKCommunity = (() => {
       frame.append(clues);
 
     } else if (isRace) {
-      // Phonics Race thumbnail using actual phonics words.
+      // Phonics Race thumbnail.
+
       const scene = el(
         'div',
         'tk-race-scene'
@@ -713,7 +1051,6 @@ const TKCommunity = (() => {
 
       scene.append(line);
 
-      // Exclude old JSON keys from previous generic previews.
       const oldKeys = new Set([
         'scores',
         'currentRound',
@@ -733,10 +1070,14 @@ const TKCommunity = (() => {
         : ['Phonics', 'Race'];
 
       const positions = [
-        [9, 21], [31, 39],
-        [53, 20], [73, 40],
-        [14, 71], [37, 65],
-        [61, 72], [79, 62]
+        [9, 21],
+        [31, 39],
+        [53, 20],
+        [73, 40],
+        [14, 71],
+        [37, 65],
+        [61, 72],
+        [79, 62]
       ];
 
       samples.forEach((word, i) => {
@@ -759,13 +1100,18 @@ const TKCommunity = (() => {
           color: '#fff',
           textShadow:
             '-2px -2px #0f172a,2px 2px #0f172a,0 3px 5px #000',
-          transform: 'translate(-10%,-50%)'
+          transform:
+            'translate(-10%,-50%)'
         });
 
         scene.append(label);
       });
 
-      const flag = el('span', '', '🏁');
+      const flag = el(
+        'span',
+        '',
+        '🏁'
+      );
 
       Object.assign(flag.style, {
         position: 'absolute',
@@ -778,7 +1124,8 @@ const TKCommunity = (() => {
       frame.append(scene);
 
     } else {
-      // Click It! thumbnail.
+      // Generic vocabulary preview.
+
       const board = el(
         'div',
         'tk-wall-choices'
@@ -790,7 +1137,8 @@ const TKCommunity = (() => {
           board.append(
             el(
               'span',
-              'tk-wall-tile tk-wall-tile-' + (i % 6),
+              'tk-wall-tile tk-wall-tile-' +
+                (i % 6),
               String(word).slice(0, 24)
             )
           );
@@ -798,7 +1146,11 @@ const TKCommunity = (() => {
 
       if (!board.children.length) {
         board.append(
-          el('span', 'tk-wall-tile', 'Ready to play')
+          el(
+            'span',
+            'tk-wall-tile',
+            'Ready to play'
+          )
         );
       }
 
@@ -808,26 +1160,35 @@ const TKCommunity = (() => {
     screenshot.append(frame);
     panel.append(screenshot);
 
+    // Access badge.
+
     panel.append(
       el(
         'span',
         'tk-lesson-badge' +
-          (l.access_level === 'premium'
-            ? ' premium'
-            : ''),
+          (
+            l.access_level === 'premium'
+              ? ' premium'
+              : ''
+          ),
         l.access_level === 'premium'
           ? '♛ Premium'
           : 'Free'
       )
     );
 
+    // Save favorite.
+
     const heart = el(
       'button',
       'tk-heart',
-      favorites.has(l.id) ? '♥' : '♡'
+      favorites.has(l.id)
+        ? '♥'
+        : '♡'
     );
 
     heart.type = 'button';
+
     heart.title = favorites.has(l.id)
       ? 'Remove from My Library'
       : 'Save to My Library';
@@ -846,7 +1207,11 @@ const TKCommunity = (() => {
     card.append(panel);
 
     card.append(
-      el('h4', '', l.title)
+      el(
+        'h4',
+        '',
+        l.title
+      )
     );
 
     card.append(
@@ -890,6 +1255,7 @@ const TKCommunity = (() => {
     );
 
     play.type = 'button';
+
     play.disabled =
       !locked && !gameFor(l.game_slug);
 
@@ -908,16 +1274,29 @@ const TKCommunity = (() => {
     return card;
   }
 
+  // =========================================================
+  // GAME LABEL
+  // =========================================================
+
   function gamesLabel(slug) {
     return (
       gameFor(slug)?.name ||
       slug.replace(/-/g, ' ')
-        .replace(/\b\w/g, c => c.toUpperCase())
+        .replace(
+          /\b\w/g,
+          c => c.toUpperCase()
+        )
     );
   }
 
+  // =========================================================
+  // RENDER COMMUNITY AND MY LIBRARY
+  // =========================================================
+
   function render() {
-    const grid = $('tk-lessons-grid');
+    const grid =
+      $('tk-lessons-grid');
+
     if (!grid) return;
 
     grid.replaceChildren();
@@ -933,6 +1312,7 @@ const TKCommunity = (() => {
             'Log in to see your saved lessons.'
           )
         );
+
         return;
       }
 
@@ -946,8 +1326,10 @@ const TKCommunity = (() => {
 
       all = all.filter(
         l =>
-          (filter === 'all' ||
-            l.access_level === filter) &&
+          (
+            filter === 'all' ||
+            l.access_level === filter
+          ) &&
           (
             !q ||
             [
@@ -955,7 +1337,9 @@ const TKCommunity = (() => {
               l.description,
               l.grade_level,
               l.game_slug
-            ].join(' ').toLowerCase().includes(q)
+            ].join(' ')
+              .toLowerCase()
+              .includes(q)
           )
       );
     }
@@ -970,18 +1354,31 @@ const TKCommunity = (() => {
             : 'No lessons found yet.'
         )
       );
+
       return;
     }
 
-    all.forEach(l => grid.append(card(l)));
+    all.forEach(l =>
+      grid.append(card(l))
+    );
   }
 
+  // =========================================================
+  // LESSON CONTENT PREVIEW
+  // =========================================================
+
   function showPreview(l) {
-    const b = $('tk-preview-body');
+    const b =
+      $('tk-preview-body');
+
     b.replaceChildren();
 
     b.append(
-      el('h2', '', l.title),
+      el(
+        'h2',
+        '',
+        l.title
+      ),
       el(
         'p',
         '',
@@ -1006,7 +1403,11 @@ const TKCommunity = (() => {
       .slice(0, 18)
       .forEach(v => {
         chips.append(
-          el('span', '', String(v))
+          el(
+            'span',
+            '',
+            String(v)
+          )
         );
       });
 
@@ -1020,8 +1421,13 @@ const TKCommunity = (() => {
       )
     );
 
-    $('tk-preview-overlay').hidden = false;
+    $('tk-preview-overlay').hidden =
+      false;
   }
+
+  // =========================================================
+  // SAVE OR REMOVE FAVORITES
+  // =========================================================
 
   async function toggleFavorite(id) {
     const u = user();
@@ -1032,7 +1438,9 @@ const TKCommunity = (() => {
     }
 
     const sb = client();
-    const removing = favorites.has(id);
+
+    const removing =
+      favorites.has(id);
 
     const result = removing
       ? await sb.from(FAV)
@@ -1046,7 +1454,10 @@ const TKCommunity = (() => {
           });
 
     if (result.error) {
-      alert(result.error.message);
+      alert(
+        result.error.message
+      );
+
       return;
     }
 
@@ -1059,17 +1470,45 @@ const TKCommunity = (() => {
     render();
   }
 
+  // =========================================================
+  // AUTOMATIC GAME LESSON LOADING
+  // =========================================================
+
   async function playLesson(l) {
-    const game = gameFor(l.game_slug);
+    const game =
+      gameFor(l.game_slug);
 
     if (!game) {
       alert(
         'Automatic JSON loading is not connected for this game yet.'
       );
+
       return;
     }
 
     const url = game.url;
+
+    if (!url) {
+      alert(
+        'The game link has not been confirmed for ' +
+        game.name +
+        '. Add its exact deployed URL to community.js before launching.'
+      );
+
+      return;
+    }
+
+    // Prevent Premium lesson delivery over HTTP.
+    if (
+      game.access_level === 'premium' &&
+      !url.startsWith('https://')
+    ) {
+      alert(
+        'This Premium game requires a secure HTTPS URL before Community lessons can be launched.'
+      );
+
+      return;
+    }
 
     const popup = window.open(
       'about:blank',
@@ -1080,6 +1519,7 @@ const TKCommunity = (() => {
       alert(
         'Please allow popups for this site.'
       );
+
       return;
     }
 
@@ -1087,8 +1527,11 @@ const TKCommunity = (() => {
       'Loading your classroom lesson…';
 
     try {
-      const { data, error } =
-        await client().functions.invoke(
+      const {
+        data,
+        error
+      } = await client()
+        .functions.invoke(
           'community-lesson',
           {
             body: {
@@ -1099,10 +1542,12 @@ const TKCommunity = (() => {
 
       if (error) throw error;
 
-      if (!supportedLesson(
-        l.game_slug,
-        data
-      )) {
+      if (
+        !supportedLesson(
+          l.game_slug,
+          data
+        )
+      ) {
         throw new Error(
           'The lesson JSON is invalid for ' +
           gamesLabel(l.game_slug) +
@@ -1131,6 +1576,7 @@ const TKCommunity = (() => {
           'message',
           onMessage
         );
+
         clearTimeout(messageTimer);
       };
 
@@ -1139,6 +1585,8 @@ const TKCommunity = (() => {
           e.source !== popup ||
           !trustedOrigins.has(e.origin)
         ) return;
+
+        // Game tells Community it is ready.
 
         if (
           e.data?.type === protocol.ready &&
@@ -1153,6 +1601,8 @@ const TKCommunity = (() => {
           );
         }
 
+        // Game confirms lesson loaded.
+
         if (
           e.data?.type === protocol.loaded &&
           !finished
@@ -1165,7 +1615,8 @@ const TKCommunity = (() => {
             !favorites.has(l.id)
           ) {
             const saved =
-              await client().from(FAV)
+              await client()
+                .from(FAV)
                 .upsert(
                   {
                     user_id: user().id,
@@ -1180,6 +1631,7 @@ const TKCommunity = (() => {
             if (!saved.error) {
               favorites.add(l.id);
               render();
+
             } else {
               console.warn(
                 'Could not automatically save favorite:',
@@ -1188,6 +1640,8 @@ const TKCommunity = (() => {
             }
           }
         }
+
+        // Game reports a lesson error.
 
         if (
           e.data?.type === protocol.error &&
@@ -1198,8 +1652,10 @@ const TKCommunity = (() => {
 
           alert(
             'Game could not load lesson: ' +
-            (e.data.message ||
-              'Unknown error')
+            (
+              e.data.message ||
+              'Unknown error'
+            )
           );
         }
       };
@@ -1218,13 +1674,18 @@ const TKCommunity = (() => {
               gamesLabel(l.game_slug) +
               ' did not acknowledge Community lesson load. Confirm the corresponding game HTML is deployed.'
             );
+
+            alert(
+              'The game did not confirm loading the Community lesson. Check that the updated HTML connector is deployed at the registered game URL.'
+            );
           }
         },
         300000
       );
 
       popup.location.href =
-        url + '#tk-community';
+        url.split('#')[0] +
+        '#tk-community';
 
     } catch (err) {
       popup.close();
@@ -1239,15 +1700,29 @@ const TKCommunity = (() => {
     }
   }
 
+  // =========================================================
+  // ADMIN — UPLOAD A COMMUNITY LESSON
+  // =========================================================
+
   async function upload(e) {
     e.preventDefault();
 
-    if (!isAdmin || !user()) return;
+    if (
+      !isAdmin ||
+      !user()
+    ) return;
 
-    const status = $('tk-upload-status');
-    const form = $('tk-upload-form');
-    const fd = new FormData(form);
-    const file = fd.get('lesson_file');
+    const status =
+      $('tk-upload-status');
+
+    const form =
+      $('tk-upload-form');
+
+    const fd =
+      new FormData(form);
+
+    const file =
+      fd.get('lesson_file');
 
     if (
       !file?.name?.toLowerCase()
@@ -1255,21 +1730,27 @@ const TKCommunity = (() => {
     ) {
       status.textContent =
         'Please choose a JSON file.';
+
       return;
     }
 
-    const submit = form.querySelector(
-      '[type=submit]'
-    );
+    const submit =
+      form.querySelector(
+        '[type=submit]'
+      );
 
     submit.disabled = true;
+
     status.textContent =
       'Validating and uploading...';
 
     let path = null;
 
     try {
-      if (file.size > 10 * 1024 * 1024) {
+      if (
+        file.size >
+        10 * 1024 * 1024
+      ) {
         throw new Error(
           'JSON exceeds 10 MB.'
         );
@@ -1283,7 +1764,8 @@ const TKCommunity = (() => {
         fd.get('game_slug')
       );
 
-      const game = gameFor(slug);
+      const game =
+        gameFor(slug);
 
       if (!game) {
         throw new Error(
@@ -1291,10 +1773,12 @@ const TKCommunity = (() => {
         );
       }
 
-      if (!supportedLesson(
-        slug,
-        json
-      )) {
+      if (
+        !supportedLesson(
+          slug,
+          json
+        )
+      ) {
         throw new Error(
           'The JSON is not valid for the selected game.'
         );
@@ -1302,7 +1786,9 @@ const TKCommunity = (() => {
 
       if (
         game.access_level === 'premium' &&
-        String(fd.get('access_level')) !== 'premium'
+        String(
+          fd.get('access_level')
+        ) !== 'premium'
       ) {
         throw new Error(
           'This Premium game requires Premium lesson access.'
@@ -1333,18 +1819,26 @@ const TKCommunity = (() => {
 
       const row = {
         title:
-          String(fd.get('title')).trim(),
+          String(
+            fd.get('title')
+          ).trim(),
 
         game_slug: slug,
 
         description:
-          String(fd.get('description')).trim(),
+          String(
+            fd.get('description')
+          ).trim(),
 
         grade_level:
-          String(fd.get('grade_level')),
+          String(
+            fd.get('grade_level')
+          ),
 
         access_level:
-          String(fd.get('access_level')),
+          String(
+            fd.get('access_level')
+          ),
 
         preview_items:
           await previewMetadata(
@@ -1375,6 +1869,7 @@ const TKCommunity = (() => {
         'Lesson uploaded successfully!';
 
       form.reset();
+
       await refresh();
 
     } catch (err) {
@@ -1383,14 +1878,20 @@ const TKCommunity = (() => {
         err.message;
 
       if (path) {
-        await client().storage
+        await client()
+          .storage
           .from('community-json')
           .remove([path]);
       }
+
     } finally {
       submit.disabled = false;
     }
   }
+
+  // =========================================================
+  // ADMIN — GAME SELECTOR
+  // =========================================================
 
   function renderGameSelector() {
     const select =
@@ -1402,6 +1903,7 @@ const TKCommunity = (() => {
     if (!select) return;
 
     const previous = select.value;
+
     select.replaceChildren();
 
     Object.entries(GAMES)
@@ -1427,8 +1929,14 @@ const TKCommunity = (() => {
     syncAccessWithGame();
   }
 
+  // =========================================================
+  // ADMIN — PREMIUM ACCESS SELECTION
+  // =========================================================
+
   function syncAccessWithGame() {
-    const form = $('tk-upload-form');
+    const form =
+      $('tk-upload-form');
+
     if (!form) return;
 
     const game = gameFor(
@@ -1458,10 +1966,16 @@ const TKCommunity = (() => {
     );
   }
 
+  // =========================================================
+  // ADMIN — MANAGE EXISTING LESSONS
+  // =========================================================
+
   async function renderAdmin() {
     if (!isAdmin) return;
 
-    const area = $('tk-admin-records');
+    const area =
+      $('tk-admin-records');
+
     area.replaceChildren();
 
     lessons.forEach(l => {
@@ -1477,6 +1991,8 @@ const TKCommunity = (() => {
 
       const type =
         gameProtocol(l.game_slug);
+
+      // Preview regeneration for Spot It and Race.
 
       if (
         type === 'spot-it' ||
@@ -1505,8 +2021,11 @@ const TKCommunity = (() => {
             'Generating...';
 
           try {
-            const { data, error } =
-              await client().functions.invoke(
+            const {
+              data,
+              error
+            } = await client()
+              .functions.invoke(
                 'community-lesson',
                 {
                   body: {
@@ -1544,7 +2063,8 @@ const TKCommunity = (() => {
             }
 
             const updated =
-              await client().from(TABLE)
+              await client()
+                .from(TABLE)
                 .update({
                   preview_items: metadata
                 })
@@ -1576,6 +2096,8 @@ const TKCommunity = (() => {
         r.append(rebuild);
       }
 
+      // Publish or unpublish.
+
       const toggle = el(
         'button',
         '',
@@ -1592,7 +2114,8 @@ const TKCommunity = (() => {
         ) return;
 
         const { error } =
-          await client().from(TABLE)
+          await client()
+            .from(TABLE)
             .update({
               is_published:
                 !l.is_published
@@ -1608,6 +2131,8 @@ const TKCommunity = (() => {
 
       r.append(toggle);
 
+      // Delete lesson.
+
       const del = el(
         'button',
         '',
@@ -1622,7 +2147,8 @@ const TKCommunity = (() => {
         ) return;
 
         const { error } =
-          await client().from(TABLE)
+          await client()
+            .from(TABLE)
             .delete()
             .eq('id', l.id);
 
@@ -1632,9 +2158,12 @@ const TKCommunity = (() => {
         }
 
         const result =
-          await client().storage
+          await client()
+            .storage
             .from('community-json')
-            .remove([l.json_path]);
+            .remove([
+              l.json_path
+            ]);
 
         if (result.error) {
           alert(
@@ -1651,8 +2180,14 @@ const TKCommunity = (() => {
     });
   }
 
+  // =========================================================
+  // INITIALIZATION
+  // =========================================================
+
   function init() {
-    if (!$('tk-community-shell')) {
+    if (
+      !$('tk-community-shell')
+    ) {
       return;
     }
 
@@ -1663,7 +2198,9 @@ const TKCommunity = (() => {
       );
 
     $('tk-upload-form')
-      .elements.namedItem('game_slug')
+      .elements.namedItem(
+        'game_slug'
+      )
       .addEventListener(
         'change',
         syncAccessWithGame
@@ -1695,7 +2232,8 @@ const TKCommunity = (() => {
       '#tk-community-filters [data-filter]'
     ).forEach(b => {
       b.onclick = () => {
-        filter = b.dataset.filter;
+        filter =
+          b.dataset.filter;
 
         document.querySelectorAll(
           '#tk-community-filters [data-filter]'
@@ -1716,8 +2254,11 @@ const TKCommunity = (() => {
 
     refresh();
 
-    if (location.hash === '#community') {
+    if (
+      location.hash === '#community'
+    ) {
       navigate('community');
+
     } else if (
       location.hash === '#library'
     ) {
@@ -1734,4 +2275,5 @@ const TKCommunity = (() => {
     navigate,
     refresh
   };
+
 })();
