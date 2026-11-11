@@ -1,6 +1,9 @@
 /* TeacherKhen Community extension. Does not replace payment or auth logic. */
 const TKCommunity = (() => {
-  const TABLE='community_lessons', FAV='community_favorites';
+  const TABLE='community_lessons', FAV='community_favorites', REGISTRY='community_games';
+  let registeredGames=[];
+  const gameFor=slug=>registeredGames.find(g=>g.slug===slug);
+  const gameProtocol=slug=>gameFor(slug)?.protocol || (slug==='spot-it'?'spot-it':'click-it');
   const URLS={
     'click-it':'https://clickit.teacherkhen.com/',
     'spot-it':'https://spot-it.teacherkhen.com/'
@@ -13,8 +16,8 @@ const TKCommunity = (() => {
     'click-it':{ready:'TK_CLICKIT_READY',load:'TK_CLICKIT_LESSON',loaded:'TK_CLICKIT_LOADED',error:'TK_CLICKIT_ERROR'},
     'spot-it':{ready:'TK_SPOTIT_READY',load:'TK_SPOTIT_LESSON',loaded:'TK_SPOTIT_LOADED',error:'TK_SPOTIT_ERROR'}
   };
-  const supportedLesson=(slug,data)=> slug==='click-it' ? Array.isArray(data?.words)&&data.words.length>0 : slug==='spot-it' ? Array.isArray(data?.objects)&&data.objects.length>0 : false;
-  const getPreview=(slug,data)=> (slug==='spot-it'?data.objects.map(x=>String(x.name||'Clue')):data.words).slice(0,18).map(x=>String(x).slice(0,70));
+  const supportedLesson=(slug,data)=> gameProtocol(slug)==='click-it' ? Array.isArray(data?.words)&&data.words.length>0 : gameProtocol(slug)==='spot-it' ? Array.isArray(data?.objects)&&data.objects.length>0 : false;
+  const getPreview=(slug,data)=> (gameProtocol(slug)==='spot-it'?data.objects.map(x=>String(x.name||'Clue')):data.words).slice(0,18).map(x=>String(x).slice(0,70));
   let page='games', filter='all', lessons=[], favorites=new Set(), isAdmin=false, lastUserId=null;
   const $=id=>document.getElementById(id);
   const client=()=>window.supabaseClient || (typeof supabaseClient!=='undefined'?supabaseClient:null);
@@ -41,14 +44,18 @@ const TKCommunity = (() => {
     const sb=client();if(!sb)return;
     const id=user()?.id||null;
     if(lastUserId!==id){favorites.clear();lastUserId=id;}
-    const [all,admins,favs]=await Promise.all([
+    const [all,admins,favs,gamesResult]=await Promise.all([
       sb.from(TABLE).select('id,title,game_slug,description,grade_level,access_level,preview_items,json_path,is_published,created_at').order('created_at',{ascending:false}),
       id?sb.from('community_admins').select('user_id').eq('user_id',id).maybeSingle():Promise.resolve({data:null}),
-      id?sb.from(FAV).select('lesson_id').eq('user_id',id):Promise.resolve({data:[]})
+      id?sb.from(FAV).select('lesson_id').eq('user_id',id):Promise.resolve({data:[]}),
+      sb.from(REGISTRY).select('slug,name,url,protocol,access_level,enabled,created_at').order('name')
     ]);
     if(all.error)console.error('Community loading:',all.error.message);
     else lessons=all.data||[];
     isAdmin=!!admins.data;favorites=new Set((favs.data||[]).map(x=>x.lesson_id));
+    if(gamesResult.error)console.error('Manage Games registry:',gamesResult.error.message);
+    else registeredGames=gamesResult.data||[];
+    renderGameSelector();renderManageGames();
     $('tk-admin-nav').hidden=!isAdmin;
     if(page==='admin'&&!isAdmin)navigate('community');
     render();if(page==='admin')renderAdmin();
@@ -63,15 +70,15 @@ const TKCommunity = (() => {
     heading.append(el('span','tk-wall-game-icon','✦'),el('strong','',gamesLabel(l.game_slug)));
     screenshot.append(heading);
     const frame=el('div','tk-wall-player-frame');
-    if(l.game_slug==='spot-it')screenshot.classList.add('tk-spotit-screen');
+    if(gameProtocol(l.game_slug)==='spot-it')screenshot.classList.add('tk-spotit-screen');
     const board=el('div','tk-wall-choices');
-    if(l.game_slug==='spot-it')board.classList.add('tk-spotit-choices');
+    if(gameProtocol(l.game_slug)==='spot-it')board.classList.add('tk-spotit-choices');
     (Array.isArray(l.preview_items)?l.preview_items:[]).slice(0,6).forEach((word,i)=>{
       const tile=el('span','tk-wall-tile tk-wall-tile-'+(i%6),String(word).slice(0,24));
       board.append(tile);
     });
     if(!board.children.length)board.append(el('span','tk-wall-tile','Ready to play'));
-    if(l.game_slug==='spot-it')frame.append(el('span','tk-spotit-flashlight','🔦')); 
+    if(gameProtocol(l.game_slug)==='spot-it')frame.append(el('span','tk-spotit-flashlight','🔦')); 
     frame.append(board);
     screenshot.append(frame);
     panel.append(screenshot);
@@ -93,7 +100,7 @@ const TKCommunity = (() => {
     buttons.append(play);card.append(buttons);
     return card;
   }
-  function gamesLabel(slug){return {'click-it':'Click It!','spot-it':'Spot It! Detectives Premium'}[slug]||slug;}
+  function gamesLabel(slug){return gameFor(slug)?.name || {'click-it':'Click It!','spot-it':'Spot It! Detectives Premium'}[slug]||slug;}
   function render(){
     const grid=$('tk-lessons-grid');if(!grid)return;grid.replaceChildren();
     let all=visibleLessons();if(page==='library'){
@@ -115,7 +122,8 @@ const TKCommunity = (() => {
     const removing=favorites.has(id);const result=removing?await sb.from(FAV).delete().eq('user_id',u.id).eq('lesson_id',id):await sb.from(FAV).insert({user_id:u.id,lesson_id:id});
     if(result.error){alert(result.error.message);return;}if(removing)favorites.delete(id);else favorites.add(id);render();}
   async function playLesson(l){
-    const url=URLS[l.game_slug];
+    const game=gameFor(l.game_slug);
+    const url=game?.url || URLS[l.game_slug];
     if(!url){alert('This game has not been linked to Community yet.');return;}
     // Open immediately during the click so popup blockers do not suppress the game.
     const popup=window.open('about:blank','_blank');
@@ -125,8 +133,11 @@ const TKCommunity = (() => {
       const {data,error}=await client().functions.invoke('community-lesson',{body:{lesson_id:l.id}});
       if(error)throw error;
       if(!supportedLesson(l.game_slug,data))throw new Error('The lesson JSON is invalid for '+gamesLabel(l.game_slug)+'.');
-      const protocol=PROTOCOLS[l.game_slug];
-      const trustedOrigins=GAME_ORIGINS[l.game_slug] || new Set([new URL(url).origin]);
+      const protocol=PROTOCOLS[gameProtocol(l.game_slug)];
+      if(!protocol)throw new Error('Game connector not supported yet.');
+      const trustedOrigins=new Set([new URL(url).origin]);
+      // Preserve existing GitHub Pages custom-domain redirects for the original games.
+      if(['click-it','spot-it'].includes(l.game_slug))for(const origin of GAME_ORIGINS[l.game_slug])trustedOrigins.add(origin);
       let messageTimer;
       let finished=false;
       const cleanup=()=>{window.removeEventListener('message',onMessage);clearTimeout(messageTimer);};
@@ -162,9 +173,10 @@ const TKCommunity = (() => {
       if(file.size>10*1024*1024)throw new Error('JSON exceeds 10 MB.');
       const json=JSON.parse(await file.text());
       const slug=String(fd.get('game_slug'));
-      if(!Object.prototype.hasOwnProperty.call(URLS,slug))throw new Error('Unsupported game type.');
-      if(!supportedLesson(slug,json))throw new Error(slug==='spot-it'?'Spot It! JSON requires a nonempty objects array.':'Click It! JSON requires a nonempty words array.');
-      if(slug==='spot-it' && String(fd.get('access_level'))!=='premium')throw new Error('Spot It! Premium lessons must be published as Premium.');
+      const game=gameFor(slug);
+      if(!game||!game.enabled)throw new Error('Please register and enable this game under Manage Games first.');
+      if(!supportedLesson(slug,json))throw new Error(game.protocol==='spot-it'?'This JSON requires a nonempty objects array.':'This JSON requires a nonempty words array.');
+      if(game.access_level==='premium' && String(fd.get('access_level'))!=='premium')throw new Error('This Premium game requires Premium lesson access.');
       path=`${slug}/${crypto.randomUUID()}.json`;
       const sb=client();const storage=await sb.storage.from('community-json').upload(path,file,{contentType:'application/json',upsert:false});if(storage.error)throw storage.error;
       const row={title:String(fd.get('title')).trim(),game_slug:slug,description:String(fd.get('description')).trim(),grade_level:String(fd.get('grade_level')),access_level:String(fd.get('access_level')),preview_items:getPreview(slug,json),json_path:path,is_published:fd.has('is_published'),created_by:user().id};
@@ -173,6 +185,68 @@ const TKCommunity = (() => {
     }catch(err){status.textContent='Upload failed: '+err.message;
       if(path){await client().storage.from('community-json').remove([path]);}
     }finally{submit.disabled=false;}
+  }
+  // Manage Games: one-time registry, reused by upload form and Play Lesson.
+  function renderGameSelector(){
+    const select=$('tk-upload-form')?.elements.namedItem('game_slug');if(!select)return;
+    const previous=select.value;select.replaceChildren();
+    registeredGames.filter(g=>g.enabled).forEach(g=>{const option=el('option','',g.name);option.value=g.slug;select.append(option)});
+    if([...select.options].some(o=>o.value===previous))select.value=previous;
+    if(!select.options.length){const o=el('option','','No games registered — add one below');o.value='';select.append(o)}
+    syncAccessWithGame();
+  }
+  function syncAccessWithGame(){
+    const form=$('tk-upload-form');if(!form)return;
+    const game=gameFor(form.elements.namedItem('game_slug')?.value);
+    const access=form.elements.namedItem('access_level');if(!access)return;
+    if(game?.access_level==='premium')access.value='premium';
+    access.querySelector('option[value="free"]')?.toggleAttribute('disabled',game?.access_level==='premium');
+  }
+  function renderManageGames(){
+    const area=$('tk-games-records');if(!area)return;area.replaceChildren();
+    if(!isAdmin)return;
+    registeredGames.forEach(g=>{
+      const r=el('div','tk-admin-record');
+      r.append(el('strong','',g.name),el('span','',`${g.slug} · ${g.protocol} · ${g.access_level} · ${g.enabled?'Enabled':'Disabled'}`));
+      const edit=el('button','','Edit');edit.type='button';edit.onclick=()=>{
+        const f=$('tk-game-form');f.elements.namedItem('slug').value=g.slug;
+        f.elements.namedItem('slug').readOnly=true;
+        for(const field of ['name','url','protocol','access_level'])f.elements.namedItem(field).value=g[field];
+        f.elements.namedItem('enabled').checked=g.enabled;
+        $('tk-game-save').textContent='Save game changes';$('tk-game-cancel').hidden=false;
+        f.scrollIntoView({behavior:'smooth',block:'center'});
+      };r.append(edit);
+      const toggle=el('button','',g.enabled?'Disable':'Enable');toggle.type='button';toggle.onclick=async()=>{
+        const {error}=await client().from(REGISTRY).update({enabled:!g.enabled}).eq('slug',g.slug);
+        if(error)alert(error.message);else await refresh();
+      };r.append(toggle);area.append(r);
+    });
+  }
+  function resetGameForm(){const form=$('tk-game-form');if(!form)return;form.reset();
+    form.elements.namedItem('slug').readOnly=false;
+    $('tk-game-save').textContent='+ Add Game';$('tk-game-cancel').hidden=true;
+  }
+  async function saveGame(e){
+    e.preventDefault();if(!isAdmin||!user())return;
+    const f=$('tk-game-form'),status=$('tk-game-status'),submit=$('tk-game-save');
+    const slug=String(f.elements.namedItem('slug').value).trim().toLowerCase();
+    const name=String(f.elements.namedItem('name').value).trim();
+    const url=String(f.elements.namedItem('url').value).trim();
+    const protocol=String(f.elements.namedItem('protocol').value);
+    const access_level=String(f.elements.namedItem('access_level').value);
+    const enabled=f.elements.namedItem('enabled').checked;
+    if(!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)){status.textContent='Use a game ID like spider-web.';return;}
+    let parsed;
+    try{parsed=new URL(url);if(parsed.protocol!=='https:')throw Error('HTTPS only');}
+    catch(_){status.textContent='Enter a valid HTTPS game URL.';return;}
+    submit.disabled=true;status.textContent='Saving game...';
+    const payload={slug,name,url:parsed.href,protocol,access_level,enabled};
+    const editing=f.elements.namedItem('slug').readOnly;
+    const result=editing ? await client().from(REGISTRY).update(payload).eq('slug',slug)
+                         : await client().from(REGISTRY).insert(payload);
+    if(result.error)status.textContent='Could not save: '+result.error.message;
+    else{status.textContent='Game saved. You can now select it when uploading a lesson.';resetGameForm();await refresh();}
+    submit.disabled=false;
   }
   async function renderAdmin(){if(!isAdmin)return;const area=$('tk-admin-records');area.replaceChildren();
     lessons.forEach(l=>{const r=el('div','tk-admin-record');r.append(el('strong','',l.title),el('span','',l.access_level));
@@ -184,6 +258,9 @@ const TKCommunity = (() => {
   }
   function init(){if(!$('tk-community-shell'))return;
     $('tk-upload-form').addEventListener('submit',upload);
+    $('tk-upload-form').elements.namedItem('game_slug').addEventListener('change',syncAccessWithGame);
+    $('tk-game-form')?.addEventListener('submit',saveGame);
+    if($('tk-game-cancel'))$('tk-game-cancel').onclick=resetGameForm;
     $('tk-preview-close').onclick=()=>$('tk-preview-overlay').hidden=true;
     $('tk-preview-overlay').onclick=e=>{if(e.target===$('tk-preview-overlay'))$('tk-preview-overlay').hidden=true;};
     $('tk-community-search').oninput=render;

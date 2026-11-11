@@ -1095,7 +1095,7 @@
     <form id="tk-upload-form" class="tk-community-upload">
       <h3>Publish a JSON lesson</h3>
       <label>Title <input required name="title" maxlength="120" placeholder="Grade 1 — Alphabet Aa–Ii"></label>
-      <label>Game <select required name="game_slug"><option value="click-it">Click It!</option><option value="spot-it">Spot It! Detectives Premium</option></select></label>
+      <label>Game <select required name="game_slug"><option value="">Loading registered games...</option></select></label>
       <label>Grade <select name="grade_level"><option value="Grade 1">Grade 1</option><option value="Grade 2">Grade 2</option><option value="Grade 3">Grade 3</option><option value="Grade 4">Grade 4</option><option value="Grade 5">Grade 5</option><option value="Grade 6">Grade 6</option><option value="All Grades">All Grades</option></select></label>
       <label>Access <select name="access_level"><option value="free">Free</option><option value="premium">Premium</option></select></label>
       <label>Description <textarea name="description" maxlength="500" rows="3" placeholder="What students will practice..."></textarea></label>
@@ -1104,6 +1104,22 @@
       <button type="submit" class="tk-community-primary">Upload lesson</button>
       <p id="tk-upload-status" role="status"></p>
     </form>
+    <!-- Manage Games: add a compatible game once; upload lessons anytime -->
+    <section id="tk-manage-games" style="margin-top:22px;padding:20px;border-radius:18px;background:#fff;max-width:740px;box-sizing:border-box;">
+      <h3 style="margin-top:0;">🎮 Manage Games</h3>
+      <p>Register a game URL here instead of editing website code. New games must already support the selected Community connector.</p>
+      <form id="tk-game-form" class="tk-community-upload" style="padding:0;box-shadow:none;">
+        <label>Game ID <input required name="slug" maxlength="60" pattern="[a-z0-9]+(-[a-z0-9]+)*" placeholder="spider-web"></label>
+        <label>Game name <input required name="name" maxlength="100" placeholder="Spider Web Reading Premium"></label>
+        <label>Game website URL <input required name="url" type="url" pattern="https://.*" placeholder="https://your-game.example.com/"></label>
+        <label>Community connector <select name="protocol" required><option value="click-it">Click It! format (words)</option><option value="spot-it">Spot It! format (objects)</option></select></label>
+        <label>Game access <select name="access_level"><option value="free">Free</option><option value="premium">Premium</option></select></label>
+        <label class="tk-admin-checkbox"><input name="enabled" type="checkbox" checked> Enabled for lesson uploads</label>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;"><button class="tk-community-primary" id="tk-game-save" type="submit">+ Add Game</button><button id="tk-game-cancel" type="button" hidden>Cancel Edit</button></div>
+        <p id="tk-game-status" role="status" aria-live="polite"></p>
+      </form>
+      <div id="tk-games-records" class="tk-admin-records"></div>
+    </section>
     <div class="tk-admin-records" id="tk-admin-records"></div>
   </section>
 </section>
