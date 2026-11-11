@@ -1,1087 +1,335 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Teacher Khen's Learning Hub</title>
-
-
-    <!-- =========================================================
-         GOOGLE ADSENSE
-         ========================================================= -->
-
-    <script async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1688473629636200"
-        crossorigin="anonymous">
-    </script>
-
-
-    <!-- =========================================================
-         GOOGLE FONTS
-         ========================================================= -->
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Fredoka:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
-
-
-    <!-- =========================================================
-         FONT AWESOME
-         ========================================================= -->
-
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-
-    <!-- =========================================================
-         MAIN STYLESHEET
-         ========================================================= -->
-
-    <link
-        rel="stylesheet"
-        href="style.css">
-
-
-    <!-- =========================================================
-         SUPABASE
-         ========================================================= -->
-
-    <script
-        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-    </script>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teacher Khen's Learning Hub</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1688473629636200" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-
-
 <body>
 
+<div class="bg-container"></div>
 
-    <!-- =========================================================
-         BACKGROUND
-         ========================================================= -->
+<!-- Welcome Screen -->
+<div id="welcome-overlay">
+  <div class="welcome-card">
+    <div class="welcome-msg">Welcome to my website!</div>
+    <p class="welcome-subtitle">Enjoy FREE learning materials for your classroom!</p>
+    <button class="enter-btn" onclick="enterSite()">START LEARNING ➔</button>
+  </div>
+</div>
 
-    <div class="bg-container"></div>
-
-
-
-    <!-- =========================================================
-         WELCOME SCREEN
-         ========================================================= -->
-
-    <div id="welcome-overlay">
-
-        <div class="welcome-card">
-
-            <div class="welcome-msg">
-                Welcome to my website!
-            </div>
-
-            <p class="welcome-subtitle">
-                Enjoy FREE learning materials for your classroom!
-            </p>
-
-            <button
-                class="enter-btn"
-                onclick="enterSite()">
-
-                START LEARNING ➔
-
-            </button>
-
+<!-- Reminders -->
+<div id="reminder-overlay">
+  <div class="reminder-card">
+    <div class="close-x" onclick="toggleReminder(false)">
+      <i class="fas fa-times"></i>
+    </div>
+    <h2>Hub Reminders & Info</h2>
+    <div class="reminder-section">
+      <h3>🎮 How to Utilize the Games</h3>
+      <ol>
+        <li>Each interactive game uses a custom <strong>.json</strong> file to store its structure, data, and your specific progress.</li>
+        <li>If you want to use your game data on <strong>another device</strong>, make sure to first click <strong>Export Data</strong> inside the game dashboard and save that generated <strong>.json</strong> file.</li>
+        <li>Then, simply open this website layout on your target new device, run the game, and <strong>load the .json file</strong> right back into it to resume!</li>
+      </ol>
+    </div>
+    <div class="reminder-section">
+      <h3>✉️ Contact Me</h3>
+      <p>Have questions, technical issues, or feedback? Feel free to reach out directly at:
+        <a href="mailto:khenetsherwin97@gmail.com" class="reminder-email">khenetsherwin97@gmail.com</a>
+      </p>
+    </div>
+    <div class="reminder-section support-section">
+      <h3>💖 Support My Efforts</h3>
+      <p>Creating and hosting these free educational classroom tools requires time and continuous development effort. If you enjoy using these resources and would love to support Teacher Khen's Learning Hub, you can scan either QR code below to donate directly. Every little bit helps keep these tools free for teachers and students everywhere!</p>
+      <div class="qr-container">
+        <div class="qr-box">
+          <img src="GCASH.png" alt="GCash QR Code">
+          <div class="qr-label">GCash</div>
         </div>
+        <div class="qr-box">
+          <img src="Paypal.png" alt="PayPal QR Code">
+          <div class="qr-label">PayPal</div>
+        </div>
+      </div>
+    </div>
+    <button class="back-btn" onclick="toggleReminder(false)">Back to Learning Hub</button>
+  </div>
+</div>
 
+<!-- Donation -->
+<div id="donate-modal">
+  <div class="donate-card">
+    <div class="close-x" onclick="toggleDonateModal(false)">
+      <i class="fas fa-times"></i>
+    </div>
+    <h2>Support Teacher Khen 💖</h2>
+    <p>If you find these resources helpful for your lessons, any small contribution helps me keep this hub running and continuously updated with new free materials for your classroom!</p>
+    <div class="qr-container">
+      <div class="qr-box">
+        <img src="GCASH.png" alt="GCash QR Code">
+        <div class="qr-label">GCash</div>
+      </div>
+      <div class="qr-box">
+        <img src="Paypal.png" alt="PayPal QR Code">
+        <div class="qr-label">PayPal</div>
+      </div>
+    </div>
+    <button class="back-btn" onclick="toggleDonateModal(false)">Close</button>
+  </div>
+</div>
+
+<!-- Authentication -->
+<div id="auth-modal" class="auth-modal">
+  <div class="auth-card">
+    <button class="auth-close" onclick="closeAuthModal()" aria-label="Close">×</button>
+    <div class="auth-icon"><i class="fas fa-user-circle"></i></div>
+    <h2 id="authTitle">Welcome Back!</h2>
+    <p id="authSubtitle" class="auth-subtitle">Log in to access your Teacher Khen account.</p>
+
+    <div id="loginForm">
+      <input type="email" id="loginEmail" class="auth-input" placeholder="Email address" autocomplete="email">
+      <input type="password" id="loginPassword" class="auth-input" placeholder="Password" autocomplete="current-password">
+      <button class="auth-submit-btn" onclick="loginUser()">
+        <i class="fas fa-right-to-bracket"></i> Login
+      </button>
+      <button class="auth-switch-btn" onclick="showSignupForm()">
+        Don't have an account? <strong>Sign Up</strong>
+      </button>
     </div>
 
-
-
-    <!-- =========================================================
-         HUB REMINDERS & INFO
-         ========================================================= -->
-
-    <div id="reminder-overlay">
-
-        <div class="reminder-card">
-
-            <div
-                class="close-x"
-                onclick="toggleReminder(false)">
-
-                <i class="fas fa-times"></i>
-
-            </div>
-
-
-            <h2>
-                Hub Reminders & Info
-            </h2>
-
-
-            <div class="reminder-section">
-
-                <h3>
-                    🎮 How to Utilize the Games
-                </h3>
-
-                <ol>
-
-                    <li>
-                        Each interactive game uses a custom
-                        <strong>.json</strong> file to store its structure,
-                        data, and your specific progress.
-                    </li>
-
-                    <li>
-                        If you want to use your game data on
-                        <strong>another device</strong>, make sure to first
-                        click <strong>Export Data</strong> inside the game
-                        dashboard and save that generated
-                        <strong>.json</strong> file.
-                    </li>
-
-                    <li>
-                        Then, simply open this website layout on your target
-                        new device, run the game, and
-                        <strong>load the .json file</strong> right back into
-                        it to resume!
-                    </li>
-
-                </ol>
-
-            </div>
-
-
-            <div class="reminder-section">
-
-                <h3>
-                    ✉️ Contact Me
-                </h3>
-
-                <p>
-
-                    Have questions, technical issues, or feedback?
-                    Feel free to reach out directly at:
-
-                    <a
-                        href="mailto:khenetsherwin97@gmail.com"
-                        class="reminder-email">
-
-                        khenetsherwin97@gmail.com
-
-                    </a>
-
-                </p>
-
-            </div>
-
-
-            <div class="reminder-section support-section">
-
-                <h3>
-                    💖 Support My Efforts
-                </h3>
-
-                <p>
-
-                    Creating and hosting these free educational classroom
-                    tools requires time and continuous development effort.
-                    If you enjoy using these resources and would love to
-                    support Teacher Khen's Learning Hub, you can scan either
-                    QR code below to donate directly.
-
-                    Every little bit helps keep these tools free for teachers
-                    and students everywhere!
-
-                </p>
-
-
-                <div class="qr-container">
-
-                    <div class="qr-box">
-
-                        <img
-                            src="GCASH.png"
-                            alt="GCash QR Code">
-
-                        <div class="qr-label">
-                            GCash
-                        </div>
-
-                    </div>
-
-
-                    <div class="qr-box">
-
-                        <img
-                            src="Paypal.png"
-                            alt="PayPal QR Code">
-
-                        <div class="qr-label">
-                            PayPal
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <button
-                class="back-btn"
-                onclick="toggleReminder(false)">
-
-                Back to Learning Hub
-
-            </button>
-
-        </div>
-
+    <div id="signupForm" style="display:none;">
+      <input type="email" id="signupEmail" class="auth-input" placeholder="Email address" autocomplete="email">
+      <input type="password" id="signupPassword" class="auth-input" placeholder="Create a password" autocomplete="new-password">
+      <input type="password" id="signupPasswordConfirm" class="auth-input" placeholder="Confirm password" autocomplete="new-password">
+      <button class="auth-submit-btn" onclick="signupUser()">
+        <i class="fas fa-user-plus"></i> Create Account
+      </button>
+      <button class="auth-switch-btn" onclick="showLoginForm()">
+        Already have an account? <strong>Login</strong>
+      </button>
     </div>
 
+    <div id="authMessage" class="auth-message"></div>
+  </div>
+</div>
 
+<!-- Premium Modal -->
+<div id="premium-modal" class="premium-modal">
+  <div class="premium-card">
+    <button class="premium-close" onclick="closePremiumModal()" aria-label="Close">×</button>
+    <div class="premium-icon">⭐</div>
+    <h2>Unlock Premium Games!</h2>
+    <p class="premium-subtitle">
+      This game is available to Premium members.
+      Unlock more interactive classroom games and resources for your lessons.
+    </p>
 
-    <!-- =========================================================
-         DONATION MODAL
-         ========================================================= -->
-
-    <div id="donate-modal">
-
-        <div class="donate-card">
-
-            <div
-                class="close-x"
-                onclick="toggleDonateModal(false)">
-
-                <i class="fas fa-times"></i>
-
-            </div>
-
-
-            <h2>
-                Support Teacher Khen 💖
-            </h2>
-
-
-            <p>
-
-                If you find these resources helpful for your lessons,
-                any small contribution helps me keep this hub running
-                and continuously updated with new free materials for
-                your classroom!
-
-            </p>
-
-
-            <div class="qr-container">
-
-                <div class="qr-box">
-
-                    <img
-                        src="GCASH.png"
-                        alt="GCash QR Code">
-
-                    <div class="qr-label">
-                        GCash
-                    </div>
-
-                </div>
-
-
-                <div class="qr-box">
-
-                    <img
-                        src="Paypal.png"
-                        alt="PayPal QR Code">
-
-                    <div class="qr-label">
-                        PayPal
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <button
-                class="back-btn"
-                onclick="toggleDonateModal(false)">
-
-                Close
-
-            </button>
-
+    <div class="premium-benefits">
+      <div class="premium-benefit">
+        <span class="premium-benefit-icon">🎮</span>
+        <div>
+          <strong>Premium Games</strong>
+          <p>Access exclusive interactive classroom games.</p>
         </div>
-
+      </div>
+      <div class="premium-benefit">
+        <span class="premium-benefit-icon">⭐</span>
+        <div>
+          <strong>New Resources</strong>
+          <p>Get access to future Premium games and activities.</p>
+        </div>
+      </div>
+      <div class="premium-benefit">
+        <span class="premium-benefit-icon">👨‍🏫</span>
+        <div>
+          <strong>Teacher-Friendly</strong>
+          <p>Designed for practical classroom teaching and student engagement.</p>
+        </div>
+      </div>
     </div>
 
+    <div class="premium-plan-section">
+      <h3 class="premium-plan-heading">Choose Your Premium Plan</h3>
+      <p class="premium-plan-description">Choose the plan that works best for you.</p>
 
+      <div class="premium-plan-options">
+        <button type="button" class="premium-plan-option selected"
+          id="premium-plan-monthly" onclick="selectPremiumPlan('monthly')">
+          <span class="premium-plan-icon">⭐</span>
+          <span class="premium-plan-name">MONTHLY</span>
+          <span class="premium-plan-price">$4</span>
+          <span class="premium-plan-period">per month</span>
+          <span class="premium-plan-description">Flexible monthly access</span>
+          <span class="premium-plan-select">SELECTED</span>
+        </button>
 
-    <!-- =========================================================
-         SUPABASE AUTHENTICATION MODAL
-         ========================================================= -->
-
-    <div
-        id="auth-modal"
-        class="auth-modal">
-
-        <div class="auth-card">
-
-            <button
-                class="auth-close"
-                onclick="closeAuthModal()"
-                aria-label="Close">
-
-                ×
-
-            </button>
-
-
-            <div class="auth-icon">
-
-                <i class="fas fa-user-circle"></i>
-
-            </div>
-
-
-            <h2 id="authTitle">
-                Welcome Back!
-            </h2>
-
-
-            <p
-                id="authSubtitle"
-                class="auth-subtitle">
-
-                Log in to access your Teacher Khen account.
-
-            </p>
-
-
-
-            <!-- =====================================================
-                 LOGIN FORM
-                 ===================================================== -->
-
-            <div id="loginForm">
-
-                <input
-                    type="email"
-                    id="loginEmail"
-                    class="auth-input"
-                    placeholder="Email address"
-                    autocomplete="email">
-
-
-                <input
-                    type="password"
-                    id="loginPassword"
-                    class="auth-input"
-                    placeholder="Password"
-                    autocomplete="current-password">
-
-
-                <button
-                    class="auth-submit-btn"
-                    onclick="loginUser()">
-
-                    <i class="fas fa-right-to-bracket"></i>
-
-                    Login
-
-                </button>
-
-
-                <button
-                    class="auth-switch-btn"
-                    onclick="showSignupForm()">
-
-                    Don't have an account?
-
-                    <strong>
-                        Sign Up
-                    </strong>
-
-                </button>
-
-            </div>
-
-
-
-            <!-- =====================================================
-                 SIGNUP FORM
-                 ===================================================== -->
-
-            <div
-                id="signupForm"
-                style="display: none;">
-
-                <input
-                    type="email"
-                    id="signupEmail"
-                    class="auth-input"
-                    placeholder="Email address"
-                    autocomplete="email">
-
-
-                <input
-                    type="password"
-                    id="signupPassword"
-                    class="auth-input"
-                    placeholder="Create a password"
-                    autocomplete="new-password">
-
-
-                <input
-                    type="password"
-                    id="signupPasswordConfirm"
-                    class="auth-input"
-                    placeholder="Confirm password"
-                    autocomplete="new-password">
-
-
-                <button
-                    class="auth-submit-btn"
-                    onclick="signupUser()">
-
-                    <i class="fas fa-user-plus"></i>
-
-                    Create Account
-
-                </button>
-
-
-                <button
-                    class="auth-switch-btn"
-                    onclick="showLoginForm()">
-
-                    Already have an account?
-
-                    <strong>
-                        Login
-                    </strong>
-
-                </button>
-
-            </div>
-
-
-
-            <!-- =====================================================
-                 AUTH MESSAGE
-                 ===================================================== -->
-
-            <div
-                id="authMessage"
-                class="auth-message">
-            </div>
-
-        </div>
-
+        <button type="button" class="premium-plan-option"
+          id="premium-plan-yearly" onclick="selectPremiumPlan('yearly')">
+          <span class="premium-plan-value-badge">BEST VALUE</span>
+          <span class="premium-plan-icon">🏆</span>
+          <span class="premium-plan-name">YEARLY</span>
+          <span class="premium-plan-price">$20</span>
+          <span class="premium-plan-period">per year</span>
+          <span class="premium-plan-description">Full-year Premium access</span>
+          <span class="premium-plan-select">SELECT</span>
+        </button>
+      </div>
     </div>
 
-
-
-    <!-- =========================================================
-         PREMIUM UPGRADE MODAL
-         ========================================================= -->
-
-    <div
-        id="premium-modal"
-        class="premium-modal">
-
-        <div class="premium-card">
-
-
-            <!-- CLOSE -->
-
-            <button
-                class="premium-close"
-                onclick="closePremiumModal()"
-                aria-label="Close">
-
-                ×
-
-            </button>
-
-
-            <!-- PREMIUM ICON -->
-
-            <div class="premium-icon">
-                ⭐
-            </div>
-
-
-            <!-- TITLE -->
-
-            <h2>
-                Unlock Premium Games!
-            </h2>
-
-
-            <p class="premium-subtitle">
-
-                This game is available to Premium members.
-
-                Unlock more interactive classroom games
-                and resources for your lessons.
-
-            </p>
-
-
-            <!-- =====================================================
-                 BENEFITS
-                 ===================================================== -->
-
-            <div class="premium-benefits">
-
-
-                <div class="premium-benefit">
-
-                    <span class="premium-benefit-icon">
-                        🎮
-                    </span>
-
-                    <div>
-
-                        <strong>
-                            Premium Games
-                        </strong>
-
-                        <p>
-                            Access exclusive interactive
-                            classroom games.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="premium-benefit">
-
-                    <span class="premium-benefit-icon">
-                        ⭐
-                    </span>
-
-                    <div>
-
-                        <strong>
-                            New Resources
-                        </strong>
-
-                        <p>
-                            Get access to future Premium
-                            games and activities.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="premium-benefit">
-
-                    <span class="premium-benefit-icon">
-                        👨‍🏫
-                    </span>
-
-                    <div>
-
-                        <strong>
-                            Teacher-Friendly
-                        </strong>
-
-                        <p>
-                            Designed for practical classroom
-                            teaching and student engagement.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- =====================================================
-                 PREMIUM PLAN SELECTOR
-                 ===================================================== -->
-
-            <div class="premium-plan-section">
-
-                <h3 class="premium-plan-heading">
-                    Choose Your Premium Plan
-                </h3>
-
-                <p class="premium-plan-description">
-                    Choose the plan that works best for you.
-                </p>
-
-
-                <div class="premium-plan-options">
-
-
-                    <!-- =================================================
-                         MONTHLY PLAN
-                         ================================================= -->
-
-                    <button
-                        type="button"
-                        class="premium-plan-option selected"
-                        id="premium-plan-monthly"
-                        onclick="selectPremiumPlan('monthly')">
-
-                        <span class="premium-plan-icon">
-                            ⭐
-                        </span>
-
-                        <span class="premium-plan-name">
-                            MONTHLY
-                        </span>
-
-                        <span class="premium-plan-price">
-                            $4
-                        </span>
-
-                        <span class="premium-plan-period">
-                            per month
-                        </span>
-
-                        <span class="premium-plan-description">
-                            Flexible monthly access
-                        </span>
-
-                        <span class="premium-plan-select">
-                            SELECTED
-                        </span>
-
-                    </button>
-
-
-
-                    <!-- =================================================
-                         YEARLY PLAN
-                         ================================================= -->
-
-                    <button
-                        type="button"
-                        class="premium-plan-option"
-                        id="premium-plan-yearly"
-                        onclick="selectPremiumPlan('yearly')">
-
-                        <span class="premium-plan-value-badge">
-                            BEST VALUE
-                        </span>
-
-                        <span class="premium-plan-icon">
-                            🏆
-                        </span>
-
-                        <span class="premium-plan-name">
-                            YEARLY
-                        </span>
-
-                        <span class="premium-plan-price">
-                            $20
-                        </span>
-
-                        <span class="premium-plan-period">
-                            per year
-                        </span>
-
-                        <span class="premium-plan-description">
-                            Full-year Premium access
-                        </span>
-
-                        <span class="premium-plan-select">
-                            SELECT
-                        </span>
-
-                    </button>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- =====================================================
-                 SELECTED PLAN SUMMARY
-                 ===================================================== -->
-
-            <div
-                class="premium-selected-plan"
-                id="premium-selected-plan">
-
-                Selected plan:
-
-                <strong id="selected-premium-plan-label">
-                    $4 / month
-                </strong>
-
-            </div>
-
-
-
-            <!-- Payment method selection: scoped inline styling; style.css unchanged -->
-            <fieldset id="tk-payment-methods" style="border:1px solid #d9e3ef;border-radius:14px;padding:16px;margin:18px 0;min-width:0;">
-                <legend style="padding:0 6px;font-weight:800;">Choose your payment method</legend>
-                <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 4px;">
-                    <input type="radio" name="tk-payment-provider" value="paypal" checked onchange="updatePaymentProviderUI()" style="width:20px;height:20px;accent-color:#2563eb;">
-                    <span><strong>PayPal</strong><small style="display:block;">$4 monthly / $20 yearly · subscription</small></span>
-                </label>
-                <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 4px;">
-                    <input type="radio" name="tk-payment-provider" value="paymongo" onchange="updatePaymentProviderUI()" style="width:20px;height:20px;accent-color:#2563eb;">
-                    <span><strong>PayMongo QR Ph</strong><small style="display:block;">₱250 monthly / ₱1,260 yearly · one-time payment</small></span>
-                </label>
-                <div id="tk-payment-price" aria-live="polite" style="font-weight:700;margin-top:8px;">PayPal: $4 / month</div>
-            </fieldset>
-
-            <!-- =====================================================
-                 CONTINUE TO PAYMENT
-                 ===================================================== -->
-
-            <button
-                type="button"
-                class="premium-upgrade-btn"
-                onclick="continueToPayment()">
-
-                <i class="fas fa-credit-card"></i>
-
-                Continue to Payment
-
-            </button>
-
-
-
-            <!-- =====================================================
-                 PAYMENT STATUS
-                 ===================================================== -->
-
-            <div
-                class="premium-coming-soon"
-                id="premium-payment-message">
-
-                <i class="fas fa-credit-card"></i>
-
-                Payment integration will be connected soon.
-
-            </div>
-
-
-
-            <!-- =====================================================
-                 CONTINUE BROWSING
-                 ===================================================== -->
-
-            <button
-                type="button"
-                class="premium-continue-btn"
-                onclick="closePremiumModal()">
-
-                Maybe Later
-
-            </button>
-
-
-        </div>
-
+    <div class="premium-selected-plan" id="premium-selected-plan">
+      Selected plan: <strong id="selected-premium-plan-label">$4 / month</strong>
     </div>
 
-
-
-    <!-- =========================================================
-         MAIN CONTENT
-         ========================================================= -->
-
-    <main class="main-content">
-
-
-        <!-- =====================================================
-             HEADER
-             ===================================================== -->
-
-        <header class="header-container">
-
-
-            <div
-                class="website-name"
-                id="main-title">
-            </div>
-
-
-            <div class="search-contact-wrapper">
-
-
-                <!-- HELP -->
-
-                <button
-                    class="contact-btn help"
-                    onclick="toggleReminder(true)"
-                    title="Reminders & Info"
-                    aria-label="Reminders and Information">
-
-                    <i class="fas fa-question"></i>
-
-                </button>
-
-
-                <!-- FACEBOOK -->
-
-                <a
-                    href="https://www.facebook.com/khenethsherwin.avila.9"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="contact-btn fb"
-                    title="Facebook">
-
-                    <i class="fab fa-facebook-f"></i>
-
-                </a>
-
-
-                <!-- INSTAGRAM -->
-
-                <a
-                    href="https://www.instagram.com/kheneth_02/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="contact-btn ig"
-                    title="Instagram">
-
-                    <i class="fab fa-instagram"></i>
-
-                </a>
-
-
-                <!-- SEARCH -->
-
-                <input
-                    type="text"
-                    id="gameSearch"
-                    placeholder="🔍 Search games, skills, or grade levels..."
-                    oninput="filterGames()"
-                    aria-label="Search games">
-
-
-                <!-- YOUTUBE -->
-
-                <a
-                    href="https://www.youtube.com/@khenethavila"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="contact-btn yt"
-                    title="YouTube">
-
-                    <i class="fab fa-youtube"></i>
-
-                </a>
-
-
-                <!-- BLOGGER -->
-
-                <a
-                    href="https://teacherkhenlearninghub.blogspot.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="contact-btn blogger"
-                    title="Blogger">
-
-                    <i class="fab fa-blogger-b"></i>
-
-                </a>
-
-
-                <!-- TIKTOK -->
-
-                <a
-                    href="https://www.tiktok.com/@khenethavila"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="contact-btn tiktok"
-                    title="TikTok">
-
-                    <i class="fab fa-tiktok"></i>
-
-                </a>
-
-            </div>
-
-
-
-            <!-- =====================================================
-                 ACCOUNT / LOGIN
-                 ===================================================== -->
-
-            <div class="account-area">
-
-
-                <!-- LOGIN BUTTON -->
-
-                <button
-                    id="loginBtn"
-                    class="account-btn"
-                    onclick="openAuthModal()">
-
-                    <i class="fas fa-user"></i>
-
-                    Login
-
-                </button>
-
-
-
-                <!-- LOGGED-IN ACCOUNT -->
-
-                <div
-                    id="userAccount"
-                    class="user-account"
-                    style="display: none;">
-
-
-                    <!-- USER IDENTITY -->
-
-                    <div class="user-account-info">
-
-
-                        <div class="user-account-icon">
-
-                            <i class="fas fa-user"></i>
-
-                        </div>
-
-
-                        <div class="user-account-details">
-
-
-                            <span
-                                id="userEmail"
-                                class="user-email">
-
-                                User
-
-                            </span>
-
-
-                            <span
-                                id="userPlan"
-                                class="user-plan">
-
-                                FREE MEMBER
-
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- ACCOUNT ACTIONS -->
-
-                    <div class="user-account-actions">
-
-
-                        <button
-                            id="upgradeAccountBtn"
-                            class="account-upgrade-btn"
-                            onclick="openPremiumModal()">
-
-                            ⭐ Upgrade to Premium
-
-                        </button>
-
-
-                        <button
-                            class="logout-btn"
-                            onclick="logoutUser()">
-
-                            <i class="fas fa-right-from-bracket"></i>
-
-                            Logout
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-<nav class="tk-nav tk-community-nav" aria-label="Main navigation">
-  <button type="button" data-tk-page="home" onclick="TKCommunity.navigate('home')">🏠 Home</button>
-  <button type="button" data-tk-page="games" onclick="TKCommunity.navigate('games')">🎮 Games</button>
-  <button type="button" data-tk-page="community" onclick="TKCommunity.navigate('community')">👥 Community</button>
-  <button type="button" data-tk-page="library" onclick="TKCommunity.navigate('library')">♡ My Library</button>
-  <button type="button" data-tk-page="premium" onclick="TKCommunity.navigate('premium')">👑 Premium</button>
-  <button type="button" id="tk-admin-nav" hidden onclick="TKCommunity.navigate('admin')">⚙ Manage Community</button>
-</nav>
-        </header>
-
-
-
-<section class="tk-explorer" id="game-explorer" aria-label="Browse learning games"><div class="tk-intro"><h2>🎮 Explore Learning Games!</h2><p>Find the perfect activity for your classroom. Choose a category, grade, or membership type.</p></div><div class="tk-category-grid" id="tkCategoryGrid"></div><div class="tk-filter-panel"><div class="tk-access-tabs" role="group" aria-label="Game access"><button type="button" data-access="all" class="active">🎲 All Games</button><button type="button" data-access="free">🟢 Free</button><button type="button" data-access="premium">⭐ Premium</button></div><div class="tk-filter-row"><label for="tkGrade">Grade <select id="tkGrade"><option value="all">All Grades</option><option value="1">Grade 1</option><option value="2">Grade 2</option><option value="3">Grade 3</option><option value="4">Grade 4</option><option value="5">Grade 5</option><option value="6">Grade 6</option></select></label><button type="button" id="tkReset">↻ Clear Filters</button></div><p id="tkGameCount" class="tk-count" aria-live="polite"></p></div></section>
-        <!-- =====================================================
-             GAME GRID
-             ===================================================== -->
-
-        <div
-            class="game-grid"
-            id="gameGrid">
-
+    <fieldset id="tk-payment-methods" style="border:1px solid #d9e3ef;border-radius:14px;padding:16px;margin:18px 0;min-width:0;">
+      <legend style="padding:0 6px;font-weight:800;">Choose your payment method</legend>
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 4px;">
+        <input type="radio" name="tk-payment-provider" value="paypal" checked
+          onchange="updatePaymentProviderUI()" style="width:20px;height:20px;accent-color:#2563eb;">
+        <span><strong>PayPal</strong><small style="display:block;">$4 monthly / $20 yearly · subscription</small></span>
+      </label>
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 4px;">
+        <input type="radio" name="tk-payment-provider" value="paymongo"
+          onchange="updatePaymentProviderUI()" style="width:20px;height:20px;accent-color:#2563eb;">
+        <span><strong>PayMongo QR Ph</strong><small style="display:block;">₱250 monthly / ₱1,260 yearly · one-time payment</small></span>
+      </label>
+      <div id="tk-payment-price" aria-live="polite" style="font-weight:700;margin-top:8px;">PayPal: $4 / month</div>
+    </fieldset>
+
+    <button type="button" class="premium-upgrade-btn" onclick="continueToPayment()">
+      <i class="fas fa-credit-card"></i> Continue to Payment
+    </button>
+    <div class="premium-coming-soon" id="premium-payment-message">
+      <i class="fas fa-credit-card"></i>
+      Payment integration will be connected soon.
+    </div>
+    <button type="button" class="premium-continue-btn" onclick="closePremiumModal()">Maybe Later</button>
+  </div>
+</div>
+
+<!-- Main Website -->
+<main class="main-content">
+  <header class="header-container">
+    <div class="website-name" id="main-title"></div>
+
+    <div class="search-contact-wrapper">
+      <button class="contact-btn help" onclick="toggleReminder(true)" title="Reminders & Info" aria-label="Reminders and Information">
+        <i class="fas fa-question"></i>
+      </button>
+      <a href="https://www.facebook.com/khenethsherwin.avila.9" target="_blank" rel="noopener noreferrer" class="contact-btn fb" title="Facebook">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="https://www.instagram.com/kheneth_02/" target="_blank" rel="noopener noreferrer" class="contact-btn ig" title="Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <input type="text" id="gameSearch" placeholder="🔍 Search games, skills, or grade levels..." oninput="filterGames()" aria-label="Search games">
+      <a href="https://www.youtube.com/@khenethavila" target="_blank" rel="noopener noreferrer" class="contact-btn yt" title="YouTube">
+        <i class="fab fa-youtube"></i>
+      </a>
+      <a href="https://teacherkhenlearninghub.blogspot.com/" target="_blank" rel="noopener noreferrer" class="contact-btn blogger" title="Blogger">
+        <i class="fab fa-blogger-b"></i>
+      </a>
+      <a href="https://www.tiktok.com/@khenethavila" target="_blank" rel="noopener noreferrer" class="contact-btn tiktok" title="TikTok">
+        <i class="fab fa-tiktok"></i>
+      </a>
+    </div>
+
+    <!-- Login / Account -->
+    <div class="account-area">
+      <button id="loginBtn" class="account-btn" onclick="openAuthModal()">
+        <i class="fas fa-user"></i> Login
+      </button>
+
+      <div id="userAccount" class="user-account" style="display:none;">
+        <div class="user-account-info">
+          <div class="user-account-icon"><i class="fas fa-user"></i></div>
+          <div class="user-account-details">
+            <span id="userEmail" class="user-email">User</span>
+            <span id="userPlan" class="user-plan">FREE MEMBER</span>
+          </div>
         </div>
 
-
-
-        <!-- =====================================================
-             NO SEARCH RESULTS
-             ===================================================== -->
-
-        <div
-            id="noResults"
-            class="no-results">
-
-            🔎 No games found. Try another search!
-
+        <div class="user-account-actions">
+          <button id="upgradeAccountBtn" class="account-upgrade-btn" onclick="openPremiumModal()">
+            ⭐ Upgrade to Premium
+          </button>
+          <button class="logout-btn" onclick="logoutUser()">
+            <i class="fas fa-right-from-bracket"></i> Logout
+          </button>
         </div>
+      </div>
+    </div>
 
+    <!-- Main Navigation -->
+    <nav class="tk-nav tk-community-nav" aria-label="Main navigation">
+      <button type="button" data-tk-page="home" onclick="TKCommunity.navigate('home')">🏠 Home</button>
+      <button type="button" data-tk-page="games" onclick="TKCommunity.navigate('games')">🎮 Games</button>
+      <button type="button" data-tk-page="community" onclick="TKCommunity.navigate('community')">👥 Community</button>
+      <button type="button" data-tk-page="library" onclick="TKCommunity.navigate('library')">♡ My Library</button>
+      <button type="button" data-tk-page="premium" onclick="TKCommunity.navigate('premium')">👑 Premium</button>
+      <button type="button" id="tk-admin-nav" hidden onclick="TKCommunity.navigate('admin')">⚙ Manage Community</button>
+    </nav>
+  </header>
 
+  <!-- Game Explorer -->
+  <section class="tk-explorer" id="game-explorer" aria-label="Browse learning games">
+    <div class="tk-intro">
+      <h2>🎮 Explore Learning Games!</h2>
+      <p>Find the perfect activity for your classroom. Choose a category, grade, or membership type.</p>
+    </div>
 
-        <!-- =====================================================
-             DONATE BUTTON
-             ===================================================== -->
+    <div class="tk-category-grid" id="tkCategoryGrid"></div>
 
-        <div class="bottom-donate-container">
+    <div class="tk-filter-panel">
+      <div class="tk-access-tabs" role="group" aria-label="Game access">
+        <button type="button" data-access="all" class="active">🎲 All Games</button>
+        <button type="button" data-access="free">🟢 Free</button>
+        <button type="button" data-access="premium">⭐ Premium</button>
+      </div>
+      <div class="tk-filter-row">
+        <label for="tkGrade">Grade
+          <select id="tkGrade">
+            <option value="all">All Grades</option>
+            <option value="1">Grade 1</option>
+            <option value="2">Grade 2</option>
+            <option value="3">Grade 3</option>
+            <option value="4">Grade 4</option>
+            <option value="5">Grade 5</option>
+            <option value="6">Grade 6</option>
+          </select>
+        </label>
+        <button type="button" id="tkReset">↻ Clear Filters</button>
+      </div>
+      <p id="tkGameCount" class="tk-count" aria-live="polite"></p>
+    </div>
+  </section>
 
-            <button
-                class="donate-btn"
-                onclick="toggleDonateModal(true)">
+  <div class="game-grid" id="gameGrid"></div>
 
-                <i class="fas fa-heart"></i>
+  <div id="noResults" class="no-results">
+    🔎 No games found. Try another search!
+  </div>
 
-                Donate & Support
+  <div class="bottom-donate-container">
+    <button class="donate-btn" onclick="toggleDonateModal(true)">
+      <i class="fas fa-heart"></i> Donate & Support
+    </button>
+  </div>
+</main>
 
-            </button>
-
-        </div>
-
-    </main>
-
-
-
-
-<!-- Community / My Library / Admin: existing games, login and payments remain intact -->
+<!-- TeacherKhen Community -->
 <section class="tk-community-shell" id="tk-community-shell" hidden>
   <div class="tk-community-header">
     <h2 id="tk-community-heading">Teacher Khen Community</h2>
     <p id="tk-community-subheading">Discover prepared classroom lessons. Preview, save and play.</p>
   </div>
+
   <div id="tk-community-content">
     <div class="tk-community-filters" id="tk-community-filters">
       <button type="button" data-filter="all" class="active">All Lessons</button>
@@ -1091,37 +339,63 @@
     </div>
     <div class="tk-lessons-grid" id="tk-lessons-grid" aria-live="polite"></div>
   </div>
+
+  <!-- Community Admin: Manage Games removed -->
   <section id="tk-community-admin" hidden>
     <form id="tk-upload-form" class="tk-community-upload">
       <h3>Publish a JSON lesson</h3>
-      <label>Title <input required name="title" maxlength="120" placeholder="Grade 1 — Alphabet Aa–Ii"></label>
-      <label>Game <select required name="game_slug"><option value="">Loading registered games...</option></select></label>
-      <label>Grade <select name="grade_level"><option value="Grade 1">Grade 1</option><option value="Grade 2">Grade 2</option><option value="Grade 3">Grade 3</option><option value="Grade 4">Grade 4</option><option value="Grade 5">Grade 5</option><option value="Grade 6">Grade 6</option><option value="All Grades">All Grades</option></select></label>
-      <label>Access <select name="access_level"><option value="free">Free</option><option value="premium">Premium</option></select></label>
-      <label>Description <textarea name="description" maxlength="500" rows="3" placeholder="What students will practice..."></textarea></label>
-      <label>JSON file <input required name="lesson_file" type="file" accept=".json,application/json"></label>
-      <label class="tk-admin-checkbox"><input type="checkbox" name="is_published" checked> Publish immediately</label>
+
+      <label>Title
+        <input required name="title" maxlength="120" placeholder="Grade 1 — Alphabet Aa–Ii">
+      </label>
+
+      <label>Game
+        <select required name="game_slug">
+          <option value="">Loading available games...</option>
+        </select>
+      </label>
+
+      <label>Grade
+        <select name="grade_level">
+          <option value="Grade 1">Grade 1</option>
+          <option value="Grade 2">Grade 2</option>
+          <option value="Grade 3">Grade 3</option>
+          <option value="Grade 4">Grade 4</option>
+          <option value="Grade 5">Grade 5</option>
+          <option value="Grade 6">Grade 6</option>
+          <option value="All Grades">All Grades</option>
+        </select>
+      </label>
+
+      <label>Access
+        <select name="access_level">
+          <option value="free">Free</option>
+          <option value="premium">Premium</option>
+        </select>
+      </label>
+
+      <label>Description
+        <textarea name="description" maxlength="500" rows="3" placeholder="What students will practice..."></textarea>
+      </label>
+
+      <label>JSON file
+        <input required name="lesson_file" type="file" accept=".json,application/json">
+      </label>
+
+      <label class="tk-admin-checkbox">
+        <input type="checkbox" name="is_published" checked>
+        Publish immediately
+      </label>
+
       <button type="submit" class="tk-community-primary">Upload lesson</button>
       <p id="tk-upload-status" role="status"></p>
     </form>
-    <!-- Manage Games: add a compatible game once; upload lessons anytime -->
-    <section id="tk-manage-games" style="margin-top:22px;padding:20px;border-radius:18px;background:#fff;max-width:740px;box-sizing:border-box;">
-      <h3 style="margin-top:0;">🎮 Manage Games</h3>
-      <p>Register a game by its URL. Click It! and Spot It! already support automatic lesson loading. Other games can be registered and shared immediately using Download JSON + Open Game; automatic loading requires a one-time bridge in the game.</p>
-      <form id="tk-game-form" class="tk-community-upload" style="padding:0;box-shadow:none;">
-        <label>Game ID <input required name="slug" maxlength="60" pattern="[a-z0-9]+(-[a-z0-9]+)*" placeholder="spider-web"></label>
-        <label>Game name <input required name="name" maxlength="100" placeholder="Spider Web Reading Premium"></label>
-        <label>Game website URL <input required name="url" type="url" pattern="https://.*" placeholder="https://your-game.example.com/"></label>
-        <label>Game access <select name="access_level"><option value="free">Free</option><option value="premium">Premium</option></select></label>
-        <label class="tk-admin-checkbox"><input name="enabled" type="checkbox" checked> Enabled for lesson uploads</label>
-        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;"><button class="tk-community-primary" id="tk-game-save" type="submit">+ Add Game</button><button id="tk-game-cancel" type="button" hidden>Cancel Edit</button></div>
-        <p id="tk-game-status" role="status" aria-live="polite"></p>
-      </form>
-      <div id="tk-games-records" class="tk-admin-records"></div>
-    </section>
+
     <div class="tk-admin-records" id="tk-admin-records"></div>
   </section>
 </section>
+
+<!-- Lesson Preview -->
 <div id="tk-preview-overlay" class="tk-preview-overlay" hidden>
   <div class="tk-preview-dialog" role="dialog" aria-modal="true" aria-label="Lesson preview">
     <button type="button" id="tk-preview-close" aria-label="Close preview">×</button>
@@ -1129,614 +403,168 @@
   </div>
 </div>
 
-    <!-- =========================================================
-         COMPACT FOOTER
-         ========================================================= -->
-
-    <footer class="site-footer">
-
-        <div class="footer-content">
-
-
-            <div class="footer-title">
-                Teacher Khen's Learning Hub
-            </div>
-
-
-            <div class="footer-links">
-
-
-                <button
-                    type="button"
-                    onclick="openFooterInfo('about-info')">
-
-                    👨‍🏫 About Teacher Khen
-
-                </button>
-
-
-                <button
-                    type="button"
-                    onclick="openFooterInfo('how-to-use-info')">
-
-                    🚀 How to Use
-
-                </button>
-
-
-                <button
-                    type="button"
-                    onclick="openFooterInfo('resources-info')">
-
-                    ✨ Resources
-
-                </button>
-
-
-                <button
-                    type="button"
-                    onclick="openFooterInfo('contact-info')">
-
-                    ✉️ Contact
-
-                </button>
-
-
-                <button
-                    type="button"
-                    onclick="openFooterInfo('teacher-info')">
-
-                    📚 Teacher Information
-
-                </button>
-
-            </div>
-
-
-            <div class="footer-social">
-
-
-                <a
-                    href="https://www.facebook.com/khenethsherwin.avila.9"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="Facebook">
-
-                    <i class="fab fa-facebook-f"></i>
-
-                </a>
-
-
-                <a
-                    href="https://www.instagram.com/kheneth_02/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="Instagram">
-
-                    <i class="fab fa-instagram"></i>
-
-                </a>
-
-
-                <a
-                    href="https://www.youtube.com/@khenethavila"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="YouTube">
-
-                    <i class="fab fa-youtube"></i>
-
-                </a>
-
-
-                <a
-                    href="https://www.tiktok.com/@khenethavila"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="TikTok">
-
-                    <i class="fab fa-tiktok"></i>
-
-                </a>
-
-            </div>
-
-
-            <div class="footer-divider"></div>
-
-
-            <div class="footer-bottom">
-
-                <strong>
-                    © 2026 Teacher Khen's Learning Hub
-                </strong>
-
-                <br>
-
-                All rights reserved.
-
-                <br>
-
-                <span>
-                    Made with ❤️ for teachers and learners.
-                </span>
-
-            </div>
-
-        </div>
-
-    </footer>
-
-
-
-    <!-- =========================================================
-         ABOUT FOOTER POPUP
-         ========================================================= -->
-
-    <div
-        id="about-info"
-        class="footer-info-overlay"
-        onclick="closeFooterInfo(event)">
-
-        <div class="footer-info-card">
-
-
-            <button
-                class="footer-info-close"
-                onclick="closeFooterInfo()"
-                aria-label="Close">
-
-                ×
-
-            </button>
-
-
-            <h2>
-                👨‍🏫 About Teacher Khen
-            </h2>
-
-
-            <div class="about-highlight">
-
-                Teaching English • Designing Lessons • Creating Learning Experiences
-
-            </div>
-
-
-            <p>
-
-                Hello! I'm <strong>Teacher Khen</strong>, an English teacher
-                fond of designing creative lessons and finding new ways to make
-                learning more interactive, meaningful, and enjoyable.
-
-            </p>
-
-
-            <p>
-
-                Over the years, teaching has become more than simply presenting
-                lessons. I enjoy turning ideas into classroom activities, games,
-                visual materials, and interactive experiences that encourage
-                students to participate, communicate, and learn by doing.
-
-            </p>
-
-
-            <p>
-
-                This Learning Hub grew from that passion. Many of the resources
-                found here are created to make everyday English lessons a little
-                more exciting — whether you're reviewing vocabulary, practicing
-                phonics, building sentences, or simply looking for a fun way to
-                get your students involved.
-
-            </p>
-
-
-            <div class="teacher-badges">
-
-
-                <div class="teacher-badge">
-                    🎨 Creative Lessons
-                </div>
-
-
-                <div class="teacher-badge">
-                    🎮 Interactive Learning
-                </div>
-
-
-                <div class="teacher-badge">
-                    📚 English Education
-                </div>
-
-
-                <div class="teacher-badge">
-                    💡 Classroom Innovation
-                </div>
-
-            </div>
-
-        </div>
-
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-title">Teacher Khen's Learning Hub</div>
+
+    <div class="footer-links">
+      <button type="button" onclick="openFooterInfo('about-info')">👨‍🏫 About Teacher Khen</button>
+      <button type="button" onclick="openFooterInfo('how-to-use-info')">🚀 How to Use</button>
+      <button type="button" onclick="openFooterInfo('resources-info')">✨ Resources</button>
+      <button type="button" onclick="openFooterInfo('contact-info')">✉️ Contact</button>
+      <button type="button" onclick="openFooterInfo('teacher-info')">📚 Teacher Information</button>
     </div>
 
-
-
-    <!-- =========================================================
-         HOW TO USE FOOTER POPUP
-         ========================================================= -->
-
-    <div
-        id="how-to-use-info"
-        class="footer-info-overlay"
-        onclick="closeFooterInfo(event)">
-
-        <div class="footer-info-card">
-
-
-            <button
-                class="footer-info-close"
-                onclick="closeFooterInfo()"
-                aria-label="Close">
-
-                ×
-
-            </button>
-
-
-            <h2>
-                🚀 How to Use
-            </h2>
-
-
-            <p>
-
-                Everything is designed to be simple. Choose a resource,
-                open it, and bring it into your classroom!
-
-            </p>
-
-
-            <div class="steps-container">
-
-
-                <div class="step-card">
-
-                    <div class="step-number">
-                        1
-                    </div>
-
-                    <h3>
-                        Choose
-                    </h3>
-
-                    <p>
-                        Browse the game collection and find a resource
-                        that fits your lesson.
-                    </p>
-
-                </div>
-
-
-                <div class="step-card">
-
-                    <div class="step-number">
-                        2
-                    </div>
-
-                    <h3>
-                        Open
-                    </h3>
-
-                    <p>
-                        Click the game card to open the interactive
-                        learning activity.
-                    </p>
-
-                </div>
-
-
-                <div class="step-card">
-
-                    <div class="step-number">
-                        3
-                    </div>
-
-                    <h3>
-                        Customize
-                    </h3>
-
-                    <p>
-                        Add your own words, questions, or lesson content
-                        whenever the game supports customization.
-                    </p>
-
-                </div>
-
-
-                <div class="step-card">
-
-                    <div class="step-number">
-                        4
-                    </div>
-
-                    <h3>
-                        Teach!
-                    </h3>
-
-                    <p>
-                        Put the activity on your screen and let your
-                        students learn through play.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
+    <div class="footer-social">
+      <a href="https://www.facebook.com/khenethsherwin.avila.9" target="_blank" rel="noopener noreferrer" title="Facebook">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="https://www.instagram.com/kheneth_02/" target="_blank" rel="noopener noreferrer" title="Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://www.youtube.com/@khenethavila" target="_blank" rel="noopener noreferrer" title="YouTube">
+        <i class="fab fa-youtube"></i>
+      </a>
+      <a href="https://www.tiktok.com/@khenethavila" target="_blank" rel="noopener noreferrer" title="TikTok">
+        <i class="fab fa-tiktok"></i>
+      </a>
     </div>
 
-
-
-    <!-- =========================================================
-         RESOURCES FOOTER POPUP
-         ========================================================= -->
-
-    <div
-        id="resources-info"
-        class="footer-info-overlay"
-        onclick="closeFooterInfo(event)">
-
-        <div class="footer-info-card">
-
-
-            <button
-                class="footer-info-close"
-                onclick="closeFooterInfo()"
-                aria-label="Close">
-
-                ×
-
-            </button>
-
-
-            <h2>
-                ✨ Resources
-            </h2>
-
-
-            <p>
-
-                The Learning Hub is built around practical classroom use,
-                creativity, and student participation.
-
-            </p>
-
-
-            <div class="value-grid">
-
-
-                <div class="value-card">
-
-                    <i class="fas fa-gamepad"></i>
-
-                    <h3>
-                        Interactive Games
-                    </h3>
-
-                    <p>
-                        Classroom-friendly games that turn practice
-                        into an engaging learning experience.
-                    </p>
-
-                </div>
-
-
-                <div class="value-card">
-
-                    <i class="fas fa-book-open"></i>
-
-                    <h3>
-                        English Practice
-                    </h3>
-
-                    <p>
-                        Activities covering areas such as phonics,
-                        vocabulary, spelling, reading, and language practice.
-                    </p>
-
-                </div>
-
-
-                <div class="value-card">
-
-                    <i class="fas fa-lightbulb"></i>
-
-                    <h3>
-                        Creative Ideas
-                    </h3>
-
-                    <p>
-                        Resources inspired by real classroom experiences
-                        and the continuous search for better ways to teach.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <strong>© 2026 Teacher Khen's Learning Hub</strong>
+      <br>All rights reserved.
+      <br><span>Made with ❤️ for teachers and learners.</span>
     </div>
+  </div>
+</footer>
 
-
-
-    <!-- =========================================================
-         CONTACT FOOTER POPUP
-         ========================================================= -->
-
-    <div
-        id="contact-info"
-        class="footer-info-overlay"
-        onclick="closeFooterInfo(event)">
-
-        <div class="footer-info-card">
-
-
-            <button
-                class="footer-info-close"
-                onclick="closeFooterInfo()"
-                aria-label="Close">
-
-                ×
-
-            </button>
-
-
-            <h2>
-                ✉️ Contact Teacher Khen
-            </h2>
-
-
-            <p>
-
-                Have a question, suggestion, technical concern, or an idea
-                for a future classroom resource? I'd love to hear from you.
-
-            </p>
-
-
-            <div class="contact-box">
-
-                <p class="contact-intro">
-                    You can reach me directly at:
-                </p>
-
-
-                <a
-                    class="contact-email"
-                    href="mailto:khenetsherwin97@gmail.com">
-
-                    <i class="fas fa-envelope"></i>
-
-                    khenetsherwin97@gmail.com
-
-                </a>
-
-            </div>
-
-        </div>
-
+<!-- About -->
+<div id="about-info" class="footer-info-overlay" onclick="closeFooterInfo(event)">
+  <div class="footer-info-card">
+    <button class="footer-info-close" onclick="closeFooterInfo()" aria-label="Close">×</button>
+    <h2>👨‍🏫 About Teacher Khen</h2>
+    <div class="about-highlight">
+      Teaching English • Designing Lessons • Creating Learning Experiences
     </div>
+    <p>Hello! I'm <strong>Teacher Khen</strong>, an English teacher fond of designing creative lessons and finding new ways to make learning more interactive, meaningful, and enjoyable.</p>
+    <p>Over the years, teaching has become more than simply presenting lessons. I enjoy turning ideas into classroom activities, games, visual materials, and interactive experiences that encourage students to participate, communicate, and learn by doing.</p>
+    <p>This Learning Hub grew from that passion. Many of the resources found here are created to make everyday English lessons a little more exciting — whether you're reviewing vocabulary, practicing phonics, building sentences, or simply looking for a fun way to get your students involved.</p>
 
-
-
-    <!-- =========================================================
-         TEACHER INFORMATION FOOTER POPUP
-         ========================================================= -->
-
-    <div
-        id="teacher-info"
-        class="footer-info-overlay"
-        onclick="closeFooterInfo(event)">
-
-        <div class="footer-info-card">
-
-
-            <button
-                class="footer-info-close"
-                onclick="closeFooterInfo()"
-                aria-label="Close">
-
-                ×
-
-            </button>
-
-
-            <h2>
-                📚 Teacher Information
-            </h2>
-
-
-            <h3>
-                For Teachers
-            </h3>
-
-            <p>
-
-                These resources are created to support teachers and make
-                classroom preparation more creative and engaging.
-
-            </p>
-
-
-            <h3>
-                👩‍🏫 Adapt the Activities
-            </h3>
-
-            <p>
-
-                Teachers are encouraged to adapt activities to suit their
-                students' age, English level, classroom environment, and
-                learning objectives.
-
-            </p>
-
-
-            <h3>
-                🎯 Preview Before Use
-            </h3>
-
-            <p>
-
-                Always preview a resource before using it with your class
-                and make any adjustments necessary for your learners.
-
-            </p>
-
-
-            <h3>
-                💡 The Goal
-            </h3>
-
-            <p>
-
-                The goal of Teacher Khen's Learning Hub is simple:
-
-                <strong>
-                    make teaching more creative and learning more fun.
-                </strong>
-
-            </p>
-
-        </div>
-
+    <div class="teacher-badges">
+      <div class="teacher-badge">🎨 Creative Lessons</div>
+      <div class="teacher-badge">🎮 Interactive Learning</div>
+      <div class="teacher-badge">📚 English Education</div>
+      <div class="teacher-badge">💡 Classroom Innovation</div>
     </div>
+  </div>
+</div>
 
+<!-- How to Use -->
+<div id="how-to-use-info" class="footer-info-overlay" onclick="closeFooterInfo(event)">
+  <div class="footer-info-card">
+    <button class="footer-info-close" onclick="closeFooterInfo()" aria-label="Close">×</button>
+    <h2>🚀 How to Use</h2>
+    <p>Everything is designed to be simple. Choose a resource, open it, and bring it into your classroom!</p>
 
+    <div class="steps-container">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <h3>Choose</h3>
+        <p>Browse the game collection and find a resource that fits your lesson.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <h3>Open</h3>
+        <p>Click the game card to open the interactive learning activity.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <h3>Customize</h3>
+        <p>Add your own words, questions, or lesson content whenever the game supports customization.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">4</div>
+        <h3>Teach!</h3>
+        <p>Put the activity on your screen and let your students learn through play.</p>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <!-- =========================================================
-         AUDIO
-         ========================================================= -->
+<!-- Resources -->
+<div id="resources-info" class="footer-info-overlay" onclick="closeFooterInfo(event)">
+  <div class="footer-info-card">
+    <button class="footer-info-close" onclick="closeFooterInfo()" aria-label="Close">×</button>
+    <h2>✨ Resources</h2>
+    <p>The Learning Hub is built around practical classroom use, creativity, and student participation.</p>
 
-    <audio
-        id="welcome-sound"
-        src="winner sound effect.mp3">
-    </audio>
+    <div class="value-grid">
+      <div class="value-card">
+        <i class="fas fa-gamepad"></i>
+        <h3>Interactive Games</h3>
+        <p>Classroom-friendly games that turn practice into an engaging learning experience.</p>
+      </div>
+      <div class="value-card">
+        <i class="fas fa-book-open"></i>
+        <h3>English Practice</h3>
+        <p>Activities covering areas such as phonics, vocabulary, spelling, reading, and language practice.</p>
+      </div>
+      <div class="value-card">
+        <i class="fas fa-lightbulb"></i>
+        <h3>Creative Ideas</h3>
+        <p>Resources inspired by real classroom experiences and the continuous search for better ways to teach.</p>
+      </div>
+    </div>
+  </div>
+</div>
 
+<!-- Contact -->
+<div id="contact-info" class="footer-info-overlay" onclick="closeFooterInfo(event)">
+  <div class="footer-info-card">
+    <button class="footer-info-close" onclick="closeFooterInfo()" aria-label="Close">×</button>
+    <h2>✉️ Contact Teacher Khen</h2>
+    <p>Have a question, suggestion, technical concern, or an idea for a future classroom resource? I'd love to hear from you.</p>
+    <div class="contact-box">
+      <p class="contact-intro">You can reach me directly at:</p>
+      <a class="contact-email" href="mailto:khenetsherwin97@gmail.com">
+        <i class="fas fa-envelope"></i>
+        khenetsherwin97@gmail.com
+      </a>
+    </div>
+  </div>
+</div>
 
+<!-- Teacher Information -->
+<div id="teacher-info" class="footer-info-overlay" onclick="closeFooterInfo(event)">
+  <div class="footer-info-card">
+    <button class="footer-info-close" onclick="closeFooterInfo()" aria-label="Close">×</button>
+    <h2>📚 Teacher Information</h2>
 
-    <!-- =========================================================
-         JAVASCRIPT FILES
-         ========================================================= -->
+    <h3>For Teachers</h3>
+    <p>These resources are created to support teachers and make classroom preparation more creative and engaging.</p>
 
-    <script src="games.js?v=20261101-categories"></script>
+    <h3>👩‍🏫 Adapt the Activities</h3>
+    <p>Teachers are encouraged to adapt activities to suit their students' age, English level, classroom environment, and learning objectives.</p>
 
-    <script src="script.js"></script>
-    <script src="community.js"></script>
+    <h3>🎯 Preview Before Use</h3>
+    <p>Always preview a resource before using it with your class and make any adjustments necessary for your learners.</p>
 
+    <h3>💡 The Goal</h3>
+    <p>The goal of Teacher Khen's Learning Hub is simple:
+      <strong>make teaching more creative and learning more fun.</strong>
+    </p>
+  </div>
+</div>
+
+<!-- Audio -->
+<audio id="welcome-sound" src="winner sound effect.mp3"></audio>
+
+<!-- Existing JavaScript files -->
+<script src="games.js?v=20261101-categories"></script>
+<script src="script.js"></script>
+<script src="community.js"></script>
 
 </body>
 </html>
