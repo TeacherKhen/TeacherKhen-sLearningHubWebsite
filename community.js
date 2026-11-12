@@ -305,6 +305,84 @@ const setWords = d => {
       d => d.questions.map(q => q.text)
     ),
 
+    // PAC-MAN LEARNING HUB
+    'learning-hub': base(
+      'Teacher Khen Learning Hub - Pac-Man',
+      'https://teacherkhen.github.io/pacman/',
+      'free',
+      'LEARNINGHUB',
+      d =>
+        Array.isArray(d) &&
+        d.length > 0 &&
+        d.every(q =>
+          typeof q?.text === 'string' &&
+          typeof q?.img === 'string' &&
+          Array.isArray(q.opts) &&
+          q.opts.length === 4 &&
+          q.opts.every(o =>
+            typeof o?.t === 'string' &&
+            typeof o?.c === 'boolean'
+          ) &&
+          q.opts.filter(o => o.c).length === 1
+        ),
+      d => d.map(q =>
+        q.text || q.opts.find(o => o.c)?.t || 'Question'
+      )
+    ),
+
+    // SPELLING GAME
+    'spelling-game': base(
+      'Spelling Game',
+      'https://teacherkhen.github.io/spelling/',
+      'free',
+      'SPELLING',
+      d =>
+        !!d &&
+        !Array.isArray(d) &&
+        Array.isArray(d.questions) &&
+        d.questions.length > 0 &&
+        d.questions.every(q =>
+          typeof q?.q === 'string' &&
+          typeof q?.a === 'string' &&
+          !!q.a.trim() &&
+          (
+            q.img == null ||
+            typeof q.img === 'string'
+          )
+        ),
+      d => d.questions.map(q => q.a)
+    ),
+
+    // MONSTER EGG PREMIUM
+    'monster-egg': base(
+      'Monster Egg: Halloween Gold Rush',
+      'https://monsteregg.teacherkhen.com/',
+      'premium',
+      'MONSTEREGG',
+      d =>
+        !!d &&
+        !Array.isArray(d) &&
+        Array.isArray(d.questions) &&
+        d.questions.length > 0 &&
+        d.questions.every(q =>
+          typeof q?.text === 'string' &&
+          typeof q?.image === 'string' &&
+          Array.isArray(q.answers) &&
+          q.answers.length === 4 &&
+          q.answers.every(a =>
+            typeof a?.text === 'string' &&
+            typeof a?.image === 'string' &&
+            typeof a?.correct === 'boolean'
+          ) &&
+          q.answers.filter(a => a.correct).length === 1
+        ),
+      d => d.questions.map(q =>
+        q.text ||
+        q.answers.find(a => a.correct)?.text ||
+        'Question'
+      )
+    ),
+
     'monster-bingo': base(
       'Monster Bingo – Pixel UNO',
       'https://teacherkhen.github.io/monster-card-flip-game/',
@@ -755,6 +833,31 @@ async function createGameThumbnail(slug, data) {
         q.options.find(o => o.correct)?.text ||
         'Question',
       image: q.img || null
+    }));
+
+  } else if (slug === 'learning-hub') {
+
+    entries = data.map(q => ({
+      text: q.text ||
+        q.opts.find(o => o.c)?.t ||
+        'Question',
+      image: q.img || null
+    }));
+
+  } else if (slug === 'spelling-game') {
+
+    entries = data.questions.map(q => ({
+      text: q.a,
+      image: q.img || null
+    }));
+
+  } else if (slug === 'monster-egg') {
+
+    entries = data.questions.map(q => ({
+      text: q.text ||
+        q.answers.find(a => a.correct)?.text ||
+        'Question',
+      image: q.image || null
     }));
 
   } else if (slug === 'phonics-board') {
