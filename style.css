@@ -5309,3 +5309,184 @@ body.modal-open {
     }
 }
 
+/* =====================================================
+   TEACHER KHEN COMMUNITY
+   COMPACT GAME CARDS — COMPLETE CSS UPDATE
+   5–6 games per row, smaller thumbnails,
+   reduced spacing, responsive design
+   ===================================================== */
+
+/* COMMUNITY GRID — 5 CARDS PER ROW */
+#tk-lessons-grid {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  align-items: start !important;
+}
+
+/* COMPACT CARD CONTAINER */
+#tk-lessons-grid .tk-lesson-card.tk-wall-card {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 0 0 10px !important;
+  overflow: hidden !important;
+}
+
+/* SMALLER GAME THUMBNAILS */
+#tk-lessons-grid .tk-lesson-preview {
+  height: 140px !important;
+  min-height: 0 !important;
+  flex-shrink: 0 !important;
+  overflow: hidden !important;
+  position: relative;
+}
+
+/* KEEP PREVIEW INSIDE THUMBNAIL AREA */
+#tk-lessons-grid .tk-wall-game-screen {
+  height: 100% !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* THUMBNAIL CONTENT */
+#tk-lessons-grid .tk-wall-player-frame {
+  min-height: 0 !important;
+  max-height: 98px !important;
+  overflow: hidden !important;
+}
+
+/* GAME NAME AT TOP OF PREVIEW */
+#tk-lessons-grid .tk-wall-game-heading {
+  font-size: 12px !important;
+  line-height: 1.2 !important;
+}
+
+/* LESSON TITLE */
+#tk-lessons-grid .tk-lesson-card > h4 {
+  font-size: 15px !important;
+  line-height: 1.25 !important;
+  margin: 9px 11px 4px !important;
+  padding: 0 !important;
+  overflow-wrap: anywhere;
+}
+
+/* GAME LABEL AND GRADE */
+#tk-lessons-grid .tk-lesson-meta {
+  font-size: 11px !important;
+  line-height: 1.3 !important;
+  margin: 0 11px 5px !important;
+  padding: 0 !important;
+  overflow-wrap: anywhere;
+}
+
+/* LESSON DESCRIPTION */
+#tk-lessons-grid .tk-wall-description {
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+  margin: 0 11px 10px !important;
+  padding: 0 !important;
+  overflow-wrap: anywhere;
+}
+
+/* PLAY LESSON BUTTON CONTAINER */
+#tk-lessons-grid .tk-lesson-actions {
+  margin: auto 11px 0 !important;
+  padding: 0 !important;
+}
+
+/* SMALLER PLAY LESSON BUTTON */
+#tk-lessons-grid .tk-play-button {
+  width: 100% !important;
+  min-height: 38px !important;
+  padding: 8px 10px !important;
+  font-size: 13px !important;
+  line-height: 1.2 !important;
+  border-radius: 10px !important;
+}
+
+/* PREVENT OVERSIZED EMPTY SPACES */
+#tk-lessons-grid .tk-lesson-card > h4,
+#tk-lessons-grid .tk-lesson-meta,
+#tk-lessons-grid .tk-wall-description {
+  flex-grow: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+/* EXTRA-WIDE DESKTOP — 6 CARDS */
+@media (min-width: 1800px) {
+  #tk-lessons-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+  }
+}
+
+/* LAPTOP — 4 CARDS */
+@media (min-width: 1100px) and (max-width: 1399px) {
+  #tk-lessons-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+/* TABLET — 3 CARDS */
+@media (min-width: 700px) and (max-width: 1099px) {
+  #tk-lessons-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  #tk-lessons-grid .tk-lesson-preview {
+    height: 135px !important;
+  }
+}
+
+/* MOBILE — 2 CARDS */
+@media (max-width: 699px) {
+  #tk-lessons-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+
+  #tk-lessons-grid .tk-lesson-preview {
+    height: 115px !important;
+  }
+
+  #tk-lessons-grid .tk-lesson-card > h4 {
+    font-size: 12px !important;
+    margin: 7px 8px 3px !important;
+  }
+
+  #tk-lessons-grid .tk-lesson-meta {
+    font-size: 10px !important;
+    margin: 0 8px 4px !important;
+  }
+
+  #tk-lessons-grid .tk-wall-description {
+    font-size: 10px !important;
+    margin: 0 8px 8px !important;
+  }
+
+  #tk-lessons-grid .tk-lesson-actions {
+    margin: auto 8px 0 !important;
+  }
+
+  #tk-lessons-grid .tk-play-button {
+    font-size: 11px !important;
+    min-height: 35px !important;
+  }
+}
+
+/* VERY NARROW SCREENS — 1 CARD */
+@media (max-width: 360px) {
+  #tk-lessons-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  #tk-lessons-grid .tk-lesson-preview {
+    height: 160px !important;
+  }
+}
+
+
