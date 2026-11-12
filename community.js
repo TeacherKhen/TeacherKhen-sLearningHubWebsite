@@ -245,6 +245,35 @@ const setWords = d => {
       d => d.words
     ),
 
+    // Reading Roll Quest — separate FREE game (GitHub Pages).
+    'reading-roll-quest': base(
+      'Reading Roll Quest',
+      'https://teacherkhen.github.io/phonicsreading/',
+      'free',
+      'ROLLQUEST',
+      d => {
+        const list = Array.isArray(d?.words)
+          ? d.words
+          : Array.isArray(d?.settings?.words)
+            ? d.settings.words
+            : Array.isArray(d?.config?.words)
+              ? d.config.words
+              : null;
+
+        return Array.isArray(list) &&
+          list.length > 0 &&
+          list.every(w =>
+            typeof w === 'string' && !!w.trim()
+          );
+      },
+      d => (
+        d.words ||
+        d.settings?.words ||
+        d.config?.words ||
+        []
+      )
+    ),
+
     'phonics-board-premium': base(
       'Phonics Board Premium',
       'https://phonics-learning.teacherkhen.com/',
@@ -683,6 +712,18 @@ async function createGameThumbnail(slug, data) {
     entries = (set?.words || []).map(i => ({
       text: i.text,
       image: i.image
+    }));
+
+  } else if (slug === 'reading-roll-quest') {
+
+    const list =
+      data.words ||
+      data.settings?.words ||
+      data.config?.words ||
+      [];
+
+    entries = list.map(w => ({
+      text: w
     }));
 
   } else if (slug === 'phonics-board') {
