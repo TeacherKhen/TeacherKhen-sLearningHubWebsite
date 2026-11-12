@@ -1224,9 +1224,9 @@ async function previewMetadata(slug, json) {
       gameProtocol(l.game_slug) ===
       'phonics-race';
 
-    const thumbnail = isSpotIt
-      ? thumbFrom(l.preview_items)
-      : null;
+    
+const thumbnail = thumbFrom(l.preview_items);
+
 
     if (isSpotIt) {
       screenshot.classList.add(
