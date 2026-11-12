@@ -56,10 +56,20 @@ const TKCommunity = (() => {
       )
     );
 
-  const setWords = d =>
-    d.sets.flatMap(s =>
-      s.items.map(i => i.word)
-    );
+const setWords = d => {
+  const chosen = d.sets.find(s =>
+    s?.id === d.selected &&
+    Array.isArray(s.items) &&
+    s.items.length
+  ) || d.sets.find(s =>
+    Array.isArray(s?.items) &&
+    s.items.length
+  );
+
+  return chosen
+    ? chosen.items.map(i => i.word)
+    : [];
+};
 
   const hasSpiderweb = d => {
     const state = d?.activityState || d;
@@ -587,22 +597,336 @@ const TKCommunity = (() => {
   // PREVIEW METADATA
   // =========================================================
 
-  async function previewMetadata(slug, json) {
-    const names = getPreview(slug, json);
+ 
+/* =========================================================
+   TEACHER KHEN COMMUNITY
+   AUTOMATIC JSON-BASED GAME THUMBNAILS
+   ========================================================= */
+
+async function createGameThumbnail(slug, data) {
+
+  // Preserve the existing Spot It Premium thumbnail.
+  if (slug === 'spot-it') {
+    return createSpotItThumbnail(data);
+  }
+
+  const W = 480;
+  const H = 270;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return null;
+
+  const isPop = slug.startsWith('balloon-pop');
+  const isRace = slug === 'phonics-race';
+  const isSpider = slug === 'spiderweb-free';
+
+  const theme = isPop
+    ? ['#082c50', '#2066a8']
+    : isRace
+      ? ['#102c59', '#2048a0']
+      : isSpider
+        ? ['#17203c', '#484071']
+        : ['#12384b', '#326c7b'];
+
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, theme[0]);
+  bg.addColorStop(1, theme[1]);
+
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  let entries = [];
+
+  if (isPop) {
+
+    // Use the selected set, not the first preset.
+    const set = data.sets.find(s =>
+      s?.id === data.selected && s.items?.length
+    ) || data.sets.find(s => s?.items?.length);
+
+    entries = (set?.items || []).map(i => ({
+      text: i.word,
+      image: i.image
+    }));
+
+  } else if (slug === 'spot-it-free') {
+
+    entries = data.objects.map(i => ({
+      text: i.name,
+      image: i.image
+    }));
+
+  } else if (isRace) {
+
+    entries = data.rounds.flatMap(r =>
+      r.circles.map(i => ({
+        text: i.text
+      }))
+    );
+
+  } else if (isSpider) {
+
+    entries = (data.activityState || data)
+      .columns.flat()
+      .map(v => ({ text: v }));
+
+  } else if (slug === 'phonics-board-premium') {
+
+    const set = data.presets.find(p =>
+      p.id === data.selected && p.words?.length
+    ) || data.presets.find(p => p.words?.length);
+
+    entries = (set?.words || []).map(i => ({
+      text: i.text,
+      image: i.image
+    }));
+
+  } else if (slug === 'phonics-board') {
+
+    entries = data.words.map(w => ({
+      text: w
+    }));
+
+  } else if (slug === 'monster-bingo') {
+
+    entries = data.cards.map(i => ({
+      text: i.text,
+      image: i.img
+    }));
+
+  } else if (slug === 'give-or-keep') {
+
+    entries = data.map(i => ({
+      text: i.text,
+      image: i.image
+    }));
+
+  } else if (slug === 'click-it') {
+
+    entries = data.words.map(i => ({
+      text: typeof i === 'string'
+        ? i
+        : i?.text || '',
+      image: i?.image
+    }));
+
+  }
+
+  entries = entries.filter(i =>
+    typeof i.text === 'string' &&
+    i.text.trim()
+  ).slice(0, 6);
+
+  // Embedded pictures can be displayed safely.
+  // Relative image paths belong to the game's host
+  // and are not loaded from TeacherKhen.com.
+
+  const loadImage = src => new Promise(resolve => {
 
     if (
-      gameProtocol(slug) !== 'spot-it'
+      typeof src !== 'string' ||
+      !/^data:image\/(png|jpeg|webp|gif);base64,/i.test(src)
     ) {
-      return names;
+      resolve(null);
+      return;
     }
 
-    const thumbnail =
-      await createSpotItThumbnail(json);
+    const img = new Image();
 
-    return thumbnail
-      ? [THUMB_PREFIX + thumbnail, ...names]
-      : names;
+    const timer = setTimeout(
+      () => resolve(null),
+      3000
+    );
+
+    img.onload = () => {
+      clearTimeout(timer);
+      resolve(img);
+    };
+
+    img.onerror = () => {
+      clearTimeout(timer);
+      resolve(null);
+    };
+
+    img.src = src;
+  });
+
+  const pictures = await Promise.all(
+    entries.map(i => loadImage(i.image))
+  );
+
+  // Game heading.
+  ctx.fillStyle = 'rgba(255,255,255,.95)';
+  ctx.font = "bold 20px 'Comic Neue',sans-serif";
+  ctx.textAlign = 'center';
+
+  const gameName = gameFor(slug)?.name ||
+    'Classroom Game';
+
+  ctx.fillText(
+    gameName.slice(0, 34),
+    W / 2,
+    31,
+    450
+  );
+
+  // Draw six vocabulary tiles or bubbles.
+  entries.forEach((entry, i) => {
+
+    const x = 22 + (i % 3) * 149;
+    const y = 49 + Math.floor(i / 3) * 106;
+
+    const cx = x + 69;
+    const cy = y + 46;
+
+    if (isPop) {
+
+      ctx.beginPath();
+
+      ctx.ellipse(
+        cx, cy, 56, 44, 0,
+        0, Math.PI * 2
+      );
+
+      ctx.fillStyle = [
+        '#fc95b6',
+        '#8ed9ff',
+        '#ffe28c',
+        '#b9edaa',
+        '#cdb5ff',
+        '#ffbd9e'
+      ][i];
+
+      ctx.fill();
+
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = 'rgba(255,255,255,.7)';
+      ctx.stroke();
+
+    } else {
+
+      ctx.fillStyle = 'rgba(255,255,255,.96)';
+
+      ctx.beginPath();
+      ctx.roundRect(x, y, 138, 92, 13);
+      ctx.fill();
+
+    }
+
+    const img = pictures[i];
+
+    if (
+      img?.naturalWidth &&
+      img?.naturalHeight
+    ) {
+
+      const scale = Math.min(
+        64 / img.naturalWidth,
+        55 / img.naturalHeight
+      );
+
+      const iw = img.naturalWidth * scale;
+      const ih = img.naturalHeight * scale;
+
+      ctx.drawImage(
+        img,
+        cx - iw / 2,
+        y + 8,
+        iw,
+        ih
+      );
+    }
+
+    const label = entry.text.trim().slice(0, 35);
+
+    const font = Math.max(
+      12,
+      Math.min(
+        23,
+        235 / (label.length * .7 + 2)
+      )
+    );
+
+    ctx.font =
+      `bold ${font}px 'Comic Neue',sans-serif`;
+
+    ctx.fillStyle = '#172b53';
+    ctx.textBaseline = 'middle';
+
+    ctx.fillText(
+      label,
+      cx,
+      img ? y + 76 : cy,
+      126
+    );
+
+    ctx.textBaseline = 'alphabetic';
+
+  });
+
+  if (!entries.length) {
+
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 24px sans-serif';
+
+    ctx.fillText(
+      'Ready to play',
+      W / 2,
+      H / 2
+    );
   }
+
+  // Compressed thumbnails remain small enough
+  // for Community preview metadata.
+  try {
+
+    let result = canvas.toDataURL(
+      'image/jpeg',
+      .66
+    );
+
+    if (result.length > 145000) {
+      result = canvas.toDataURL(
+        'image/jpeg',
+        .4
+      );
+    }
+
+    return result.length < 180000
+      ? result
+      : null;
+
+  } catch (e) {
+
+    console.warn('Thumbnail failed', e);
+    return null;
+
+  }
+}
+
+/* =========================================================
+   GENERATE THUMBNAIL AUTOMATICALLY ON UPLOAD
+   ========================================================= */
+
+async function previewMetadata(slug, json) {
+
+  const names = getPreview(slug, json);
+
+  const thumbnail = await createGameThumbnail(
+    slug,
+    json
+  );
+
+  return thumbnail
+    ? [THUMB_PREFIX + thumbnail, ...names]
+    : names;
+}
+
+/* END AUTOMATIC THUMBNAILS */
 
   // =========================================================
   // COMMUNITY STATE
