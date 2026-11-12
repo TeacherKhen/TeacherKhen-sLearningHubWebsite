@@ -210,7 +210,7 @@ const setWords = d => {
 
       // Original website catalog address.
       // Must use HTTPS before live Premium delivery.
-      'http://balloon-bubble-star-pop.teacherkhen.com/',
+      'https://balloon-bubble-star-pop.teacherkhen.com/',
 
       'premium',
       'BALLOON',
