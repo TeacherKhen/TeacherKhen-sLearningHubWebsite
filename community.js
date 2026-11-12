@@ -1756,13 +1756,71 @@ const TKCommunity = (() => {
         );
       }
 
-      const json = JSON.parse(
+      let json = JSON.parse(
         await file.text()
       );
 
       const slug = String(
         fd.get('game_slug')
       );
+      
+/* TEACHER KHEN - BALLOON POP JSON CLEANUP */
+
+let uploadFile = file;
+
+if (
+  slug === 'balloon-pop-free' ||
+  slug === 'balloon-pop-premium'
+) {
+  if (
+    json &&
+    typeof json === 'object' &&
+    !Array.isArray(json) &&
+    Array.isArray(json.sets)
+  ) {
+    const originalCount = json.sets.length;
+
+    const cleanedSets = json.sets.filter(
+      set =>
+        !set ||
+        !Array.isArray(set.items) ||
+        set.items.length !== 0
+    );
+
+    const removedCount =
+      originalCount - cleanedSets.length;
+
+    if (removedCount > 0) {
+      json = {
+        ...json,
+        sets: cleanedSets
+      };
+
+      const cleanedText = JSON.stringify(json);
+
+      uploadFile = new File(
+        [cleanedText],
+        file.name,
+        {
+          type: 'application/json'
+        }
+      );
+
+      console.log(
+        'TeacherKhen Community: Removed ' +
+        removedCount +
+        ' empty vocabulary set(s).'
+      );
+    }
+  }
+}
+
+if (uploadFile.size > 10 * 1024 * 1024) {
+  throw new Error('JSON exceeds 10 MB.');
+}
+
+/* END BALLOON POP CLEANUP */
+
 
       const game =
         gameFor(slug);
@@ -1802,16 +1860,16 @@ const TKCommunity = (() => {
 
       const storage =
         await sb.storage
-          .from('community-json')
-          .upload(
-            path,
-            file,
-            {
-              contentType:
-                'application/json',
-              upsert: false
-            }
-          );
+          .from('community-json')          
+.upload(
+  path,
+  uploadFile,
+  {
+    contentType:
+      'application/json',
+    upsert: false
+  }
+);
 
       if (storage.error) {
         throw storage.error;
