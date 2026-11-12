@@ -2374,109 +2374,103 @@ if (uploadFile.size > 10 * 1024 * 1024) {
       const type =
         gameProtocol(l.game_slug);
 
-      // Preview regeneration for Spot It and Race.
+      
+/* =========================================================
+   TEACHER KHEN COMMUNITY
+   REGENERATE THUMBNAILS FOR ALL GAMES
+   ========================================================= */
 
-      if (
-        type === 'spot-it' ||
-        type === 'phonics-race'
-      ) {
-        const isRace =
-          type === 'phonics-race';
+if (gameFor(l.game_slug)) {
 
-        const rebuild = el(
-          'button',
-          '',
-          isRace
-            ? 'Refresh Phonics Preview'
-            : 'Regenerate Thumbnail'
+  const rebuild = el(
+    'button',
+    '',
+    'Regenerate Thumbnail'
+  );
+
+  rebuild.type = 'button';
+
+  rebuild.title =
+    'Generate a thumbnail from the existing lesson JSON.';
+
+  rebuild.onclick = async () => {
+
+    rebuild.disabled = true;
+    rebuild.textContent = 'Generating...';
+
+    try {
+
+      const { data, error } =
+        await client().functions.invoke(
+          'community-lesson',
+          {
+            body: {
+              lesson_id: l.id
+            }
+          }
         );
 
-        rebuild.type = 'button';
+      if (error) throw error;
 
-        rebuild.title = isRace
-          ? 'Updates the preview with actual phonics words from the existing JSON.'
-          : 'Generates a Spot It! image from the existing JSON.';
-
-        rebuild.onclick = async () => {
-          rebuild.disabled = true;
-          rebuild.textContent =
-            'Generating...';
-
-          try {
-            const {
-              data,
-              error
-            } = await client()
-              .functions.invoke(
-                'community-lesson',
-                {
-                  body: {
-                    lesson_id: l.id
-                  }
-                }
-              );
-
-            if (error) throw error;
-
-            if (
-              !supportedLesson(
-                l.game_slug,
-                data
-              )
-            ) {
-              throw Error(
-                'The lesson JSON is invalid for this game.'
-              );
-            }
-
-            const metadata =
-              await previewMetadata(
-                l.game_slug,
-                data
-              );
-
-            if (
-              !isRace &&
-              !thumbFrom(metadata)
-            ) {
-              throw Error(
-                'Could not render embedded pictures. Check the JSON or try again.'
-              );
-            }
-
-            const updated =
-              await client()
-                .from(TABLE)
-                .update({
-                  preview_items: metadata
-                })
-                .eq('id', l.id);
-
-            if (updated.error) {
-              throw updated.error;
-            }
-
-            await refresh();
-
-          } catch (err) {
-            alert(
-              'Thumbnail update failed: ' +
-              (
-                err.message ||
-                'Unknown error'
-              )
-            );
-
-            rebuild.disabled = false;
-
-            rebuild.textContent = isRace
-              ? 'Refresh Phonics Preview'
-              : 'Regenerate Thumbnail';
-          }
-        };
-
-        r.append(rebuild);
+      if (!supportedLesson(l.game_slug, data)) {
+        throw new Error(
+          'Invalid lesson JSON for ' +
+          gamesLabel(l.game_slug)
+        );
       }
+
+      const metadata = await previewMetadata(
+        l.game_slug,
+        data
+      );
+
+      if (!thumbFrom(metadata)) {
+        throw new Error(
+          'Thumbnail could not be generated.'
+        );
+      }
+
+      const { error: updateError } =
+        await client()
+          .from(TABLE)
+          .update({
+            preview_items: metadata
+          })
+          .eq('id', l.id);
+
+      if (updateError) {
+        throw updateError;
+      }
+
+      rebuild.textContent = 'Updated!';
+
+      await refresh();
+
+    } catch (err) {
+
+      console.error(
+        'Thumbnail regeneration failed:',
+        err
+      );
+
+      alert(
+        'Thumbnail update failed: ' +
+        (err.message || 'Unknown error')
+      );
+
+      rebuild.disabled = false;
+
+      rebuild.textContent =
+        'Regenerate Thumbnail';
+    }
+
+  };
+
+  r.append(rebuild);
+}
+
+/* END UNIVERSAL THUMBNAIL REGENERATION */
+
 
       // Publish or unpublish.
 
