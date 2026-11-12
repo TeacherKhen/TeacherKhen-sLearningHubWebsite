@@ -283,6 +283,28 @@ const setWords = d => {
       premiumBoardWords
     ),
 
+    // Fishing Vocabulary Adventure
+    'fishing-adventure': base(
+      'Fishing Vocabulary Adventure',
+      'https://teacherkhen.github.io/fishing/',
+      'free',
+      'FISHING',
+      d =>
+        Array.isArray(d?.questions) &&
+        d.questions.length > 0 &&
+        d.questions.every(q =>
+          typeof q?.text === 'string' &&
+          Array.isArray(q.options) &&
+          q.options.length === 4 &&
+          q.options.every(o =>
+            typeof o?.text === 'string' &&
+            typeof o?.correct === 'boolean'
+          ) &&
+          q.options.filter(o => o.correct).length === 1
+        ),
+      d => d.questions.map(q => q.text)
+    ),
+
     'monster-bingo': base(
       'Monster Bingo – Pixel UNO',
       'https://teacherkhen.github.io/monster-card-flip-game/',
@@ -724,6 +746,15 @@ async function createGameThumbnail(slug, data) {
 
     entries = list.map(w => ({
       text: w
+    }));
+
+  } else if (slug === 'fishing-adventure') {
+
+    entries = data.questions.map(q => ({
+      text: q.text ||
+        q.options.find(o => o.correct)?.text ||
+        'Question',
+      image: q.img || null
     }));
 
   } else if (slug === 'phonics-board') {
