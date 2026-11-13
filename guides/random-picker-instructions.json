@@ -1,69 +1,115 @@
+
 {
   "title": "Random Picker",
-  "description": "A classroom game where teachers can create one, two, or three independent columns using pictures or words. All columns flip together and reveal random selections when STOP is pressed.",
+  "description": "A classroom activity where teachers can randomly select pictures or words using one, two, or three independent columns. Follow these simple steps to set up and play.",
   "steps": [
-    {
-      "title": "Choose the number of columns",
-      "description": "Select one, two, or three columns depending on the activity you want to play."
-    },
-    {
-      "title": "Add pictures or words",
-      "description": "In each column, upload picture files or add words. You can use pictures in one column and words in another. Uploaded pictures appear without their file names."
-    },
-    {
-      "title": "Set item elimination for each column",
-      "description": "Use the setting in each column to decide whether its selected items should remain available or be automatically eliminated. Enable keeping items available when you want the same choices to appear again. Leave it disabled to eliminate selected items after each round."
-    },
-    {
-      "title": "Start the picker",
-      "description": "Press START. All active columns flip rapidly at the same time. The column boxes stay in fixed positions while their contents change."
-    },
-    {
-      "title": "Stop and reveal the choices",
-      "description": "Press STOP to stop all columns together and reveal one random choice in each active column."
-    },
-    {
-      "title": "Manage selected items",
-      "description": "Review the picked results below the columns. Use the available remove or restore controls to manage items when those controls are shown."
-    },
-    {
-      "title": "Play another round",
-      "description": "Press START again to pick another set of choices. Columns configured to keep items available can reuse their choices; columns configured for automatic elimination will use the remaining items."
-    },
-    {
-      "title": "Use the presentation controls",
-      "description": "Use the full-screen control when presenting the game to a class. Background music can be controlled with its music button. The flipping sound effect plays while the columns are flipping."
-    }
+    "Open Random Picker and look at the setup screen.",
+    "Choose whether you want to use one, two, or three columns.",
+    "Prepare each column by adding pictures or words. You can use pictures in one column and words in another.",
+    "If you use pictures, upload the image files. The game displays the pictures without showing their file names.",
+    "If you use words, enter the words you want to include in that column.",
+    "Configure each column's Keep Items Available setting. Enable it if you want selected items to remain available for future rounds. Leave it disabled if you want selected items to be automatically eliminated.",
+    "Check all your columns and settings before starting the activity.",
+    "Press START to make all active columns flip rapidly at the same time.",
+    "Press STOP to stop the columns and reveal one random selection from each active column.",
+    "Review the selected results and use the available Remove or Restore controls if you want to manage the selected items.",
+    "Press PICK AGAIN or START to play another round using your current settings and remaining items.",
+    "Use Full Screen when presenting the activity to your class. You can also turn the background music on or off."
   ],
   "buttons": [
     {
       "name": "START",
-      "description": "Starts the rapid flipping animation in all active columns."
+      "meaning": "Starts the random selection animation in all active columns."
     },
     {
       "name": "STOP",
-      "description": "Stops all active columns together and reveals their random selections."
+      "meaning": "Stops the animation and reveals the randomly selected item in each active column."
     },
     {
       "name": "PICK AGAIN",
-      "description": "Begins another round using the current column settings and available items."
+      "meaning": "Starts another round using the current column settings and available items."
     },
     {
-      "name": "Keep items available",
-      "description": "A separate setting for each column. When enabled, picked items are not automatically eliminated and can be selected again."
+      "name": "Keep Items Available",
+      "meaning": "A separate setting for each column. When enabled, selected items remain available and can be picked again. When disabled, selected items are automatically eliminated from that column's remaining choices."
     },
     {
       "name": "Remove / Restore",
-      "description": "Manages selected items in the results history when these controls are available."
+      "meaning": "Removes or restores selected items when these controls are available."
     },
     {
       "name": "Full Screen",
-      "description": "Expands the game for classroom presentation."
+      "meaning": "Expands the game to fill the screen for classroom presentation."
     },
     {
       "name": "Music",
-      "description": "Turns the background music on or off."
+      "meaning": "Turns the background music on or off."
     }
   ],
-  "video": ""
+  "jsonHelp": false,
+  "video": "",
+  "videoChannel": "",
+  "sections": [
+    {
+      "heading": "🎲 Set up your Random Picker",
+      "steps": [
+        "Open Random Picker and choose the number of columns you need: one, two, or three.",
+        "Add pictures or words to each column. Each column can have its own content.",
+        "You can combine different column types. For example, use pictures in Column 1 and words in Column 2.",
+        "For picture columns, upload your image files. Only the pictures will appear during the activity; file names will not be displayed.",
+        "For word columns, enter the words you want students to choose from.",
+        "Review the contents of every column before starting."
+      ]
+    },
+    {
+      "heading": "⚙️ Configure each column independently",
+      "steps": [
+        "Find the Keep Items Available setting in each column.",
+        "Enable this setting if you want the selected item to remain in the column and be available again in future rounds.",
+        "Leave this setting disabled if you want the selected item to be automatically eliminated after it is picked.",
+        "Remember that this setting is independent for each column. For example, Column 1 can eliminate selected items while Column 2 keeps its selected items available.",
+        "Check your settings before beginning the activity."
+      ]
+    },
+    {
+      "heading": "▶️ Play the Random Picker",
+      "steps": [
+        "Press START to begin the rapid flipping animation.",
+        "All active columns flip simultaneously while their boxes remain in fixed positions.",
+        "Press STOP when you are ready to reveal the results.",
+        "The game stops the columns and displays one random selection in each active column.",
+        "Review the selected pictures or words with your students.",
+        "Press PICK AGAIN or START to continue with another round."
+      ]
+    },
+    {
+      "heading": "🔄 Manage selections and play another round",
+      "steps": [
+        "Review the selected results after each round.",
+        "Use the available Remove or Restore controls to manage selected items when these controls are shown.",
+        "Columns with Keep Items Available enabled can reuse their previously selected items.",
+        "Columns with automatic elimination enabled will continue using their remaining available items.",
+        "Continue playing until you finish the activity or run out of available choices."
+      ]
+    },
+    {
+      "heading": "🖥️ Presentation and audio controls",
+      "steps": [
+        "Use Full Screen to display the activity more clearly on a classroom screen, projector, or interactive board.",
+        "Use the Music button to turn background music on or off.",
+        "The flipping sound effect plays while the columns are changing selections.",
+        "Make sure the game is ready before presenting it to your students."
+      ]
+    }
+  ],
+  "tips": [
+    "You can use one, two, or three columns depending on your classroom activity.",
+    "Each column can contain pictures or words independently.",
+    "Picture columns display images only. Their file names are not shown.",
+    "The Keep Items Available setting is independent for each column. Check each column separately.",
+    "If you want students to be selected only once, leave Keep Items Available disabled for that column.",
+    "If you want a choice to appear more than once, enable Keep Items Available for that column.",
+    "The columns remain in fixed positions while their contents flip.",
+    "Check all your choices and settings before pressing START."
+  ]
 }
