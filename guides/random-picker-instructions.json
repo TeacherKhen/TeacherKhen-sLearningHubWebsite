@@ -1,0 +1,69 @@
+{
+  "title": "Random Picker",
+  "description": "A classroom game where teachers can create one, two, or three independent columns using pictures or words. All columns flip together and reveal random selections when STOP is pressed.",
+  "steps": [
+    {
+      "title": "Choose the number of columns",
+      "description": "Select one, two, or three columns depending on the activity you want to play."
+    },
+    {
+      "title": "Add pictures or words",
+      "description": "In each column, upload picture files or add words. You can use pictures in one column and words in another. Uploaded pictures appear without their file names."
+    },
+    {
+      "title": "Set item elimination for each column",
+      "description": "Use the setting in each column to decide whether its selected items should remain available or be automatically eliminated. Enable keeping items available when you want the same choices to appear again. Leave it disabled to eliminate selected items after each round."
+    },
+    {
+      "title": "Start the picker",
+      "description": "Press START. All active columns flip rapidly at the same time. The column boxes stay in fixed positions while their contents change."
+    },
+    {
+      "title": "Stop and reveal the choices",
+      "description": "Press STOP to stop all columns together and reveal one random choice in each active column."
+    },
+    {
+      "title": "Manage selected items",
+      "description": "Review the picked results below the columns. Use the available remove or restore controls to manage items when those controls are shown."
+    },
+    {
+      "title": "Play another round",
+      "description": "Press START again to pick another set of choices. Columns configured to keep items available can reuse their choices; columns configured for automatic elimination will use the remaining items."
+    },
+    {
+      "title": "Use the presentation controls",
+      "description": "Use the full-screen control when presenting the game to a class. Background music can be controlled with its music button. The flipping sound effect plays while the columns are flipping."
+    }
+  ],
+  "buttons": [
+    {
+      "name": "START",
+      "description": "Starts the rapid flipping animation in all active columns."
+    },
+    {
+      "name": "STOP",
+      "description": "Stops all active columns together and reveals their random selections."
+    },
+    {
+      "name": "PICK AGAIN",
+      "description": "Begins another round using the current column settings and available items."
+    },
+    {
+      "name": "Keep items available",
+      "description": "A separate setting for each column. When enabled, picked items are not automatically eliminated and can be selected again."
+    },
+    {
+      "name": "Remove / Restore",
+      "description": "Manages selected items in the results history when these controls are available."
+    },
+    {
+      "name": "Full Screen",
+      "description": "Expands the game for classroom presentation."
+    },
+    {
+      "name": "Music",
+      "description": "Turns the background music on or off."
+    }
+  ],
+  "video": ""
+}
