@@ -218,6 +218,17 @@ const games = [
         grades: "Grades 1–6",
         access: "free"
     },
+   
+    {
+        title: "Random Picker",
+        categories: ["phonics", "vocabulary", "classroom", "action"],
+        guide: "guides/random-picker-instructions.json",
+        url: "http://random-picker.teacherkhen.com/",
+        image: "randompicker.png",
+        category: "Teaching Tool",
+        grades: "Grades 1–6",
+        access: "free"
+    },
 
     {
         title: "Halloween Monster Egg",
