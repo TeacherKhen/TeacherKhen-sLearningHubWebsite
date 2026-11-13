@@ -403,8 +403,19 @@ const setWords = d => {
       'MONSTERBINGO',
       hasMonsterBingo,
       d => d.cards.map(c => c.text)
+    ),
+   
+      'random-picker': base(
+      'Random Picker',
+      'https://random-picker.teacherkhen.com/',
+      'free',
+      'RANDOMPICKER',
+      hasRandomPicker,
+      d => d.columns
+        .slice(0, Number(d.columnCount))
+        .flat()
+        .map(item => item.kind === 'word' ? item.label : 'Picture')
     )
-
   };
 
   const gameFor = slug =>
