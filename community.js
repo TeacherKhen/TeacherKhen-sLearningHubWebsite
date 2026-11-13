@@ -140,6 +140,19 @@ const setWords = d => {
   // GAME REGISTRY — ALL 11 GAMES
   // =========================================================
 
+  const hasRandomPicker = d =>
+    !!d &&
+    !Array.isArray(d) &&
+    Number.isInteger(Number(d.columnCount)) &&
+    Number(d.columnCount) >= 1 &&
+    Number(d.columnCount) <= 3 &&
+    Array.isArray(d.columns) &&
+    d.columns.length >= Number(d.columnCount) &&
+    d.columns.slice(0, Number(d.columnCount)).every(column =>
+      Array.isArray(column) &&
+      column.length > 0
+    );
+  
   const GAMES = {
 
     'click-it': base(
