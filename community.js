@@ -141,17 +141,33 @@ const setWords = d => {
   // =========================================================
 
   const hasRandomPicker = d =>
-    !!d &&
-    !Array.isArray(d) &&
-    Number.isInteger(Number(d.columnCount)) &&
-    Number(d.columnCount) >= 1 &&
-    Number(d.columnCount) <= 3 &&
-    Array.isArray(d.columns) &&
-    d.columns.length >= Number(d.columnCount) &&
-    d.columns.slice(0, Number(d.columnCount)).every(column =>
-      Array.isArray(column) &&
-      column.length > 0
-    );
+  !!d &&
+  !Array.isArray(d) &&
+  Number.isInteger(Number(d.columnCount)) &&
+  Number(d.columnCount) >= 1 &&
+  Number(d.columnCount) <= 3 &&
+  Array.isArray(d.columns) &&
+  d.columns.length >= Number(d.columnCount) &&
+  d.columns.slice(0, Number(d.columnCount)).every(column =>
+    Array.isArray(column) &&
+    column.length > 0 &&
+    column.every(item =>
+      item &&
+      typeof item.id === 'string' &&
+      (
+        (
+          item.kind === 'word' &&
+          typeof item.label === 'string' &&
+          item.label.trim().length > 0
+        ) ||
+        (
+          item.kind === 'image' &&
+          typeof item.src === 'string' &&
+          item.src.startsWith('data:image/')
+        )
+      )
+    )
+  );
   
   const GAMES = {
 
