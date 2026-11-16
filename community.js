@@ -113,6 +113,29 @@ const setWords = d => {
     d.presets.flatMap(p =>
       p.words.map(w => w.text)
     );
+  
+  const hasJungle = d =>
+    Array.isArray(d) &&
+    d.length >= 1 &&
+    d.length <= 500 &&
+    d.every(item =>
+      item &&
+      typeof item === 'object' &&
+      !Array.isArray(item) &&
+      ['sentence', 'spelling'].includes(item.type) &&
+      typeof item.answer === 'string' &&
+      item.answer.trim().length > 0 &&
+      Array.isArray(item.tokens) &&
+      item.tokens.length >= 1 &&
+      item.tokens.every(token =>
+        typeof token === 'string' &&
+        token.length > 0
+      ) &&
+      (
+        item.image === undefined ||
+        typeof item.image === 'string'
+      )
+    );
 
   const hasGiveKeep = d =>
     Array.isArray(d) &&
@@ -419,6 +442,16 @@ const setWords = d => {
       'MONSTERBINGO',
       hasMonsterBingo,
       d => d.cards.map(c => c.text)
+    ),
+
+    // JUNGLE GAME — SPELLING AND SENTENCE COMPLETION
+    'jungle-game-spelling-a-sentence': base(
+      'Jungle Game – Spelling and Sentence Completion',
+      'https://connect-the-dots.teacherkhen.com/',
+      'free',
+      'JUNGLE',
+      hasJungle,
+      d => d.map(q => q.answer)
     ),
    
       'random-picker': base(
