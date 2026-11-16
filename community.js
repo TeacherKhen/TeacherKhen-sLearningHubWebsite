@@ -799,6 +799,325 @@ const setWords = d => {
   // PREVIEW METADATA
   // =========================================================
 
+  
+  // =========================================================
+  // JUNGLE GAME — CONTENT-BASED THUMBNAIL
+  // =========================================================
+
+  async function createJungleThumbnail(data) {
+    if (!Array.isArray(data) || !data.length) {
+      return null;
+    }
+
+    const W = 480;
+    const H = 270;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = W;
+    canvas.height = H;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return null;
+
+    // Select an actual question from the uploaded lesson.
+    const question =
+      data.find(q =>
+        q.type === 'spelling' &&
+        q.tokens?.length >= 3
+      ) ||
+      data.find(q =>
+        q.tokens?.length
+      );
+
+    if (!question) return null;
+
+    const tokens = question.tokens.slice(0, 8);
+    const answer = String(question.answer || '');
+    const isSpelling = question.type === 'spelling';
+
+    // Jungle background.
+    const bg = ctx.createLinearGradient(0, 0, W, H);
+    bg.addColorStop(0, '#102f22');
+    bg.addColorStop(.48, '#245b36');
+    bg.addColorStop(1, '#102b20');
+
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // Background foliage.
+    const leaves = [
+      [15, 55, 32],
+      [455, 40, 35],
+      [25, 235, 30],
+      [455, 235, 38],
+      [110, 15, 20],
+      [370, 15, 24]
+    ];
+
+    leaves.forEach(([x, y, r], i) => {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(i % 2 ? -.6 : .6);
+
+      ctx.fillStyle = i % 2
+        ? '#3d8b50'
+        : '#1b7542';
+
+      for (let j = 0; j < 3; j++) {
+        ctx.beginPath();
+        ctx.ellipse(
+          j * 9,
+          j * 5,
+          r * .55,
+          r * .19,
+          j * .35,
+          0,
+          Math.PI * 2
+        );
+        ctx.fill();
+      }
+
+      ctx.restore();
+    });
+
+    // Soft light behind the game board.
+    const glow = ctx.createRadialGradient(
+      W / 2, 130, 10,
+      W / 2, 130, 230
+    );
+
+    glow.addColorStop(0, 'rgba(183,235,151,.17)');
+    glow.addColorStop(1, 'rgba(0,0,0,0)');
+
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, W, H);
+
+    // Header.
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    ctx.font = "bold 19px 'Comic Neue', sans-serif";
+    ctx.fillStyle = '#fff2bd';
+    ctx.shadowColor = '#071b10';
+    ctx.shadowBlur = 5;
+
+    ctx.fillText(
+      '🌴 JUNGLE CONNECT GAME',
+      W / 2,
+      23
+    );
+
+    ctx.shadowBlur = 0;
+
+    // Wooden signboard.
+    const sx = 75;
+    const sy = 43;
+    const sw = 330;
+    const sh = 65;
+
+    ctx.save();
+
+    ctx.shadowColor = 'rgba(0,0,0,.55)';
+    ctx.shadowBlur = 12;
+    ctx.shadowOffsetY = 5;
+
+    ctx.fillStyle = '#704321';
+    ctx.beginPath();
+    ctx.roundRect(sx, sy, sw, sh, 12);
+    ctx.fill();
+
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetY = 0;
+
+    ctx.strokeStyle = '#e9bd69';
+    ctx.lineWidth = 4;
+    ctx.stroke();
+
+    // Wood grain.
+    ctx.strokeStyle = 'rgba(255,218,155,.22)';
+    ctx.lineWidth = 1;
+
+    for (let i = 0; i < 4; i++) {
+      ctx.beginPath();
+      ctx.moveTo(sx + 18, sy + 14 + i * 13);
+      ctx.lineTo(sx + sw - 18, sy + 14 + i * 13);
+      ctx.stroke();
+    }
+
+    // Answer text.
+    const displayAnswer = answer.toUpperCase();
+
+    let fontSize = Math.min(
+      31,
+      285 / Math.max(1, displayAnswer.length * .65)
+    );
+
+    fontSize = Math.max(15, fontSize);
+
+    ctx.font = `bold ${fontSize}px 'Comic Neue', sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#fff3d0';
+
+    ctx.fillText(
+      displayAnswer,
+      W / 2,
+      sy + 35,
+      sw - 35
+    );
+
+    ctx.restore();
+
+    // Shuffle the displayed tokens.
+    const shuffled = tokens.slice();
+
+    if (shuffled.length > 1) {
+      shuffled.push(shuffled.shift());
+    }
+
+    // Node positions.
+    const count = shuffled.length;
+    const startX = 65;
+    const endX = 415;
+    const gap = count > 1
+      ? (endX - startX) / (count - 1)
+      : 0;
+
+    const nodeY = index =>
+      171 + (index % 2 === 0 ? 0 : 17);
+
+    const positions = shuffled.map((_, i) => ({
+      x: count === 1 ? W / 2 : startX + i * gap,
+      y: nodeY(i)
+    }));
+
+    // Connecting paths.
+    ctx.save();
+
+    ctx.strokeStyle = 'rgba(255,224,142,.85)';
+    ctx.lineWidth = 4;
+    ctx.lineCap = 'round';
+    ctx.setLineDash([7, 6]);
+
+    ctx.beginPath();
+
+    positions.forEach((p, i) => {
+      if (i === 0) {
+        ctx.moveTo(p.x, p.y);
+      } else {
+        ctx.lineTo(p.x, p.y);
+      }
+    });
+
+    ctx.stroke();
+    ctx.restore();
+
+    // Golden letter/word nodes.
+    positions.forEach((p, i) => {
+      const radius = count > 6 ? 20 : 25;
+
+      ctx.save();
+
+      ctx.shadowColor = 'rgba(0,0,0,.55)';
+      ctx.shadowBlur = 9;
+      ctx.shadowOffsetY = 4;
+
+      const node = ctx.createRadialGradient(
+        p.x - 8, p.y - 9, 2,
+        p.x, p.y, radius + 5
+      );
+
+      node.addColorStop(0, '#fff2b0');
+      node.addColorStop(.55, '#ffc94f');
+      node.addColorStop(1, '#c77a19');
+
+      ctx.fillStyle = node;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.shadowBlur = 0;
+      ctx.shadowOffsetY = 0;
+
+      ctx.strokeStyle = '#704321';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      const label = String(shuffled[i]);
+
+      const size = Math.min(
+        20,
+        Math.max(
+          11,
+          35 / Math.max(1, label.length * .65)
+        )
+      );
+
+      ctx.font = `bold ${size}px 'Comic Neue', sans-serif`;
+      ctx.fillStyle = '#442713';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      ctx.fillText(
+        label,
+        p.x,
+        p.y + 1,
+        radius * 1.65
+      );
+
+      ctx.restore();
+    });
+
+    // Activity label.
+    ctx.fillStyle = '#fff2bd';
+    ctx.font = "bold 13px 'Comic Neue', sans-serif";
+    ctx.textAlign = 'center';
+
+    ctx.fillText(
+      isSpelling
+        ? 'SPELLING CHALLENGE'
+        : 'SENTENCE BUILDING',
+      W / 2,
+      226
+    );
+
+    // Lesson question count.
+    ctx.font = "12px 'Comic Neue', sans-serif";
+    ctx.fillStyle = 'rgba(255,255,255,.9)';
+
+    ctx.fillText(
+      `${data.length} QUESTIONS IN THIS LESSON`,
+      W / 2,
+      249
+    );
+
+    // Export compressed image.
+    try {
+      let result = canvas.toDataURL(
+        'image/jpeg',
+        .72
+      );
+
+      if (result.length > 145000) {
+        result = canvas.toDataURL(
+          'image/jpeg',
+          .48
+        );
+      }
+
+      return result.length < 180000
+        ? result
+        : null;
+
+    } catch (err) {
+      console.warn(
+        'Jungle thumbnail generation failed:',
+        err
+      );
+
+      return null;
+    }
+  }
  
 /* =========================================================
    TEACHER KHEN COMMUNITY
@@ -806,6 +1125,11 @@ const setWords = d => {
    ========================================================= */
 
 async function createGameThumbnail(slug, data) {
+
+  // Jungle Game — dedicated content-based thumbnail.
+  if (slug === 'jungle-game-spelling-a-sentence') {
+    return createJungleThumbnail(data);
+  }
 
   // Preserve the existing Spot It Premium thumbnail.
   if (slug === 'spot-it') {
