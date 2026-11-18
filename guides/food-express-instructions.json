@@ -74,7 +74,7 @@
     }
   ],
   "jsonHelp": "The Food Express exports a food-express-settings.json file. Open Settings > Export JSON to download your custom foods and Level 1 positions. On a different device open The Food Express > Settings > Import JSON and select that file. Newly uploaded pictures are included in the JSON; standard photos/ image assets must remain hosted with the game. Export again after making changes. This is a game-data JSON, not the website instructions JSON.",
-  "video": "",
+  "video": "https://www.youtube.com/shorts/1kPovJ1WXEk",
   "videoChannel": "",
   "lesson": {
     "book": "Wonder World 7",
