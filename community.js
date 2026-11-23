@@ -1258,7 +1258,14 @@ async function createGameThumbnail(slug, data) {
     entries = list.map(w => ({
       text: w
     }));
+ 
+  } else if (slug === 'hoop-it-up') {
 
+      entries = (data.questions || []).map(q => ({
+        text: q.text || 'Question'
+      }));
+
+  } else if (slug === 'fishing-adventure') {
   } else if (slug === 'fishing-adventure') {
 
     entries = data.questions.map(q => ({
