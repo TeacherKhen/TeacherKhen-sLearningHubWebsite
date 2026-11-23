@@ -1266,7 +1266,6 @@ async function createGameThumbnail(slug, data) {
       }));
 
   } else if (slug === 'fishing-adventure') {
-  } else if (slug === 'fishing-adventure') {
 
     entries = data.questions.map(q => ({
       text: q.text ||
