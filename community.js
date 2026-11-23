@@ -1838,8 +1838,21 @@ async function previewMetadata(slug, json) {
       gameProtocol(l.game_slug) ===
       'phonics-race';
 
-    
-const thumbnail = thumbFrom(l.preview_items);
+
+let thumbnail = thumbFrom(l.preview_items);
+
+// Use the manually uploaded real screenshot for Hoop It Up!
+if (l.game_slug === 'hoop-it-up') {
+  const sb = client();
+
+  if (sb) {
+    const { data: manualThumb } = sb.storage
+      .from('community-thumbnails')
+      .getPublicUrl('hoop-it-up.webp');
+
+    thumbnail = manualThumb?.publicUrl || thumbnail;
+  }
+}
 
 
     if (isSpotIt) {
