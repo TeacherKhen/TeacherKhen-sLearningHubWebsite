@@ -1,0 +1,67 @@
+{
+  "title": "Hoop It Up! — Basketball Review Game",
+  "description": "An interactive basketball-themed review game for classroom teams. Students choose basketballs from the question pool, answer review questions, earn points and speed bonuses, and may receive a rare-card reward. It is designed for whole-class play on a computer, tablet, or interactive smart board.",
+  "steps": [
+    "Before playing: Open Hoop It Up! and display the game on your classroom screen. Turn on sound if you want background music and sound effects. Use Full Screen for a larger classroom display.",
+    "Prepare your questions: Add or load the question set you want to use for the lesson. Hoop It Up! no longer starts with ready-made preset questions, so prepare your own review content before starting.",
+    "Choose the game settings: Select the available game mode and configure the round to suit your class. Time Mode continues asking questions until the timer ends. Complete Mode continues until all questions have been answered.",
+    "Start the round: Choose a basketball from the question pool to open a question. Read the question aloud or let students read it on screen, then choose an answer.",
+    "Earn points: Correct answers earn points. Speed bonuses may also be awarded for answering quickly. The team scores are shown during play; check the on-screen feedback after each answer.",
+    "Play with two teams: In the two-team layout, each team's question area is displayed side by side. Make sure students can see both question panels and answer choices before they respond.",
+    "Rare-card reward: When the rare-card reward appears, choose one of the available rewards: +3 Points or Reveal a Rare Card. Choosing +3 Points adds three points without opening a card. Choosing Reveal a Rare Card lets the player select one mystery card; its result is then added to the score.",
+    "Return to the question pool: Use the Return to Question Pool or Back to Questions button after a question or rare-card result to continue the round. The game returns to the question selection area.",
+    "Finish the game: When the round ends, the final-score screen shows both teams' scores and announces the winner. Choose Play Again to start another round or Cover to leave the game screen.",
+    "For classroom use: Adjust background-music and sound-effect volumes independently. Sound effects become more prominent while they play, and the background music lowers automatically. Use Full Screen on a smart board; make sure uploaded question and option pictures are clear and fit the display."
+  ],
+  "buttons": [
+    {
+      "name": "Start / Play",
+      "meaning": "Begin the game after the questions and settings are ready."
+    },
+    {
+      "name": "Basketball Choices",
+      "meaning": "Choose a basketball in the question pool to open a review question."
+    },
+    {
+      "name": "Answer Choices",
+      "meaning": "Select the answer students think is correct. The game provides feedback and updates the score."
+    },
+    {
+      "name": "Return to Question Pool / Back to Questions",
+      "meaning": "Leave the current question or rare-card result and return to the question selection area."
+    },
+    {
+      "name": "+3 Points",
+      "meaning": "Take three points immediately. This choice does not open a rare card."
+    },
+    {
+      "name": "Reveal a Rare Card",
+      "meaning": "Choose one mystery card to reveal its reward or penalty. The result is applied to the team's score."
+    },
+    {
+      "name": "Music On/Off and Volume",
+      "meaning": "Turn background music on or off and adjust its volume."
+    },
+    {
+      "name": "Sound Effects and Volume",
+      "meaning": "Control sound effects and adjust their volume. During an effect, background music automatically becomes quieter."
+    },
+    {
+      "name": "Full Screen",
+      "meaning": "Expand the game for classroom display. Use the button again or press Escape to leave full-screen mode."
+    },
+    {
+      "name": "Settings",
+      "meaning": "Open the available game settings and configure the round before playing."
+    },
+    {
+      "name": "Play Again",
+      "meaning": "Start a new round from the final-score screen."
+    },
+    {
+      "name": "Cover",
+      "meaning": "Leave the final-score screen and return to the game's cover screen."
+    }
+  ],
+  "jsonHelp": "This file (hoop-it-up.json) is the WEBSITE INSTRUCTION GUIDE. Put it in your website's guides/ folder and connect it to the Hoop It Up! guide entry in your website. It supplies the title, description, step-by-step instructions, button explanations, and this JSON help text. It does NOT contain review questions and does NOT load questions into the game. Keep your question-set JSON as a separate file using the question format supported by Hoop It Up! or your Community lesson system. Do not rename the keys in this guide unless you also update the website code that reads them. After editing this file, save it as UTF-8 JSON and validate it with a JSON validator before publishing."
+}
