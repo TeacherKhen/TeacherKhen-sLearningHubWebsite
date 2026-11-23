@@ -301,7 +301,7 @@ const games = [
        categories: ["classroom", "action"],
        guide: "guides/hoop-it-up.json",
        url: "http://basketball-reviewgame.teacherkhen.com/",
-       image: "hoop it up.png",
+       image: "Hoop it up.png",
        category: "Review",
        grades: "Grades 1–6",
        access: "premium"
