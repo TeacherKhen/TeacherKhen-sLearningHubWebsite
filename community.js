@@ -464,6 +464,39 @@ const setWords = d => {
         .slice(0, Number(d.columnCount))
         .flat()
         .map(item => item.kind === 'word' ? item.label : 'Picture')
+    ),
+
+    // =====================================================
+    // HOOP IT UP! — PREMIUM BASKETBALL REVIEW GAME
+    // =====================================================
+
+    'hoop-it-up': base(
+      'Hoop It Up! (Review Game)',
+      'https://basketball-reviewgame.teacherkhen.com/',
+      'premium',
+      'HOOPITUP',
+
+      d =>
+        d?.game === 'hoop-it-up' &&
+        Array.isArray(d.questions) &&
+        d.questions.length > 0 &&
+        d.questions.every(q =>
+          q &&
+          typeof q.text === 'string' &&
+          q.text.trim().length > 0 &&
+          ['mc', 'id'].includes(q.type) &&
+          (
+            q.type !== 'mc' ||
+            (
+              Array.isArray(q.options) &&
+              q.options.length === 4
+            )
+          )
+        ),
+
+      d => d.questions.map(q => q.text),
+
+      'hoop-it-up'
     )
   };
 
