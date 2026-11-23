@@ -1841,7 +1841,7 @@ async function previewMetadata(slug, json) {
 
 let thumbnail = thumbFrom(l.preview_items);
 
-// Use the manually uploaded real screenshot for Hoop It Up!
+// Use the manually uploaded screenshot for Hoop It Up!
 if (l.game_slug === 'hoop-it-up') {
   const sb = client();
 
@@ -1850,7 +1850,8 @@ if (l.game_slug === 'hoop-it-up') {
       .from('community-thumbnails')
       .getPublicUrl('hoop-it-up.webp');
 
-    thumbnail = manualThumb?.publicUrl || thumbnail;
+    thumbnail =
+      manualThumb?.publicUrl || thumbnail;
   }
 }
 
