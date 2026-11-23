@@ -160,7 +160,7 @@ const setWords = d => {
     Number(d.winScore) >= 1;
 
   // =========================================================
-  // GAME REGISTRY — ALL 11 GAMES
+  // GAME REGISTRY — ALL 19 GAMES
   // =========================================================
 
   const hasRandomPicker = d =>
@@ -1182,14 +1182,17 @@ async function createGameThumbnail(slug, data) {
   const isPop = slug.startsWith('balloon-pop');
   const isRace = slug === 'phonics-race';
   const isSpider = slug === 'spiderweb-free';
+  const isHoop = slug === 'hoop-it-up';
 
-  const theme = isPop
-    ? ['#082c50', '#2066a8']
-    : isRace
-      ? ['#102c59', '#2048a0']
-      : isSpider
-        ? ['#17203c', '#484071']
-        : ['#12384b', '#326c7b'];
+    const theme = isHoop
+      ? ['#7c2d12', '#ea580c']
+      : isPop
+        ? ['#082c50', '#2066a8']
+        : isRace
+          ? ['#102c59', '#2048a0']
+          : isSpider
+            ? ['#17203c', '#484071']
+            : ['#12384b', '#326c7b'];
 
   const bg = ctx.createLinearGradient(0, 0, W, H);
   bg.addColorStop(0, theme[0]);
